@@ -1,4 +1,5 @@
 import fs from "fs";
+import fsExtra from "fs-extra";
 import Handlebars from "handlebars";
 import path from "path";
 import yargs from "yargs";
@@ -74,6 +75,7 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
   const existingContents = fs.readFileSync(options.changelogFile).toString();
   const newContents = `${changelogAddition}\n${existingContents}`;
   fs.writeFileSync(options.changelogFile, newContents);
+  fsExtra.emptyDirSync(options.logsDir);
   console.log(
     `${Icons.success} ${options.changelogFile} updated! Be sure to review the changes before comitting.`
   );
