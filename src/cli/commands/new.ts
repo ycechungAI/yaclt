@@ -18,17 +18,20 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
       alias: "issueId",
       describe:
         "The issue ID to be interpolated into the new changelog. Takes precedence over parsing from git branch based on --branchFormat",
+      type: "string",
       required: false,
     },
     m: {
       alias: "message",
       describe: "The change log message, defaults to a placeholder message",
+      type: "string",
       required: false,
     },
     p: {
       alias: "changeType",
       describe:
         "The change type tag to use, defaults to the first one defined in --changeTypes",
+      type: "string",
       required: false,
     },
     ...CliOptions,
@@ -45,7 +48,7 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
     }
 
     const options: ActionNewOptions = {
-      dir: argv.logsDir,
+      logsDir: argv.logsDir,
       format: argv.format,
       changeType:
         argv.changeType ?? argv.changeTypes[0] ?? StringFormatParams.changeType,

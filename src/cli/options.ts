@@ -1,18 +1,12 @@
-import fs from "fs";
 import { Options } from "yargs";
+import { touchFile } from "../utils/file-utils";
 import { StringFormatParams } from "../utils/string-format";
 
 const coerceFileArg =
   (options = { createIfNotExist: true }) =>
   (filePath: string) => {
     if (options.createIfNotExist) {
-      // see https://remarkablemark.org/blog/2017/12/17/touch-file-nodejs/#touch-file
-      const date = new Date();
-      try {
-        fs.utimesSync(filePath, date, date);
-      } catch (_) {
-        fs.closeSync(fs.openSync(filePath, "w"));
-      }
+      touchFile(filePath);
     }
 
     return filePath;
