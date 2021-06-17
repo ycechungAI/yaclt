@@ -1,5 +1,7 @@
 import fs from "fs";
+import Handlebars from "handlebars";
 import path from "path";
+import yargs from "yargs";
 import { readLines } from "../utils/file-utils";
 import { Icons } from "../utils/icons";
 import { StringFormatParams } from "../utils/string-format";
@@ -24,21 +26,29 @@ export const ActionValidate = (options: ActionValidateOptions) => {
 
   let hasInvalidEntries = false;
 
-  const pattern = options.format
-    .replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&") // escape regex special characters
-    .replace(
-      StringFormatParams.changeType,
-      `(${options.changeTypes.join("|")})`
+  // escape regex special characters except {{ }} and whitespace so we can still compile handlebars
+  const patternTemplate = Handlebars.compile(
+    options.format.replace(/[-[\]()*+?.,\\^$|#]/g, "\\$&")
+  );
+  const patterns = options.changeTypes
+    .map(
+      (changeType: string) =>
+        patternTemplate({
+          [StringFormatParams.changeType]: changeType,
+          [StringFormatParams.message]: "(.*)",
+          [StringFormatParams.issueId]: "(.*)",
+        })
+          .replace(/{}/g, "\\$&")
+          .replace(/\s/g, "\\s*") // escape any remaining { } or whitespace characters for regex
     )
-    .replace(StringFormatParams.message, ".*")
-    .replace(StringFormatParams.issueId, ".*");
-  const regex = new RegExp(`^${pattern}$`);
+    .map((pattern: string) => new RegExp(`^${pattern}$`));
 
+  console.log(patterns);
   for (const filePath of filePaths) {
     const lines = readLines(path.join(options.logsDir, filePath));
 
     for (const line of lines) {
-      if (!regex.test(line)) {
+      if (!patterns.some((pattern: RegExp) => pattern.test(line))) {
         console.error(
           `${Icons.error} Malformed changelog entry found in file ${filePath}: ${line}`
         );
@@ -49,8 +59,10 @@ export const ActionValidate = (options: ActionValidateOptions) => {
   }
 
   if (hasInvalidEntries) {
-    throw new Error(`${Icons.error} Malformed changelog entries found.`);
-  } else {
-    console.log(`${Icons.success} All changelog entries formatted correctly!`);
+    const message = `${Icons.error} Malformed changelog entries found.`;
+    yargs.exit(1, new Error(message));
+    return;
   }
+
+  console.log(`${Icons.success} All changelog entries formatted correctly!`);
 };

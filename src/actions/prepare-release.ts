@@ -1,5 +1,7 @@
 import fs from "fs";
+import Handlebars from "handlebars";
 import path from "path";
+import yargs from "yargs";
 import { readLines, touchFile } from "../utils/file-utils";
 import { Icons } from "../utils/icons";
 import { StringFormatParams } from "../utils/string-format";
@@ -20,13 +22,21 @@ export interface EntryGroup {
 
 export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
   touchFile(options.changelogFile);
-  const fileNames = fs.readdirSync(options.logsDir);
 
   ActionValidate({
     logsDir: options.logsDir,
     format: options.format,
     changeTypes: options.changeTypes,
   });
+
+  if (!fs.existsSync(options.logsDir)) {
+    const message = `${Icons.error} Cannot prepare a release because no changelogs were found in ${options.logsDir}`;
+    console.error(message);
+    yargs.exit(1, new Error(message));
+    return;
+  }
+
+  const fileNames = fs.readdirSync(options.logsDir);
 
   const entryGroups: EntryGroup[] = [];
   const changeTypePattern = options.format.replace(
@@ -40,11 +50,12 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
     const lines = readLines(filePath);
 
     for (const line of lines) {
-      const changeType = line.match(changeTypeRegex)[1] ?? "Uncategorized";
-      if (entryGroups.find((group: EntryGroup) => group.label === changeType)) {
-        entryGroups
-          .find((group: EntryGroup) => group.label === changeType)
-          .items.push(line);
+      const changeType = line.match(changeTypeRegex)?.[1] ?? "Uncategorized";
+      const existingGroup = entryGroups.find(
+        (group: EntryGroup) => group.label === changeType
+      );
+      if (existingGroup) {
+        existingGroup.items.push(line);
       } else {
         entryGroups.push({ label: changeType, items: [line] });
       }
