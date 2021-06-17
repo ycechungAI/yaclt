@@ -7,7 +7,7 @@
     "prepare": "husky install",
     "postinstall": "husky install",
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc --project tsconfig.json"
   },
   "repository": {
     "type": "git",

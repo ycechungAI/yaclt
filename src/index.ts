@@ -1,3 +1,3 @@
-console.log("hello world!");
+import { RunCli } from "./cli";
 
-export default {};
+RunCli();

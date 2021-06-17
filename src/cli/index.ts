@@ -1,7 +1,8 @@
-import { CliOptions } from "src/cli/options";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
+import { CliOptions } from "./options";
 
-const argv = yargs(hideBin(process.argv)).options(CliOptions).argv;
-
-console.log(argv);
+export const RunCli = () => {
+  const argv = yargs(hideBin(process.argv)).options(CliOptions).argv;
+  console.log(argv);
+};
