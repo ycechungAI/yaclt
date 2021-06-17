@@ -13,6 +13,7 @@ export interface ActionPrepareReleaseOptions extends ActionOptions {
   releaseNumber: string;
   template: string;
   changeTypes: string[];
+  requireIssueIds: boolean;
 }
 
 export interface EntryGroup {
@@ -27,6 +28,7 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
     logsDir: options.logsDir,
     format: options.format,
     changeTypes: options.changeTypes,
+    requireIssueIds: options.requireIssueIds,
   });
 
   if (!fs.existsSync(options.logsDir)) {

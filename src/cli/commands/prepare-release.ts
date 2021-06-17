@@ -8,7 +8,7 @@ import { CliOptions, GlobalArgv } from "../options";
 
 export interface PrepareReleaseCommandOptions extends GlobalArgv {
   changelogTemplate: string;
-  releaseNumber: string;
+  releaseNumber: string | (() => string);
 }
 
 export const PrepareReleaseCommand: CommandModule<
@@ -25,7 +25,7 @@ export const PrepareReleaseCommand: CommandModule<
       describe:
         "The Handlebars template to use to generate the changelog additions. Can be a filepath to read the template from, or a template literal string.",
       required: false,
-      default: `# Release {{releaseNumber}} - {{moment "YYYY-MM-DD"}}\n\n{{#each entryGroups}}## {{capitalize label}}\n\n{{#each items}}- {{this}}\n{{/each}}{{/each}}`,
+      default: `# Release {{releaseNumber}} - {{moment "YYYY-MM-DD"}}\n\n{{#each entryGroups}}## {{capitalize label}}\n\n{{#each items}}- {{this}}\n{{/each}}{{/each}}\n\n---`,
     },
     n: {
       alias: "releaseNumber",
@@ -44,12 +44,21 @@ export const PrepareReleaseCommand: CommandModule<
       template = argv.changelogTemplate;
     }
 
+    let releaseNumber: string;
+
+    if (typeof argv.releaseNumber === "string") {
+      releaseNumber = argv.releaseNumber;
+    } else {
+      releaseNumber = argv.releaseNumber();
+    }
+
     const options: ActionPrepareReleaseOptions = {
       changeTypes: argv.changeTypes,
       changelogFile: argv.changelogFile,
-      releaseNumber: argv.releaseNumber,
       logsDir: argv.logsDir,
       format: argv.format,
+      requireIssueIds: argv.requireIssueIds,
+      releaseNumber,
       template,
     };
 
