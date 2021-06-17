@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Yet Another Change Log Tool",
   "main": "index.js",
+  "bin": "dist/index.js",
   "scripts": {
     "prepare": "husky install",
     "postinstall": "husky install",
