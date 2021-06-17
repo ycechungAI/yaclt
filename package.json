@@ -1,0 +1,36 @@
+{
+  "name": "yaclt",
+  "version": "0.0.1",
+  "description": "Yet Another Change Log Tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrjones2014/yaclt.git"
+  },
+  "keywords": [
+    "changelog",
+    "cli",
+    "release",
+    "notes",
+    "release",
+    "notes",
+    "change",
+    "log",
+    "change",
+    "log",
+    "yargs"
+  ],
+  "author": "Mat Jones",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrjones2014/yaclt/issues"
+  },
+  "homepage": "https://github.com/mrjones2014/yaclt#readme",
+  "devDependencies": {
+    "@types/node": "^15.12.2",
+    "typescript": "^4.3.3"
+  }
+}
