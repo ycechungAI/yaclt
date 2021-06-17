@@ -1,6 +1,6 @@
 {
   "name": "yaclt",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Yet Another Change Log Tool",
   "main": "index.js",
   "bin": "dist/index.js",
@@ -38,6 +38,7 @@
     "@types/handlebars": "^4.1.0",
     "@types/handlebars-helpers": "^0.5.2",
     "@types/js-yaml": "^4.0.1",
+    "@types/moment": "^2.13.0",
     "@types/node": "^15.12.2",
     "@types/yargs": "^17.0.0",
     "husky": "^6.0.0",
@@ -51,6 +52,7 @@
     "handlebars": "^4.7.7",
     "handlebars-helpers": "^0.10.0",
     "js-yaml": "^4.1.0",
+    "moment": "^2.29.1",
     "yargs": "^17.0.1"
   },
   "husky": {
