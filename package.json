@@ -5,8 +5,7 @@
   "main": "index.js",
   "bin": "dist/index.js",
   "scripts": {
-    "prepare": "husky install",
-    "postinstall": "husky install",
+    "install-hooks": "husky install",
     "build": "tsc --project tsconfig.json",
     "clean": "rm -rf dist/"
   },
