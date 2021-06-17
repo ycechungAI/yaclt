@@ -9,7 +9,7 @@ module.exports = {
       return "release/1";
     }
 
-    const lastTag = execSync(`git describe --tags ${revList}`);
+    const lastTag = execSync(`git describe --tags ${revList}`).toString();
     if (!lastTag) {
       return "release/1";
     }
