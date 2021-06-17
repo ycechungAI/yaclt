@@ -1,6 +1,5 @@
 import fs from "fs";
 import path from "path";
-import { error } from "../utils/error";
 import { Icons } from "../utils/icons";
 import { StringFormatParams } from "../utils/string-format";
 import { ActionOptions } from "./action-options";
@@ -48,6 +47,6 @@ export const ActionValidate = (options: ActionValidateOptions) => {
   }
 
   if (hasInvalidEntries) {
-    error(`${Icons.error} Malformed changelog entries found.`);
+    throw new Error(`${Icons.error} Malformed changelog entries found.`);
   }
 };
