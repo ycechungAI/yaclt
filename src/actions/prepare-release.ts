@@ -42,10 +42,14 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
   const fileNames = fs.readdirSync(options.logsDir);
 
   const entryGroups: EntryGroup[] = [];
-  const changeTypePattern = options.format.replace(
-    new RegExp(`{{\s*${StringFormatParams.changeType}\s*}}`, "g"),
-    "(.*)"
-  );
+  const changeTypePattern = options.format
+    .replace(/[-[\]()*+?.,\\^$|#]/g, "\\$&")
+    .replace(
+      new RegExp(`{{\s*${StringFormatParams.changeType}\s*}}`, "g"),
+      "(.*)"
+    )
+    .replace(/{}/g, "\\$&")
+    .replace(/\s/g, "\\s*"); // escape any remaining { } or whitespace characters for regex
   const changeTypeRegex = new RegExp(changeTypePattern);
 
   for (const fileName of fileNames) {
@@ -53,7 +57,14 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
     const lines = readLines(filePath);
 
     for (const line of lines) {
-      const changeType = line.match(changeTypeRegex)?.[1] ?? "Uncategorized";
+      const changeType = line.match(changeTypeRegex)?.[1];
+
+      if (!changeType) {
+        throw new Error(
+          `unable to parse change type using pattern ${changeTypePattern}`
+        );
+      }
+
       const existingGroup = entryGroups.find(
         (group: EntryGroup) => group.label === changeType
       );
