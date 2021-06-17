@@ -6,7 +6,7 @@
   "bin": "dist/index.js",
   "scripts": {
     "install-hooks": "husky install",
-    "build": "tsc --project tsconfig.json",
+    "build": "tsc --project tsconfig.json && ./shebangify.js ./dist/index.js",
     "clean": "rm -rf dist/"
   },
   "repository": {
