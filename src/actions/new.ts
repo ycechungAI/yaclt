@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
 import fs from "fs";
-import Path from "path";
+import path from "path";
 import { Icons } from "../utils/icons";
 import { toValidFilename } from "../utils/path-utils";
 import { StringFormatParams } from "../utils/string-format";
@@ -14,7 +14,7 @@ export interface ActionNewOptions extends ActionOptions {
 }
 
 export const ActionNew = (options: ActionNewOptions) => {
-  const ouputPath = Path.join(
+  const ouputPath = path.join(
     options.dir,
     toValidFilename(
       `${new Date()
@@ -31,7 +31,7 @@ export const ActionNew = (options: ActionNewOptions) => {
     const branch = execSync("git branch --show-current").toString();
     if (branch) {
       const pattern = new RegExp(options.gitBranchFormat);
-      issueId = branch.match(pattern)?.[0];
+      issueId = branch.match(pattern)?.[1];
     }
   }
 

@@ -1,6 +1,7 @@
-import { Arguments, CommandModule } from "yargs";
+import yargs, { Arguments, CommandModule } from "yargs";
 import { ActionNew, ActionNewOptions } from "../../actions/new";
-import { GlobalArgv } from "../../cli/options";
+import { CliOptions, GlobalArgv } from "../../cli/options";
+import { runAction } from "../../utils/run-action";
 import { StringFormatParams } from "../../utils/string-format";
 
 export interface NewCommandOptions extends GlobalArgv {
@@ -30,13 +31,17 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
         "The change type tag to use, defaults to the first one defined in --changeTypes",
       required: false,
     },
+    ...CliOptions,
   },
   handler: (argv: Arguments<NewCommandOptions>) => {
     if (
       argv.changeType &&
       !argv.changeTypes.find((t: string) => t === argv.changeType)
     ) {
-      throw new Error(`Invalid change type: ${argv.changeType}`);
+      const message = `Invalid change type: ${argv.changeType}`;
+      console.error(message);
+      yargs.exit(1, new Error(message));
+      return;
     }
 
     const options: ActionNewOptions = {
@@ -49,6 +54,6 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
       message: argv.message,
     };
 
-    ActionNew(options);
+    runAction(() => ActionNew(options));
   },
 };

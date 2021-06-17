@@ -6,7 +6,8 @@
   "scripts": {
     "prepare": "husky install",
     "postinstall": "husky install",
-    "build": "tsc --project tsconfig.json"
+    "build": "tsc --project tsconfig.json",
+    "clean": "rm -rf dist/"
   },
   "repository": {
     "type": "git",

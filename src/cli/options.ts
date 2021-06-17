@@ -41,7 +41,6 @@ export const CliOptions: { [key: string]: Options } = {
     type: "string",
     describe:
       "Regular expression with a capturing group to parse the issue ID out of your git branch. Implies --requireIssueIds and assumes that --format includes %issueid%",
-    implies: "i",
     global: true,
   },
   c: {
