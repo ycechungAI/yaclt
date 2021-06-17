@@ -1,4 +1,4 @@
 export interface ActionOptions {
-  dir: string;
+  logsDir: string;
   format: string;
 }

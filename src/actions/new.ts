@@ -16,7 +16,7 @@ export interface ActionNewOptions extends ActionOptions {
 
 export const ActionNew = (options: ActionNewOptions) => {
   const ouputPath = path.join(
-    options.dir,
+    options.logsDir,
     toValidFilename(
       `${new Date()
         .toISOString()
@@ -44,8 +44,8 @@ export const ActionNew = (options: ActionNewOptions) => {
     [StringFormatParams.issueId]: issueId ?? "0000",
   });
 
-  if (!fs.existsSync(options.dir)) {
-    fs.mkdirSync(options.dir);
+  if (!fs.existsSync(options.logsDir)) {
+    fs.mkdirSync(options.logsDir);
   }
 
   fs.writeFileSync(ouputPath, entryText);
