@@ -1,3 +1,11 @@
+# Release release/3 - 2021-06-17
+
+## Uncategorized
+
+- [FIXED] bump version for publish {#19}
+
+
+---
 # Release release/2 - 2021-06-17
 
 ## Uncategorized
