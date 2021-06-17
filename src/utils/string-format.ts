@@ -1,5 +1,5 @@
 export const StringFormatParams = {
-  changeType: "%changetype%",
-  message: "%message%",
-  issueId: "%issueid%",
+  changeType: "changeType",
+  message: "message",
+  issueId: "issueId",
 };

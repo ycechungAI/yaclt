@@ -1,5 +1,6 @@
 import { execSync } from "child_process";
 import fs from "fs";
+import Handlebars from "handlebars";
 import path from "path";
 import { Icons } from "../utils/icons";
 import { toValidFilename } from "../utils/path-utils";
@@ -35,14 +36,13 @@ export const ActionNew = (options: ActionNewOptions) => {
     }
   }
 
-  const entryText = options.format
-    .replace(StringFormatParams.changeType, options.changeType)
-    .replace(
-      StringFormatParams.message,
-      options.message ?? "A user-friendly description of your change"
-    )
-    .replace(StringFormatParams.issueId, issueId ?? "0000")
-    .concat("\n");
+  const template = Handlebars.compile(options.format);
+  const entryText = template({
+    [StringFormatParams.changeType]: options.changeType,
+    [StringFormatParams.message]:
+      options.message ?? "A user-friendly description of your change",
+    [StringFormatParams.issueId]: issueId ?? "0000",
+  });
 
   if (!fs.existsSync(options.dir)) {
     fs.mkdirSync(options.dir);

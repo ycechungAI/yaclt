@@ -33,6 +33,8 @@
   },
   "homepage": "https://github.com/mrjones2014/yaclt#readme",
   "devDependencies": {
+    "@types/handlebars": "^4.1.0",
+    "@types/handlebars-helpers": "^0.5.2",
     "@types/node": "^15.12.2",
     "@types/yargs": "^17.0.0",
     "husky": "^6.0.0",
@@ -42,6 +44,8 @@
     "typescript": "^4.3.3"
   },
   "dependencies": {
+    "handlebars": "^4.7.7",
+    "handlebars-helpers": "^0.10.0",
     "yargs": "^17.0.1"
   },
   "husky": {

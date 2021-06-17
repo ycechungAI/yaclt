@@ -69,8 +69,8 @@ export const CliOptions: { [key: string]: Options } = {
   f: {
     alias: "format",
     type: "string",
-    default: `[${StringFormatParams.changeType}] ${StringFormatParams.message} {#${StringFormatParams.issueId}}`,
-    describe: "Changelog entry format",
+    default: `[{{${StringFormatParams.changeType}}}] {{${StringFormatParams.message}}} {{append "" "{"}}#{{${StringFormatParams.issueId}}}{{append "" "}"}}\n`,
+    describe: "Changelog entry format, as a Handlebars template",
     global: true,
   },
 };
