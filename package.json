@@ -4,7 +4,10 @@
   "description": "Yet Another Change Log Tool",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "prepare": "husky install",
+    "postinstall": "husky install",
+    "test": "jest",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -31,6 +34,19 @@
   "homepage": "https://github.com/mrjones2014/yaclt#readme",
   "devDependencies": {
     "@types/node": "^15.12.2",
+    "@types/yargs": "^17.0.0",
+    "husky": "^6.0.0",
+    "pinst": "^2.1.6",
+    "prettier": "^2.3.1",
+    "pretty-quick": "^3.1.0",
     "typescript": "^4.3.3"
+  },
+  "dependencies": {
+    "yargs": "^17.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }
