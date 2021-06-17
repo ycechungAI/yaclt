@@ -1,6 +1,6 @@
 import fs from "fs";
 import { Options } from "yargs";
-import { StringFormatParams } from "../constants/string-format";
+import { StringFormatParams } from "../utils/string-format";
 
 const coerceFileArg =
   (options = { createIfNotExist: true }) =>

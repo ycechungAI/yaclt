@@ -1,19 +1,19 @@
 import { execSync } from "child_process";
 import fs from "fs";
 import Path from "path";
-import { StringFormatParams } from "../constants/string-format";
+import { Icons } from "../utils/icons";
 import { toValidFilename } from "../utils/path-utils";
+import { StringFormatParams } from "../utils/string-format";
+import { ActionOptions } from "./action-options";
 
-export interface ActionNewOptions {
-  dir: string;
-  format: string;
+export interface ActionNewOptions extends ActionOptions {
   changeType: string;
   issueId?: string;
   gitBranchFormat?: string;
   message?: string;
 }
 
-export const ActionNew = async (options: ActionNewOptions) => {
+export const ActionNew = (options: ActionNewOptions) => {
   const ouputPath = Path.join(
     options.dir,
     toValidFilename(
@@ -49,5 +49,7 @@ export const ActionNew = async (options: ActionNewOptions) => {
   }
 
   fs.writeFileSync(ouputPath, entryText);
-  console.log(`✅ Changelog entry placeholder generated at ${ouputPath}!`);
+  console.log(
+    `${Icons.success} Changelog entry placeholder generated at ${ouputPath}!`
+  );
 };

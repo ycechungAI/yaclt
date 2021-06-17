@@ -1,15 +1,15 @@
 import { Arguments, CommandModule } from "yargs";
 import { ActionNew, ActionNewOptions } from "../../actions/new";
 import { GlobalArgv } from "../../cli/options";
-import { StringFormatParams } from "../../constants/string-format";
+import { StringFormatParams } from "../../utils/string-format";
 
-export interface NewCommandOptions {
+export interface NewCommandOptions extends GlobalArgv {
   issueId?: string;
   message?: string;
   changeType?: string;
 }
 
-export const NewCommand: CommandModule<{}, NewCommandOptions & GlobalArgv> = {
+export const NewCommand: CommandModule<{}, NewCommandOptions> = {
   command: "new",
   describe: "Generate a new changelog entry",
   builder: {
@@ -31,7 +31,7 @@ export const NewCommand: CommandModule<{}, NewCommandOptions & GlobalArgv> = {
       required: false,
     },
   },
-  handler: (argv: Arguments<GlobalArgv & NewCommandOptions>) => {
+  handler: (argv: Arguments<NewCommandOptions>) => {
     if (
       argv.changeType &&
       !argv.changeTypes.find((t: string) => t === argv.changeType)
