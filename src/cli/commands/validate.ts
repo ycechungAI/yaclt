@@ -16,6 +16,7 @@ export const ValidateCommand: CommandModule<{}, ValidateCommandOptions> = {
       logsDir: argv.logsDir,
       format: argv.format,
       changeTypes: argv.changeTypes,
+      requireIssueIds: argv.requireIssueIds,
     };
 
     runAction(() => ActionValidate(options));

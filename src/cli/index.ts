@@ -1,11 +1,14 @@
-import Helpers from "handlebars-helpers";
+import HandlebarsHelpers from "handlebars-helpers";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { NewCommand } from "./commands/new";
 import { PrepareReleaseCommand } from "./commands/prepare-release";
 import { ValidateCommand } from "./commands/validate";
+import { getConfig } from "./config-handler";
 
-Helpers();
+HandlebarsHelpers();
+
+const config = getConfig();
 
 export const RunCli = () =>
   yargs(hideBin(process.argv))
@@ -14,5 +17,6 @@ export const RunCli = () =>
     .command(ValidateCommand)
     .command(PrepareReleaseCommand)
     .demandCommand()
-    .strict()
+    .strictCommands()
+    .config(config)
     .parse();

@@ -9,6 +9,7 @@ import { ActionOptions } from "./action-options";
 
 export interface ActionValidateOptions extends ActionOptions {
   changeTypes: string[];
+  requireIssueIds: boolean;
 }
 
 export const ActionValidate = (options: ActionValidateOptions) => {
@@ -30,30 +31,32 @@ export const ActionValidate = (options: ActionValidateOptions) => {
   const patternTemplate = Handlebars.compile(
     options.format.replace(/[-[\]()*+?.,\\^$|#]/g, "\\$&")
   );
-  const patterns = options.changeTypes
-    .map(
-      (changeType: string) =>
-        patternTemplate({
-          [StringFormatParams.changeType]: changeType,
-          [StringFormatParams.message]: "(.*)",
-          [StringFormatParams.issueId]: "(.*)",
-        })
-          .replace(/{}/g, "\\$&")
-          .replace(/\s/g, "\\s*") // escape any remaining { } or whitespace characters for regex
-    )
-    .map((pattern: string) => new RegExp(`^${pattern}$`));
+  const pattern = patternTemplate({
+    [StringFormatParams.changeType]: `(${options.changeTypes.join("|")})`,
+    [StringFormatParams.message]: "(.*)",
+    [StringFormatParams.issueId]: "(.*)",
+  })
+    .replace(/{}/g, "\\$&")
+    .replace(/\s/g, "\\s*"); // escape any remaining { } or whitespace characters for regex
 
-  console.log(patterns);
+  const regex = new RegExp(`^${pattern}$`);
   for (const filePath of filePaths) {
     const lines = readLines(path.join(options.logsDir, filePath));
 
     for (const line of lines) {
-      if (!patterns.some((pattern: RegExp) => pattern.test(line))) {
+      if (!regex.test(line)) {
         console.error(
           `${Icons.error} Malformed changelog entry found in file ${filePath}: ${line}`
         );
 
         hasInvalidEntries = true;
+      }
+
+      if (options.requireIssueIds) {
+        const issueIdMatch = line.match(regex)?.[3];
+        if (!issueIdMatch) {
+          hasInvalidEntries = true;
+        }
       }
     }
   }
