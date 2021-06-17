@@ -1,5 +1,6 @@
 import fs from "fs";
 import { Options } from "yargs";
+import { StringFormatParams } from "../constants/string-format";
 
 const coerceFileArg =
   (options = { createIfNotExist: true }) =>
@@ -14,8 +15,17 @@ const coerceFileArg =
       }
     }
 
-    return fs.readFileSync(filePath);
+    return filePath;
   };
+
+export interface GlobalArgv {
+  logsDir: string;
+  branchFormat?: string;
+  changelogFile: string;
+  changeTypes: string[];
+  requireIssueIds: boolean;
+  format: string;
+}
 
 export const CliOptions: { [key: string]: Options } = {
   d: {
@@ -24,6 +34,15 @@ export const CliOptions: { [key: string]: Options } = {
     normalize: true,
     default: "changelogs/",
     describe: "The directory to find and place individual changelog entries",
+    global: true,
+  },
+  b: {
+    alias: "branchFormat",
+    type: "string",
+    describe:
+      "Regular expression with a capturing group to parse the issue ID out of your git branch. Implies --requireIssueIds and assumes that --format includes %issueid%",
+    implies: "i",
+    global: true,
   },
   c: {
     alias: "changelogFile",
@@ -32,23 +51,27 @@ export const CliOptions: { [key: string]: Options } = {
     default: "CHANGELOG.md",
     describe: "The name of the global changelog file to collect entries into",
     coerce: coerceFileArg({ createIfNotExist: true }),
+    global: true,
   },
   t: {
-    alias: "types",
+    alias: "changeTypes",
     type: "array",
     default: ["NEW", "IMPROVED", "FIXED"],
     describe: "The allowed change type tags",
+    global: true,
   },
-  i: {
+  r: {
     alias: "requireIssueIds",
     type: "boolean",
     default: true,
     describe: "Require issue IDs in changelog entries",
+    global: true,
   },
   f: {
     alias: "format",
     type: "string",
-    default: "[%type%] %message% {%issueid%}",
+    default: `[${StringFormatParams.changeType}] ${StringFormatParams.message} {#${StringFormatParams.issueId}}`,
     describe: "Changelog entry format",
+    global: true,
   },
 };
