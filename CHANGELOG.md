@@ -1,3 +1,10 @@
+# Release 0.2.1 - 2021-06-21
+
+## NEW
+
+- [NEW] Implement completions for fish shell {#28}
+
+---
 # Release 0.2.0 - 2021-06-21
 
 ## IMPROVED
