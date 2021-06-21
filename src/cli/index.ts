@@ -1,4 +1,5 @@
 import HandlebarsHelpers from "handlebars-helpers";
+import { CommandModule } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { CompletionFishCommand } from "./commands/completion-fish";
@@ -11,15 +12,21 @@ HandlebarsHelpers();
 
 const config = getConfig();
 
-export const RunCli = () =>
-  yargs(hideBin(process.argv))
-    .scriptName("yaclt")
-    .command(NewCommand)
-    .command(ValidateCommand)
-    .command(PrepareReleaseCommand)
-    .command(CompletionFishCommand)
-    .completion()
-    .demandCommand()
-    .strictCommands()
-    .config(config)
-    .parse();
+export const AllCommands: CommandModule<any, any>[] = [
+  NewCommand,
+  ValidateCommand,
+  PrepareReleaseCommand,
+  CompletionFishCommand,
+];
+
+export const BuildCli = () => {
+  const cli = yargs(hideBin(process.argv)).scriptName("yaclt");
+
+  for (const command of AllCommands) {
+    cli.command(command);
+  }
+
+  cli.completion().demandCommand().strictCommands().config(config);
+
+  return cli;
+};
