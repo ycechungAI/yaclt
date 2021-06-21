@@ -42,25 +42,50 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
   const fileNames = fs.readdirSync(options.logsDir);
 
   const entryGroups: EntryGroup[] = [];
-  const changeTypePattern = options.format.replace(
-    new RegExp(`{{\s*${StringFormatParams.changeType}\s*}}`, "g"),
-    "(.*)"
-  );
-  const changeTypeRegex = new RegExp(changeTypePattern);
+  const changeTypeTemplatePattern = /\{\{\s*changeType\s*\}\}/;
+  const hasChangeType = changeTypeTemplatePattern.test(options.format);
+  const indexOfChangeType = options.format.search(changeTypeTemplatePattern);
+  const changeTypeHandlebars = hasChangeType
+    ? options.format.substring(
+        Math.max(0, indexOfChangeType - 2),
+        Math.min(
+          options.format.length,
+          indexOfChangeType +
+            StringFormatParams.changeType.length +
+            Math.max(
+              options.format
+                .slice(indexOfChangeType + StringFormatParams.changeType.length)
+                .indexOf("}}") + 3,
+              0
+            )
+        )
+      )
+    : "UNCATEGORIZED";
+  const changeTypeCompiledTemplate = Handlebars.compile(changeTypeHandlebars);
 
   for (const fileName of fileNames) {
     const filePath = path.join(options.logsDir, fileName);
     const lines = readLines(filePath);
 
     for (const line of lines) {
-      const changeType = line.match(changeTypeRegex)?.[1] ?? "Uncategorized";
+      let lineChangeType: string | undefined;
+      options.changeTypes.forEach((changeType: string) => {
+        if (line.includes(changeTypeCompiledTemplate({ changeType }))) {
+          lineChangeType = changeType;
+        }
+      });
+
+      if (!lineChangeType) {
+        throw new Error(`unable to parse change type`);
+      }
+
       const existingGroup = entryGroups.find(
-        (group: EntryGroup) => group.label === changeType
+        (group: EntryGroup) => group.label === lineChangeType
       );
       if (existingGroup) {
         existingGroup.items.push(line);
       } else {
-        entryGroups.push({ label: changeType, items: [line] });
+        entryGroups.push({ label: lineChangeType, items: [line] });
       }
     }
   }

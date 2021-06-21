@@ -1,12 +1,12 @@
 {
   "name": "yaclt",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Yet Another Change Log Tool",
   "main": "index.js",
   "bin": "dist/index.js",
   "scripts": {
     "install-hooks": "husky install",
-    "build": "tsc --project tsconfig.json",
+    "build": "rm -rf dist/ && tsc --project tsconfig.json && ./shebangify.js ./dist/index.js && chmod +x ./dist/index.js",
     "clean": "rm -rf dist/"
   },
   "repository": {
