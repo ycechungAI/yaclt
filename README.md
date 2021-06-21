@@ -12,3 +12,9 @@ What is `yaclt`? It's <ins>**Y**</ins>et <ins>**A**</ins>nother <ins>**C**</ins>
 The changelog entry format and the global changelog file template are both [Handlebars](https://handlebarsjs.com) templates, and you can use the extra helpers from [`handlebars-helpers`](https://github.com/helpers/handlebars-helpers).
 
 Help for each command can be found by running the command with the `--help` argument.
+
+## Handlebars Variables
+
+- `changeType` - the change type for the entry, e.g. `NEW`, `IMPROVED`, `FIXED`, or custom ones you've configured. This is required.
+- `message` - the change log entry message. This is required.
+- `issueId` - the issue ID. This is optional based on your config.
