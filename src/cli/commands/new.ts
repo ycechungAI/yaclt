@@ -37,26 +37,30 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
     ...CliOptions,
   },
   handler: (argv: Arguments<NewCommandOptions>) => {
-    if (
-      argv.changeType &&
-      !argv.changeTypes.find((t: string) => t === argv.changeType)
-    ) {
-      const message = `Invalid change type: ${argv.changeType}`;
-      console.error(message);
-      yargs.exit(1, new Error(message));
-      return;
-    }
+    runAction(() => {
+      if (
+        argv.changeType &&
+        !argv.changeTypes.find((t: string) => t === argv.changeType)
+      ) {
+        const message = `Invalid change type: ${argv.changeType}`;
+        console.error(message);
+        yargs.exit(1, new Error(message));
+        return;
+      }
 
-    const options: ActionNewOptions = {
-      logsDir: argv.logsDir,
-      format: argv.format,
-      changeType:
-        argv.changeType ?? argv.changeTypes[0] ?? StringFormatParams.changeType,
-      issueId: argv.issueId,
-      gitBranchFormat: argv.branchFormat,
-      message: argv.message,
-    };
+      const options: ActionNewOptions = {
+        logsDir: argv.logsDir,
+        format: argv.format,
+        changeType:
+          argv.changeType ??
+          argv.changeTypes[0] ??
+          StringFormatParams.changeType,
+        issueId: argv.issueId,
+        gitBranchFormat: argv.branchFormat,
+        message: argv.message,
+      };
 
-    runAction(() => ActionNew(options));
+      ActionNew(options);
+    });
   },
 };

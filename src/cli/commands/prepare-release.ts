@@ -4,6 +4,7 @@ import {
   ActionPrepareRelease,
   ActionPrepareReleaseOptions,
 } from "../../actions/prepare-release";
+import { runAction } from "../../utils/run-action";
 import { CliOptions, GlobalArgv } from "../options";
 
 export interface PrepareReleaseCommandOptions extends GlobalArgv {
@@ -62,6 +63,6 @@ export const PrepareReleaseCommand: CommandModule<
       template,
     };
 
-    ActionPrepareRelease(options);
+    runAction(() => ActionPrepareRelease(options));
   },
 };

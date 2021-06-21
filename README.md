@@ -18,3 +18,10 @@ Help for each command can be found by running the command with the `--help` argu
 - `changeType` - the change type for the entry, e.g. `NEW`, `IMPROVED`, `FIXED`, or custom ones you've configured. This is required.
 - `message` - the change log entry message. This is required.
 - `issueId` - the issue ID. This is optional based on your config.
+
+## Configuration
+
+All command line flags and arguments can be specified in a configuration file. Supported file names are `yacltrc.yml`, `yacltrc.yaml`, `yacltrc.json`, and `yacltrc.js` (`.js` config must use `module.exports =`).
+
+If the working directory is inside a git repository, the tree will be traversed to the git root, using the first valid configuration file that is found. If no configuration file is found in the repo,
+it will also check, in order of precedence, `$YACLT_CONFIG_HOME/`, `$XDG_CONFIG_HOME/yaclt/`, `$HOME/.config/yaclt/` for global configuration files.
