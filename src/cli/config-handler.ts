@@ -50,8 +50,12 @@ export const getConfig = (): Record<string, any> => {
     // look for global config file
     const configHome =
       process.env["YACLT_CONFIG_HOME"] ||
-      process.env["XDG_CONFIG_HOME"] ||
-      `${os.homedir()}/.config/yaclt`;
+      path.join(
+        `${
+          process.env["XDG_CONFIG_HOME"] || path.join(os.homedir(), ".config/")
+        }`,
+        "yaclt"
+      );
     for (const filename of supportedConfigFilenames) {
       const globalConfigPath = path.join(configHome, filename);
       if (fs.existsSync(globalConfigPath)) {
