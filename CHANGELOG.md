@@ -1,3 +1,10 @@
+# Release 0.3.0 - 2021-06-21
+
+## NEW
+
+- [NEW] Add support for global config files {#32}
+
+---
 # Release 0.2.1 - 2021-06-21
 
 ## NEW
