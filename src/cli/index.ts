@@ -16,6 +16,7 @@ export const RunCli = () =>
     .command(NewCommand)
     .command(ValidateCommand)
     .command(PrepareReleaseCommand)
+    .completion()
     .demandCommand()
     .strictCommands()
     .config(config)
