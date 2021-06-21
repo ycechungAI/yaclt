@@ -61,7 +61,6 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
         )
       )
     : "UNCATEGORIZED";
-  console.log(changeTypeHandlebars);
   const changeTypeCompiledTemplate = Handlebars.compile(changeTypeHandlebars);
 
   for (const fileName of fileNames) {
