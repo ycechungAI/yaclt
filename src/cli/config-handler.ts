@@ -16,8 +16,6 @@ export const getConfig = (): Record<string, any> => {
     return {};
   }
 
-  console.log(`${Icons.info} Found config file at ${configPath}`);
-
   const configContents = fs.readFileSync(configPath).toString();
   if (configPath.endsWith("json")) {
     return JSON.parse(configContents);
