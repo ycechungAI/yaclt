@@ -1,4 +1,12 @@
-# Release 0.3.0 - 2021-06-22
+# Release 0.4.0 - 2021-06-22
+
+## FIXED
+
+- [FIXED] Abort prepare-release if changelogs are invalid {#35}
+
+## NEW
+
+- [NEW] Add automated documentation generation {#31}
 
 ---
 
