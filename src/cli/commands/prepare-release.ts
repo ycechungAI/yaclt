@@ -6,10 +6,12 @@ import {
 } from "../../actions/prepare-release";
 import { runAction } from "../../utils/run-action";
 import { CliOptions, GlobalArgv } from "../options";
+import { ValidationPatternOption } from "./validate";
 
 export interface PrepareReleaseCommandOptions extends GlobalArgv {
   changelogTemplate: string;
   releaseNumber: string | (() => string);
+  validationPattern: string;
 }
 
 export const PrepareReleaseCommand: CommandModule<
@@ -20,6 +22,7 @@ export const PrepareReleaseCommand: CommandModule<
   describe:
     "Gather the changelogs from --logsDir and compile them into --changelogFile using --changelogTemplate",
   builder: {
+    ...ValidationPatternOption,
     a: {
       alias: "changelogTemplate",
       type: "string",
@@ -58,7 +61,7 @@ export const PrepareReleaseCommand: CommandModule<
       changelogFile: argv.changelogFile,
       logsDir: argv.logsDir,
       format: argv.format,
-      requireIssueIds: argv.requireIssueIds,
+      validationPattern: argv.validationPattern,
       releaseNumber,
       template,
     };

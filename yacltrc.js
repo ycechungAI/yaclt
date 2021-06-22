@@ -1,7 +1,5 @@
-const execSync = require("child_process").execSync;
-
 module.exports = {
   branchFormat: "[a-zA-Z]/([0-9]+)-.*",
-  requireIssueIds: true,
+  validationPattern: "\\[.*\\]\\s+.*\\s{#[\\d]+}",
   releaseNumber: () => require("./package.json").version.toString(),
 };
