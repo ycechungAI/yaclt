@@ -7,7 +7,9 @@
   "scripts": {
     "install-hooks": "husky install",
     "build": "rm -rf dist/ && tsc --project tsconfig.json && ./shebangify.js ./dist/index.js && chmod +x ./dist/index.js",
-    "clean": "rm -rf dist/"
+    "clean": "rm -rf dist/",
+    "gen-docs": "yarn build && ./dist/index.js gen-docs && git add COMMANDS.md",
+    "prettier": "pretty-quick --staged"
   },
   "repository": {
     "type": "git",
@@ -41,7 +43,6 @@
     "@types/moment": "^2.13.0",
     "@types/node": "^15.12.2",
     "@types/yargs": "^17.0.0",
-    "husky": "^6.0.0",
     "pinst": "^2.1.6",
     "prettier": "^2.3.1",
     "pretty-quick": "^3.1.0",
@@ -52,13 +53,9 @@
     "fs-extra": "^10.0.0",
     "handlebars": "^4.7.7",
     "handlebars-helpers": "^0.10.0",
+    "husky": "^6.0.0",
     "js-yaml": "^4.1.0",
     "moment": "^2.29.1",
     "yargs": "^17.0.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
   }
 }
