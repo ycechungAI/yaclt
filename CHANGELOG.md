@@ -1,3 +1,11 @@
+# Release 0.4.2 - 2021-06-22
+
+## NEW
+
+- [NEW] Add required --validationPattern argument for validate and prepare-release commands {#45}
+
+---
+
 # Release 0.4.1 - 2021-06-22
 
 ## FIXED
