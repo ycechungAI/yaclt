@@ -1,6 +1,6 @@
 import moment from "moment";
-import { RunCli } from "./cli";
+import { BuildCli } from "./cli";
 
 moment.suppressDeprecationWarnings = true;
 
-RunCli();
+BuildCli().parse();

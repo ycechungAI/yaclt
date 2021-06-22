@@ -11,13 +11,24 @@ What is `yaclt`? It's <ins>**Y**</ins>et <ins>**A**</ins>nother <ins>**C**</ins>
 
 The changelog entry format and the global changelog file template are both [Handlebars](https://handlebarsjs.com) templates, and you can use the extra helpers from [`handlebars-helpers`](https://github.com/helpers/handlebars-helpers).
 
-Help for each command can be found by running the command with the `--help` argument.
+Help for each command can be found in [COMMANDS.md](./COMMANDS.md) or by running the command with the `--help` argument.
 
 ## Handlebars Variables
 
-- `changeType` - the change type for the entry, e.g. `NEW`, `IMPROVED`, `FIXED`, or custom ones you've configured. This is required.
-- `message` - the change log entry message. This is required.
-- `issueId` - the issue ID. This is optional based on your config.
+### Individual Changelog Entry Template
+
+| Name         | Description                                                                                       | Required                                  |
+| ------------ | ------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `changeType` | the change type for the entry, e.g. `NEW`, `IMPROVED`, `FIXED`, or custom ones you've configured. | `true`                                    |
+| `message`    | the change log entry message.                                                                     | `true`                                    |
+| `issueId`    | the issue ID. This is optional based on your config.                                              | `false` if `--requireIssueIds` is `false` |
+
+### Global Changelog Template
+
+| Name            | Description                                                                                                                                                        | Required |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `releaseNumber` | The release number or label, specified by `--releaseNumber` flag or from configuration file                                                                        | `true`   |
+| `entryGroups`   | An array of objects with the interface `{ label: string; items: string[]; }` where `label` is the change type and `items` is all the entries with that change type | `true`   |
 
 ## Configuration
 
@@ -25,3 +36,12 @@ All command line flags and arguments can be specified in a configuration file. S
 
 If the working directory is inside a git repository, the tree will be traversed to the git root, using the first valid configuration file that is found. If no configuration file is found in the repo,
 it will also check, in order of precedence, `$YACLT_CONFIG_HOME/`, `$XDG_CONFIG_HOME/yaclt/`, `$HOME/.config/yaclt/` for global configuration files.
+
+If using a Javascript configuration file, the `releaseNumber` property may be a function which returns the releaes number as a string. This can be useful for parsing release numbers from git tags or the version number from a `package.json` file.
+
+## Contributing
+
+- Use `yarn`, not `npm`
+- All code must be strongly-typed TypeScript (the exception being the `yacltrc.js` used in this repo)
+- Before making any commits, make sure to run `yarn install-hooks` to install the Husky git hooks
+- Each pull request must include a changelog entry generated via `yaclt new`
