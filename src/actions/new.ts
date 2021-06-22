@@ -1,6 +1,7 @@
 import { execSync } from "child_process";
 import fs from "fs";
 import Handlebars from "handlebars";
+import moment from "moment";
 import path from "path";
 import { Icons } from "../utils/icons";
 import { toValidFilename } from "../utils/path-utils";
@@ -17,12 +18,7 @@ export interface ActionNewOptions extends ActionOptions {
 export const ActionNew = (options: ActionNewOptions) => {
   const ouputPath = path.join(
     options.logsDir,
-    toValidFilename(
-      `${new Date()
-        .toISOString()
-        .replace(".", "-")
-        .replace(/[a-zA-Z]/g, "")}.md`
-    )
+    toValidFilename(`${moment().format("YYYY-MM-DD_HH-mm-ss")}.md`)
   );
 
   let issueId: string | undefined;
