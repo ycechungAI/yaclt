@@ -12,17 +12,17 @@ export interface ActionValidateOptions extends ActionOptions {
   requireIssueIds: boolean;
 }
 
-export const ActionValidate = (options: ActionValidateOptions) => {
+export const ActionValidate = (options: ActionValidateOptions): boolean => {
   const noneFoundWarning = `${Icons.warning} No changelog entries found in ${options.logsDir}`;
   if (!fs.existsSync(options.logsDir)) {
     console.warn(noneFoundWarning);
-    return;
+    return false;
   }
 
   const filePaths = fs.readdirSync(options.logsDir);
   if (filePaths.length === 0) {
     console.warn(noneFoundWarning);
-    return;
+    return false;
   }
 
   let hasInvalidEntries = false;
@@ -64,8 +64,9 @@ export const ActionValidate = (options: ActionValidateOptions) => {
   if (hasInvalidEntries) {
     const message = `${Icons.error} Malformed changelog entries found.`;
     yargs.exit(1, new Error(message));
-    return;
+    return false;
   }
 
   console.log(`${Icons.success} All changelog entries formatted correctly!`);
+  return true;
 };

@@ -25,12 +25,17 @@ export interface EntryGroup {
 export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
   touchFile(options.changelogFile);
 
-  ActionValidate({
+  const valid = ActionValidate({
     logsDir: options.logsDir,
     format: options.format,
     changeTypes: options.changeTypes,
     requireIssueIds: options.requireIssueIds,
   });
+
+  if (!valid) {
+    yargs.exit(1, new Error());
+    process.exit(1);
+  }
 
   if (!fs.existsSync(options.logsDir)) {
     const message = `${Icons.error} Cannot prepare a release because no changelogs were found in ${options.logsDir}`;
