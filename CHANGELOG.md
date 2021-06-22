@@ -1,3 +1,11 @@
+# Release 0.4.1 - 2021-06-22
+
+## FIXED
+
+- [FIXED] Fix new entry filename format timestamp to be YYYY-MM-DD_HH-mm-ss.md {#43}
+
+---
+
 # Release 0.4.0 - 2021-06-22
 
 ## FIXED
