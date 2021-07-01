@@ -1,6 +1,5 @@
-import { execSync } from "child_process";
+import { execSync, spawnSync } from "child_process";
 import fs from "fs";
-import fsExtra from "fs-extra";
 import Handlebars from "handlebars";
 import path from "path";
 import yargs from "yargs";
@@ -99,7 +98,15 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
   const existingContents = fs.readFileSync(options.changelogFile).toString();
   const newContents = `${changelogAddition}\n${existingContents}`;
   fs.writeFileSync(options.changelogFile, newContents);
-  fsExtra.emptyDirSync(options.logsDir);
+
+  // remove all markdown files in logsDir via globbing pattern
+  let globbingPattern = options.logsDir;
+  if (!globbingPattern.endsWith("/")) {
+    globbingPattern = `${globbingPattern}/`;
+  }
+  globbingPattern = `${globbingPattern}**.md`;
+  spawnSync("rm", [globbingPattern]);
+
   console.log(
     `${Icons.success} ${options.changelogFile} updated! Be sure to review the changes before comitting.`
   );
