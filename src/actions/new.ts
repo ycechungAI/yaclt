@@ -50,7 +50,7 @@ export const ActionNew = (options: ActionNewOptions) => {
     `${Icons.success} Changelog entry placeholder generated at ${outputPath}!`
   );
 
-  if (process.env["EDITOR"]) {
+  if (process.env["EDITOR"] && options.edit) {
     spawn(process.env["EDITOR"], [outputPath], { stdio: "inherit" });
   }
 };
