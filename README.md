@@ -19,9 +19,9 @@ Help for each command can be found in [COMMANDS.md](./COMMANDS.md) or by running
 
 | Name         | Description                                                                                       | Required                                  |
 | ------------ | ------------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| `changeType` | the change type for the entry, e.g. `NEW`, `IMPROVED`, `FIXED`, or custom ones you've configured. | `true`                                    |
-| `message`    | the change log entry message.                                                                     | `true`                                    |
-| `issueId`    | the issue ID. This is optional based on your config.                                              | `false` if `--requireIssueIds` is `false` |
+| `changeType` | The change type for the entry, e.g. `NEW`, `IMPROVED`, `FIXED`, or custom ones you've configured. | `true`                                    |
+| `message`    | The change log entry message.                                                                     | `true`                                    |
+| `issueId`    | The issue ID. This is optional based on your config.                                              | `false` if `--requireIssueIds` is `false` |
 
 ### Global Changelog Template
 
@@ -29,6 +29,12 @@ Help for each command can be found in [COMMANDS.md](./COMMANDS.md) or by running
 | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
 | `releaseNumber` | The release number or label, specified by `--releaseNumber` flag or from configuration file                                                                        | `true`   |
 | `entryGroups`   | An array of objects with the interface `{ label: string; items: string[]; }` where `label` is the change type and `items` is all the entries with that change type | `true`   |
+
+### Release Branch Pattern
+
+| Name            | Description                                                                                 | Required |
+| --------------- | ------------------------------------------------------------------------------------------- | -------- |
+| `releaseNumber` | The release number or label, specified by `--releaseNumber` flag or from configuration file | `true`   |
 
 ## Configuration
 

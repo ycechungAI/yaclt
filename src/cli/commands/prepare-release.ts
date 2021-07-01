@@ -12,6 +12,7 @@ export interface PrepareReleaseCommandOptions extends GlobalArgv {
   changelogTemplate: string;
   releaseNumber: string | (() => string);
   validationPattern: string;
+  releaseBranchPattern?: string;
 }
 
 export const PrepareReleaseCommand: CommandModule<
@@ -36,6 +37,13 @@ export const PrepareReleaseCommand: CommandModule<
       type: "string",
       describe: "A label for the release",
       required: true,
+    },
+    o: {
+      alias: "releaseBranchPattern",
+      type: "string",
+      describe:
+        "A pattern to generate a release branch name which will be automatically checked out before preparing the release.",
+      required: false,
     },
     ...CliOptions,
   },
@@ -62,6 +70,7 @@ export const PrepareReleaseCommand: CommandModule<
       logsDir: argv.logsDir,
       format: argv.format,
       validationPattern: argv.validationPattern,
+      releaseBranchPattern: argv.releaseBranchPattern,
       releaseNumber,
       template,
     };
