@@ -1,3 +1,15 @@
+# Release 0.5.0 - 2021-07-01
+
+## FIXED
+
+- [FIXED] Add newline to end of default CHANGELOG.md template {#47}
+
+## NEW
+
+- [NEW] Add option to automatically checkout new branch during release {#37}
+
+---
+
 # Release 0.4.2 - 2021-06-22
 
 ## NEW
