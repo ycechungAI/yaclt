@@ -1,3 +1,11 @@
+# Release 0.5.2 - 2021-07-01
+
+## NEW
+
+- [NEW] Remove changelog entries via globbing pattern {#54}
+
+---
+
 # Release 0.5.1 - 2021-07-01
 
 ## NEW
