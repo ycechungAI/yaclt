@@ -1,3 +1,4 @@
+import { execSync } from "child_process";
 import fs from "fs";
 import fsExtra from "fs-extra";
 import Handlebars from "handlebars";
@@ -15,6 +16,7 @@ export interface ActionPrepareReleaseOptions extends ActionOptions {
   template: string;
   changeTypes: string[];
   validationPattern: string;
+  releaseBranchPattern?: string;
 }
 
 export interface EntryGroup {
@@ -42,6 +44,19 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
     console.error(message);
     yargs.exit(1, new Error(message));
     return;
+  }
+
+  if (options.releaseBranchPattern) {
+    const branchTemplate = Handlebars.compile(options.releaseBranchPattern);
+    const branchName = branchTemplate({ releaseNumber: options.releaseNumber });
+    try {
+      execSync(`git checkout -b ${branchName}`);
+    } catch (_) {
+      const message = `${Icons.error} Failed to checkout release branch: ${branchName}`;
+      console.error(message);
+      yargs.exit(1, new Error(message));
+      return;
+    }
   }
 
   const fileNames = fs.readdirSync(options.logsDir);
