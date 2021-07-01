@@ -1,3 +1,11 @@
+# Release 0.5.1 - 2021-07-01
+
+## NEW
+
+- [NEW] Add flag --edit to open $EDITOR if defined {#51}
+
+---
+
 # Release 0.5.0 - 2021-07-01
 
 ## FIXED
