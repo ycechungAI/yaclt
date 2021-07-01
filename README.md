@@ -13,6 +13,10 @@ The changelog entry format and the global changelog file template are both [Hand
 
 Help for each command can be found in [COMMANDS.md](./COMMANDS.md) or by running the command with the `--help` argument.
 
+## Dependencies
+
+`yaclt` requires that `git` exists on your `$PATH` and that `node` 12+ is installed.
+
 ## Handlebars Variables
 
 ### Individual Changelog Entry Template
