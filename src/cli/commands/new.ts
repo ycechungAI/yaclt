@@ -8,6 +8,7 @@ export interface NewCommandOptions extends GlobalArgv {
   issueId?: string;
   message?: string;
   changeType?: string;
+  edit?: boolean;
 }
 
 export const NewCommand: CommandModule<{}, NewCommandOptions> = {
@@ -34,6 +35,14 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
       type: "string",
       required: false,
     },
+    o: {
+      alias: "edit",
+      describe:
+        "After generating the changelog file, open it in $EDITOR, if $EDITOR is defined.",
+      type: "boolean",
+      default: false,
+      required: false,
+    },
     ...CliOptions,
   },
   handler: (argv: Arguments<NewCommandOptions>) => {
@@ -58,6 +67,7 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
         issueId: argv.issueId,
         gitBranchFormat: argv.branchFormat,
         message: argv.message,
+        edit: argv.edit ?? false,
       };
 
       ActionNew(options);

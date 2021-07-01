@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { execSync, spawn } from "child_process";
 import fs from "fs";
 import Handlebars from "handlebars";
 import moment from "moment";
@@ -13,10 +13,11 @@ export interface ActionNewOptions extends ActionOptions {
   issueId?: string;
   gitBranchFormat?: string;
   message?: string;
+  edit: boolean;
 }
 
 export const ActionNew = (options: ActionNewOptions) => {
-  const ouputPath = path.join(
+  const outputPath = path.join(
     options.logsDir,
     toValidFilename(`${moment().format("YYYY-MM-DD_HH-mm-ss")}.md`)
   );
@@ -44,8 +45,12 @@ export const ActionNew = (options: ActionNewOptions) => {
     fs.mkdirSync(options.logsDir);
   }
 
-  fs.writeFileSync(ouputPath, entryText);
+  fs.writeFileSync(outputPath, entryText);
   console.log(
-    `${Icons.success} Changelog entry placeholder generated at ${ouputPath}!`
+    `${Icons.success} Changelog entry placeholder generated at ${outputPath}!`
   );
+
+  if (process.env["EDITOR"]) {
+    spawn(process.env["EDITOR"], [outputPath], { stdio: "inherit" });
+  }
 };
