@@ -2,5 +2,9 @@
 const fs = require("fs");
 const path = process.argv[2];
 let data = "#!/usr/bin/env node\n\n";
-data += fs.readFileSync(path);
+const fileData = fs.readFileSync(path).toString();
+if (fileData.includes("#!/usr/bin/env node")) {
+  return;
+}
+data += fileData;
 fs.writeFileSync(path, data);

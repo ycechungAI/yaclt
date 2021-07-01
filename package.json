@@ -6,7 +6,7 @@
   "bin": "dist/index.js",
   "scripts": {
     "install-hooks": "husky install",
-    "build": "rm -rf dist/ && tsc --project tsconfig.json && ./shebangify.js ./dist/index.js && chmod +x ./dist/index.js",
+    "build": "tsc --project tsconfig.json && ./shebangify.js ./dist/index.js && chmod +x ./dist/index.js",
     "clean": "rm -rf dist/",
     "gen-docs": "yarn build && ./dist/index.js gen-docs && git add COMMANDS.md",
     "prettier": "pretty-quick --staged"
