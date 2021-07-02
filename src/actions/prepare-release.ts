@@ -1,4 +1,4 @@
-import { execSync, spawnSync } from "child_process";
+import { execSync } from "child_process";
 import fs from "fs";
 import Handlebars from "handlebars";
 import path from "path";
@@ -99,13 +99,10 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
   const newContents = `${changelogAddition}\n${existingContents}`;
   fs.writeFileSync(options.changelogFile, newContents);
 
-  // remove all markdown files in logsDir via globbing pattern
-  let globbingPattern = options.logsDir;
-  if (!globbingPattern.endsWith("/")) {
-    globbingPattern = `${globbingPattern}/`;
-  }
-  globbingPattern = `${globbingPattern}**.md`;
-  spawnSync("rm", [globbingPattern]);
+  // remove all markdown files in logsDir
+  fs.readdirSync(options.logsDir)
+    .filter((fileName: string) => fileName.endsWith(".md"))
+    .map((file: string) => fs.unlinkSync(path.join(options.logsDir, file)));
 
   console.log(
     `${Icons.success} ${options.changelogFile} updated! Be sure to review the changes before comitting.`
