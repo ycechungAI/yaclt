@@ -1,3 +1,15 @@
+# Release 0.5.2 - 2021-07-02
+
+## NEW
+
+- [NEW] Add script to automate releases {#39}
+
+## FIXED
+
+- [FIXED] Fix removal of individual entries {#58}
+
+---
+
 # Release 0.5.2 - 2021-07-01
 
 ## NEW
