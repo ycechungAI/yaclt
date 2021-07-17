@@ -93,7 +93,7 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
     entryGroups,
   };
 
-  const template = Handlebars.compile(options.template);
+  const template = Handlebars.compile(options.template, { noEscape: true });
   const changelogAddition = template(handlebarsContext);
   const existingContents = fs.readFileSync(options.changelogFile).toString();
   const newContents = `${changelogAddition}\n${existingContents}`;
