@@ -1,3 +1,11 @@
+# Release 0.5.3 - 2021-07-23
+
+## FIXED
+
+- [FIXED] Add linebreaks to default template to fix spacing issues in MD {#61}
+
+---
+
 # Release 0.5.3 - 2021-07-22
 
 ## FIXED
