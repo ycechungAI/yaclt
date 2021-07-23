@@ -8,6 +8,7 @@ import { NewCommand } from "./commands/new";
 import { PrepareReleaseCommand } from "./commands/prepare-release";
 import { ValidateCommand } from "./commands/validate";
 import { getConfig } from "./config-handler";
+import { callFunctionArgs } from "./middleware/call-function-args";
 
 HandlebarsHelpers();
 
@@ -23,6 +24,9 @@ export const AllCommands: CommandModule<any, any>[] = [
 
 export const BuildCli = () => {
   const cli = yargs(hideBin(process.argv)).scriptName("yaclt");
+
+  // register middlewares
+  cli.middleware(callFunctionArgs);
 
   for (const command of AllCommands) {
     cli.command(command);
