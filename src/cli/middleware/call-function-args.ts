@@ -16,4 +16,6 @@ export function callFunctionArgs(argv: Record<string, any>) {
       }
     }
   }
+
+  return argv;
 }
