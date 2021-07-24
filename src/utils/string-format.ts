@@ -1,4 +1,4 @@
-import Handlebars from "handlebars";
+import { compile } from "../utils/template-utils";
 
 export const StringFormatParams = {
   changeType: "changeType",
@@ -27,6 +27,6 @@ export const formatToChangeTypeRegex = (format: string) => {
         )
       )
     : "UNCATEGORIZED";
-  const changeTypeCompiledTemplate = Handlebars.compile(changeTypeHandlebars);
+  const changeTypeCompiledTemplate = compile(changeTypeHandlebars);
   return changeTypeCompiledTemplate;
 };

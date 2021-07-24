@@ -1,21 +1,3 @@
-# Release 0.5.3 - 2021-07-23
-
-## FIXED
-
-- [FIXED] Add linebreaks to default template to fix spacing issues in MD {#61}
-
----
-
-# Release 0.5.3 - 2021-07-22
-
-## FIXED
-
-- [FIXED] Fix changelog template and remove HTML escaped characters {#61}
-
----
-
-&nbsp;
-
 # Release 0.5.2 - 2021-07-02
 
 ## NEW
