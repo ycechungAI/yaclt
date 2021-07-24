@@ -5,7 +5,7 @@ import path from "path";
 import { Icons } from "../utils/icons";
 import { toValidFilename } from "../utils/path-utils";
 import { StringFormatParams } from "../utils/string-format";
-import { compile } from "../utils/template-utils";
+import { compileTemplate } from "../utils/template-utils";
 import { ActionOptions } from "./action-options";
 
 export interface ActionNewOptions extends ActionOptions {
@@ -33,7 +33,7 @@ export const ActionNew = (options: ActionNewOptions) => {
     }
   }
 
-  const template = compile(options.format);
+  const template = compileTemplate(options.format);
   const entryText = template({
     [StringFormatParams.changeType]: options.changeType,
     [StringFormatParams.message]:

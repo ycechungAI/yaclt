@@ -13,7 +13,7 @@ interface CompileOptions {
   explicitPartialContext?: boolean;
 }
 
-export function compile(template: string, options?: CompileOptions) {
+export function compileTemplate(template: string, options?: CompileOptions) {
   const optionsWithDefaults = Object.assign({ noEscape: true }, options);
   return Handlebars.compile(template, optionsWithDefaults);
 }

@@ -5,7 +5,7 @@ import yargs from "yargs";
 import { readLines, touchFile } from "../utils/file-utils";
 import { Icons } from "../utils/icons";
 import { formatToChangeTypeRegex } from "../utils/string-format";
-import { compile } from "../utils/template-utils";
+import { compileTemplate } from "../utils/template-utils";
 import { ActionOptions } from "./action-options";
 import { ActionValidate } from "./validate";
 
@@ -46,7 +46,7 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
   }
 
   if (options.releaseBranchPattern) {
-    const branchTemplate = compile(options.releaseBranchPattern);
+    const branchTemplate = compileTemplate(options.releaseBranchPattern);
     const branchName = branchTemplate({ releaseNumber: options.releaseNumber });
     try {
       execSync(`git checkout -b ${branchName}`);
@@ -93,7 +93,7 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
     entryGroups,
   };
 
-  const template = compile(options.template);
+  const template = compileTemplate(options.template);
   const changelogAddition = template(handlebarsContext);
   const existingContents = fs.readFileSync(options.changelogFile).toString();
   const newContents = `${changelogAddition}\n${existingContents}`;
