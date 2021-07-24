@@ -18,3 +18,20 @@ export const touchFile = (filePath: string): void => {
     fs.closeSync(fs.openSync(filePath, "w"));
   }
 };
+
+export const isFilepath = (subject: string): boolean => {
+  try {
+    fs.accessSync(subject);
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+export const pathIsFile = (filePath: string): boolean => {
+  try {
+    return fs.statSync(filePath).isFile();
+  } catch {
+    return false;
+  }
+};
