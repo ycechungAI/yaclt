@@ -14,6 +14,6 @@ interface CompileOptions {
 }
 
 export function compileTemplate(template: string, options?: CompileOptions) {
-  const optionsWithDefaults = Object.assign({ noEscape: true }, options);
-  return Handlebars.compile(template, optionsWithDefaults);
+  options = { noEscape: true, ...options };
+  return Handlebars.compile(template, options);
 }
