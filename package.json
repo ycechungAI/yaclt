@@ -5,7 +5,7 @@
   "main": "index.js",
   "bin": "dist/index.js",
   "scripts": {
-    "install-hooks": "husky install",
+    "postinstall": "husky install",
     "build": "tsc --project tsconfig.json && ./shebangify.js ./dist/index.js && chmod +x ./dist/index.js",
     "clean": "rm -rf dist/",
     "gen-docs": "yarn build && ./dist/index.js gen-docs && git add COMMANDS.md",
@@ -36,7 +36,6 @@
   "homepage": "https://github.com/mrjones2014/yaclt#readme",
   "devDependencies": {
     "@types/find-up": "^4.0.0",
-    "@types/fs-extra": "^9.0.11",
     "@types/handlebars": "^4.1.0",
     "@types/handlebars-helpers": "^0.5.2",
     "@types/js-yaml": "^4.0.1",
