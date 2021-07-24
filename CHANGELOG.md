@@ -1,3 +1,11 @@
+# Release 0.6.1 - 2021-07-24
+
+## IMPROVED
+
+- [IMPROVED] Add documentation to README.md about features added in 0.6.0 {#68}
+
+---
+
 # Release 0.6.0 - 2021-07-24
 
 ## NEW
