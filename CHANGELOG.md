@@ -1,3 +1,11 @@
+# Release 0.6.2 - 2021-07-24
+
+## IMPROVED
+
+- [IMPROVED] Remove unused dependency and add postinstall script for husky install {#70}
+
+---
+
 # Release 0.6.1 - 2021-07-24
 
 ## IMPROVED
