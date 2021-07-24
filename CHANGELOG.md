@@ -1,3 +1,17 @@
+# Release 0.6.0 - 2021-07-24
+
+## NEW
+
+- [NEW] Allow any CLI option to be a function {#62}
+- [NEW] Add a new util function to handle compiling markdown templates {#61}
+- [NEW] Add middleware to allow Handlebars template options to be filepaths to read from {#64}
+
+## FIXED
+
+- [FIXED] Fix breaklines for changelog MD files {#61}
+
+---
+
 # Release 0.5.2 - 2021-07-02
 
 ## NEW
