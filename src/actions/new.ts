@@ -1,11 +1,11 @@
 import { execSync, spawn } from "child_process";
 import fs from "fs";
-import Handlebars from "handlebars";
 import moment from "moment";
 import path from "path";
 import { Icons } from "../utils/icons";
 import { toValidFilename } from "../utils/path-utils";
 import { StringFormatParams } from "../utils/string-format";
+import { compileTemplate } from "../utils/template-utils";
 import { ActionOptions } from "./action-options";
 
 export interface ActionNewOptions extends ActionOptions {
@@ -33,7 +33,7 @@ export const ActionNew = (options: ActionNewOptions) => {
     }
   }
 
-  const template = Handlebars.compile(options.format);
+  const template = compileTemplate(options.format);
   const entryText = template({
     [StringFormatParams.changeType]: options.changeType,
     [StringFormatParams.message]:
