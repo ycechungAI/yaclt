@@ -1,7 +1,5 @@
 ![example workflow](https://github.com/mrjones2014/yaclt/actions/workflows/build.yml/badge.svg) ![example workflow](https://github.com/mrjones2014/yaclt/actions/workflows/publish.yml/badge.svg)
 
-
-
 # `yaclt`
 
 What is `yaclt`? It's <ins>**Y**</ins>et <ins>**A**</ins>nother <ins>**C**</ins>hange<ins>**L**</ins>og <ins>**T**</ins>ool.
@@ -20,6 +18,19 @@ Help for each command can be found in [COMMANDS.md](./COMMANDS.md) or by running
 ## Dependencies
 
 `yaclt` requires that `git` exists on your `$PATH` and that `node` 12+ is installed.
+
+## Configuration
+
+All command line flags and arguments can be specified in a configuration file. Supported file names are `yacltrc.yml`, `yacltrc.yaml`, `yacltrc.json`, and `yacltrc.js` (`.js` config must use `module.exports =`).
+
+If the working directory is inside a git repository, the tree will be traversed to the git root, using the first valid configuration file that is found. If no configuration file is found in the repo,
+it will also check, in order of precedence, `$YACLT_CONFIG_HOME/`, `$XDG_CONFIG_HOME/yaclt/`, `$HOME/.config/yaclt/` for global configuration files.
+
+If you are using a Javascript configuration file (e.g. `yacltrc.js`), any of the options can be a parameterless function which returns a value of the same type expected by the option. This can be useful,
+for example, if you'd like to write some custom logic to parse the next release number based on git tags, or generate your messages automatically from git commit messages.
+
+For options which are Handlebars templates (e.g. `--format`, `--releaseBranchPattern`, or `--changelogTemplate`), you may specif a filepath instead of a literal template string.
+The CLI will check if the argument is a filepath to a file that exists, and if so, read the template from that file.
 
 ## Handlebars Variables
 
@@ -43,15 +54,6 @@ Help for each command can be found in [COMMANDS.md](./COMMANDS.md) or by running
 | Name            | Description                                                                                 | Required |
 | --------------- | ------------------------------------------------------------------------------------------- | -------- |
 | `releaseNumber` | The release number or label, specified by `--releaseNumber` flag or from configuration file | `true`   |
-
-## Configuration
-
-All command line flags and arguments can be specified in a configuration file. Supported file names are `yacltrc.yml`, `yacltrc.yaml`, `yacltrc.json`, and `yacltrc.js` (`.js` config must use `module.exports =`).
-
-If the working directory is inside a git repository, the tree will be traversed to the git root, using the first valid configuration file that is found. If no configuration file is found in the repo,
-it will also check, in order of precedence, `$YACLT_CONFIG_HOME/`, `$XDG_CONFIG_HOME/yaclt/`, `$HOME/.config/yaclt/` for global configuration files.
-
-If using a Javascript configuration file, the `releaseNumber` property may be a function which returns the releaes number as a string. This can be useful for parsing release numbers from git tags or the version number from a `package.json` file.
 
 ## Contributing
 
