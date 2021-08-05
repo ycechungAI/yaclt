@@ -1,3 +1,11 @@
+# Release 0.7.0 - 2021-08-05
+
+## NEW
+
+- [NEW] Add pre- and post- command hooks {#76}
+
+---
+
 # Release 0.6.3 - 2021-08-05
 
 ## FIXED
