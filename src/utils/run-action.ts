@@ -17,5 +17,6 @@ export const runAction = (action: () => any) => {
       console.error("An unknown error ocurred.");
     }
     yargs.exit(1, error);
+    process.exit(1);
   }
 };

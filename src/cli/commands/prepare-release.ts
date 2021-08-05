@@ -48,33 +48,49 @@ export const PrepareReleaseCommand: CommandModule<
     ...CliOptions,
   },
   handler: (argv: Arguments<PrepareReleaseCommandOptions>) => {
-    let template: string;
+    runAction(() => {
+      if (argv.preHook) {
+        const preResult = argv.preHook("prepare-release");
+        if (!preResult) {
+          throw new Error(`preHook returned a falsy value: ${preResult}`);
+        }
+      }
 
-    if (fs.existsSync(argv.changelogTemplate)) {
-      template = fs.readFileSync(argv.changelogTemplate).toString();
-    } else {
-      template = argv.changelogTemplate;
-    }
+      let template: string;
 
-    let releaseNumber: string;
+      if (fs.existsSync(argv.changelogTemplate)) {
+        template = fs.readFileSync(argv.changelogTemplate).toString();
+      } else {
+        template = argv.changelogTemplate;
+      }
 
-    if (typeof argv.releaseNumber === "string") {
-      releaseNumber = argv.releaseNumber;
-    } else {
-      releaseNumber = argv.releaseNumber();
-    }
+      let releaseNumber: string;
 
-    const options: ActionPrepareReleaseOptions = {
-      changeTypes: argv.changeTypes,
-      changelogFile: argv.changelogFile,
-      logsDir: argv.logsDir,
-      format: argv.format,
-      validationPattern: argv.validationPattern,
-      releaseBranchPattern: argv.releaseBranchPattern,
-      releaseNumber,
-      template,
-    };
+      if (typeof argv.releaseNumber === "string") {
+        releaseNumber = argv.releaseNumber;
+      } else {
+        releaseNumber = argv.releaseNumber();
+      }
 
-    runAction(() => ActionPrepareRelease(options));
+      const options: ActionPrepareReleaseOptions = {
+        changeTypes: argv.changeTypes,
+        changelogFile: argv.changelogFile,
+        logsDir: argv.logsDir,
+        format: argv.format,
+        validationPattern: argv.validationPattern,
+        releaseBranchPattern: argv.releaseBranchPattern,
+        releaseNumber,
+        template,
+      };
+
+      ActionPrepareRelease(options);
+
+      if (argv.postHook) {
+        const postResult = argv.postHook("prepare-release");
+        if (!postResult) {
+          throw new Error(`postHook returned a falsy value: ${postResult}`);
+        }
+      }
+    });
   },
 };
