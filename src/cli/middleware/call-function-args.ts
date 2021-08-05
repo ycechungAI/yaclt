@@ -1,5 +1,7 @@
 import yargs from "yargs";
+import { nameof } from "../../utils/nameof";
 import { isFunction } from "../../utils/type-utils";
+import { GlobalArgv } from "../options";
 import { MiddlewareHandler } from "./middleware-handler";
 
 // Record<string, any> allows for any option set whatsoever
@@ -8,6 +10,13 @@ export const CallFunctionArgsMiddleware: MiddlewareHandler = {
     argv: Record<string, any>
   ): Record<string, any> {
     for (const key of Object.keys(argv)) {
+      // skip hook args because they need to be executed just-in-time
+      if (
+        key === nameof<GlobalArgv>("preHook") ||
+        key === nameof<GlobalArgv>("postHook")
+      ) {
+        continue;
+      }
       if (isFunction(argv[key])) {
         try {
           argv[key] = argv[key]();

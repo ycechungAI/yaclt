@@ -19,6 +19,8 @@ export interface GlobalArgv {
   changeTypes: string[];
   requireIssueIds: boolean;
   format: string;
+  preHook?: (commandName: string) => boolean;
+  postHook?: (commandName: string) => boolean;
 }
 
 export const CliOptions: { [key: string]: Options } = {
@@ -66,5 +68,17 @@ export const CliOptions: { [key: string]: Options } = {
     default: `[{{${StringFormatParams.changeType}}}] {{${StringFormatParams.message}}} {{append "" "{"}}#{{${StringFormatParams.issueId}}}{{append "" "}"}}\n`,
     describe: "Changelog entry format, as a Handlebars template",
     global: true,
+  },
+  preHook: {
+    describe:
+      "A hook to allow arbitrary validation code to be executed pre-command execution. If a falsy value is returned, command is aborted. Hook functions get the command name being executed as a parameter; you must guard against `undefined` because the config parser attempts to run them to ensure it is a valid function.",
+    global: true,
+    hidden: true,
+  },
+  postHook: {
+    describe:
+      "A hook to allow arbitrary post-command code to be executed. In the case where one command runs another (e.g. prepare-release implies validate), hooks for both are respected. Hook functions get the command name being executed as a parameter; you must guard against `undefined` because the config parser attempts to run them to ensure it is a valid function.",
+    global: true,
+    hidden: true,
   },
 };

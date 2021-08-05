@@ -25,13 +25,29 @@ export const ValidateCommand: CommandModule<{}, ValidateCommandOptions> = {
     ...CliOptions,
   },
   handler: (argv: Arguments<ValidateCommandOptions>) => {
-    const options: ActionValidateOptions = {
-      logsDir: argv.logsDir,
-      format: argv.format,
-      changeTypes: argv.changeTypes,
-      validationPattern: argv.validationPattern,
-    };
+    runAction(() => {
+      if (argv.preHook) {
+        const preResult = argv.preHook("validate");
+        if (!preResult) {
+          throw new Error(`preHook returned a falsy value: ${preResult}`);
+        }
+      }
 
-    runAction(() => ActionValidate(options));
+      const options: ActionValidateOptions = {
+        logsDir: argv.logsDir,
+        format: argv.format,
+        changeTypes: argv.changeTypes,
+        validationPattern: argv.validationPattern,
+      };
+
+      ActionValidate(options);
+
+      if (argv.postHook) {
+        const postResult = argv.postHook("validate");
+        if (!postResult) {
+          throw new Error(`postHook returned a falsy value: ${postResult}`);
+        }
+      }
+    });
   },
 };

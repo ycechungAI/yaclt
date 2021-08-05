@@ -47,6 +47,13 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
   },
   handler: (argv: Arguments<NewCommandOptions>) => {
     runAction(() => {
+      if (argv.preHook) {
+        const preResult = argv.preHook("new");
+        if (!preResult) {
+          throw new Error(`preHook returned a falsy value: ${preResult}`);
+        }
+      }
+
       if (
         argv.changeType &&
         !argv.changeTypes.find((t: string) => t === argv.changeType)
@@ -71,6 +78,13 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
       };
 
       ActionNew(options);
+
+      if (argv.postHook) {
+        const postResult = argv.postHook("new");
+        if (!postResult) {
+          throw new Error(`postHook returned a falsy value: ${postResult}`);
+        }
+      }
     });
   },
 };
