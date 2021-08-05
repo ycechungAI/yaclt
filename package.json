@@ -6,6 +6,8 @@
   "bin": "dist/index.js",
   "scripts": {
     "postinstall": "husky install",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable",
     "build": "tsc --project tsconfig.json && ./shebangify.js ./dist/index.js && chmod +x ./dist/index.js",
     "clean": "rm -rf dist/",
     "gen-docs": "yarn build && ./dist/index.js gen-docs && git add COMMANDS.md",
