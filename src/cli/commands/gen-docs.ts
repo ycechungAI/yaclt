@@ -1,4 +1,6 @@
 import fs from "fs";
+// @ts-ignore
+import tablemark from "tablemark";
 import { Arguments, CommandModule } from "yargs";
 import { AllCommands } from "../../cli";
 
@@ -6,12 +8,20 @@ export interface GenDocsCommandOptions {
   outFile: string;
 }
 
+const escapeDefault = (value: any) => {
+  if (!value || typeof value !== "string") {
+    return value;
+  }
+
+  return value.replace(/\n/g, "\\n");
+};
+
 export const GenDocsCommand: CommandModule<{}, GenDocsCommandOptions> = {
   command: "gen-docs",
   describe: "Generate markdown documentation for this CLI.",
   builder: {
-    o: {
-      alias: "outFile",
+    outFile: {
+      alias: "o",
       describe:
         "The file to write the documentation to. Documentation will be formatted as markdown.",
       type: "string",
@@ -27,17 +37,21 @@ export const GenDocsCommand: CommandModule<{}, GenDocsCommandOptions> = {
 
       contents += `\n## \`yaclt ${command.command!}\`\n\n`;
       contents += `${command.describe!}\n`;
-      // prettier-ignore
-      contents += `
-| Option | Option Alias | Description | Type  | Required | Default Value |
-| :---   | :----------- | :---:       | :---: | :---:    | :---:         |`;
-      for (const option of Object.entries(command.builder ?? {})) {
-        // prettier-ignore
-        contents += `
-| \`-${option[0]!}\` | \`--${option[1]!.alias!}\` | ${option[1]!.describe!} | \`${option[1]!.type!}\` | \`${option[1]!.required ?? false}\` | \`${option[1]!.default?.toString()?.replace(/(?:\r\n|\r|\n)/g, "\\n")}\` |`;
-        fs.writeFileSync(argv.outFile, contents);
-      }
+      const optionsData = Object.entries(command.builder ?? {}).map(
+        (option: { [key: string]: any }) => ({
+          option: `\`--${option[0]}\``,
+          alias: option[1].alias ? `\`-${option[1].alias}\`` : "",
+          description: option[1].describe,
+          type: option[0].endsWith("Hook")
+            ? "`function`"
+            : `\`${option[1].type}\``,
+          required: option[1].required ? "`true`" : "`false`",
+          defaultValue: `\`${escapeDefault(option[1].default)}\``,
+        })
+      );
+      contents += tablemark(optionsData);
       contents += "\n";
     }
+    fs.writeFileSync(argv.outFile, contents);
   },
 };

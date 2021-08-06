@@ -24,22 +24,19 @@ export const PrepareReleaseCommand: CommandModule<
     "Gather the changelogs from --logsDir and compile them into --changelogFile using --changelogTemplate",
   builder: {
     ...ValidationPatternOption,
-    a: {
-      alias: "changelogTemplate",
+    changelogTemplate: {
       type: "string",
       describe:
-        "The Handlebars template to use to generate the changelog additions. Can be a filepath to read the template from, or a template literal string. If configured via `yacltrc.js`, it can be a function that returns a string.",
+        "The Handlebars template to use to generate the changelog additions. Can be a filepath to read the template from, or a template literal string.",
       required: false,
       default: `# Release {{releaseNumber}} - {{moment "YYYY-MM-DD"}}\n\n{{#each entryGroups}}## {{capitalize label}}\n\n{{#each items}}- {{this}}\n{{/each}}\n\n{{/each}}\n---\n`,
     },
-    n: {
-      alias: "releaseNumber",
+    releaesNumber: {
       type: "string",
       describe: "A label for the release",
       required: true,
     },
-    o: {
-      alias: "releaseBranchPattern",
+    releaseBranchPattern: {
       type: "string",
       describe:
         "A pattern to generate a release branch name which will be automatically checked out before preparing the release.",

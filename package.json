@@ -56,6 +56,7 @@
     "handlebars-helpers": "^0.10.0",
     "js-yaml": "^4.1.0",
     "moment": "^2.29.1",
+    "tablemark": "^2.0.0",
     "yargs": "^17.0.1"
   }
 }
