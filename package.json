@@ -43,6 +43,7 @@
     "@types/js-yaml": "^4.0.1",
     "@types/moment": "^2.13.0",
     "@types/node": "^15.12.2",
+    "@types/prettier": "^2.3.2",
     "@types/yargs": "^17.0.0",
     "husky": "^6.0.0",
     "pinst": "^2.1.6",
@@ -56,7 +57,6 @@
     "handlebars-helpers": "^0.10.0",
     "js-yaml": "^4.1.0",
     "moment": "^2.29.1",
-    "tablemark": "^2.0.0",
     "yargs": "^17.0.1"
   }
 }

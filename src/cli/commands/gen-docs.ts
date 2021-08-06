@@ -1,8 +1,7 @@
 import fs from "fs";
-// @ts-ignore
-import tablemark from "tablemark";
 import { Arguments, CommandModule } from "yargs";
 import { AllCommands } from "../../cli";
+import { arrayToMarkdownTable } from "../../utils/array-to-markdown-table";
 
 export interface GenDocsCommandOptions {
   outFile: string;
@@ -36,7 +35,7 @@ export const GenDocsCommand: CommandModule<{}, GenDocsCommandOptions> = {
       }
 
       contents += `\n## \`yaclt ${command.command!}\`\n\n`;
-      contents += `${command.describe!}\n`;
+      contents += `${command.describe!}\n\n`;
       const optionsData = Object.entries(command.builder ?? {}).map(
         (option: { [key: string]: any }) => ({
           option: `\`--${option[0]}\``,
@@ -49,7 +48,7 @@ export const GenDocsCommand: CommandModule<{}, GenDocsCommandOptions> = {
           defaultValue: `\`${escapeDefault(option[1].default)}\``,
         })
       );
-      contents += tablemark(optionsData);
+      contents += arrayToMarkdownTable(optionsData);
       contents += "\n";
     }
     fs.writeFileSync(argv.outFile, contents);
