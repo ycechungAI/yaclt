@@ -53,11 +53,3 @@ Gather the changelogs from --logsDir and compile them into --changelogFile using
 | `--format`               |       | Changelog entry format, as a Handlebars template                                                                                                                                                                                                                                                                                                                     | `string`   | `false`  | `[{{changeType}}] {{message}} {{append "" "{"}}#{{issueId}}{{append "" "}"}}\n`                                                                                     |
 | `--preHook`              |       | A hook to allow arbitrary validation code to be executed pre-command execution. If a falsy value is returned, command is aborted. Hook functions get the command name being executed as a parameter; you must guard against `undefined` because the config parser attempts to run them to ensure it is a valid function.                                             | `function` | `false`  | `undefined`                                                                                                                                                         |
 | `--postHook`             |       | A hook to allow arbitrary post-command code to be executed. In the case where one command runs another (e.g. prepare-release implies validate), hooks for both are respected. Hook functions get the command name being executed as a parameter; you must guard against `undefined` because the config parser attempts to run them to ensure it is a valid function. | `function` | `false`  | `undefined`                                                                                                                                                         |
-
-## `yaclt gen-docs`
-
-Generate markdown documentation for this CLI.
-
-| Option      | Alias | Description                                                                          | Type     | Required | Default Value |
-| ----------- | ----- | ------------------------------------------------------------------------------------ | -------- | -------- | ------------- |
-| `--outFile` | `-o`  | The file to write the documentation to. Documentation will be formatted as markdown. | `string` | `false`  | `COMMANDS.md` |

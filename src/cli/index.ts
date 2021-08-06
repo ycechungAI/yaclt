@@ -3,7 +3,6 @@ import { CommandModule } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { CompletionFishCommand } from "./commands/completion-fish";
-import { GenDocsCommand } from "./commands/gen-docs";
 import { NewCommand } from "./commands/new";
 import { PrepareReleaseCommand } from "./commands/prepare-release";
 import { ValidateCommand } from "./commands/validate";
@@ -20,7 +19,6 @@ export const AllCommands: CommandModule<any, any>[] = [
   ValidateCommand,
   PrepareReleaseCommand,
   CompletionFishCommand,
-  GenDocsCommand,
 ];
 
 export const BuildCli = () => {
