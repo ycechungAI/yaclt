@@ -1,5 +1,7 @@
 ![Build](https://github.com/mrjones2014/yaclt/actions/workflows/build.yml/badge.svg) ![NPM Publish](https://github.com/mrjones2014/yaclt/actions/workflows/publish.yml/badge.svg) ![Discord Server](https://img.shields.io/discord/868246245343367169?logo=discord&style=flat)
 
+[Discord Server Invite](https://discord.gg/dv5x7tjqYk)
+
 # `yaclt`
 
 What is `yaclt`? It's <ins>**Y**</ins>et <ins>**A**</ins>nother <ins>**C**</ins>hange<ins>**L**</ins>og <ins>**T**</ins>ool.
