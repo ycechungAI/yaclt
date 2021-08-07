@@ -27,6 +27,13 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
       type: "string",
       required: false,
     },
+    lastCommit: {
+      describe:
+        "Use the first line of the most recent git commit message as the message for the new changelog entry",
+      type: "boolean",
+      required: false,
+      conflicts: "message",
+    },
     changeType: {
       describe:
         "The change type tag to use, defaults to the first one defined in --changeTypes",
@@ -35,7 +42,7 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
     },
     edit: {
       describe:
-        "After generating the changelog file, open it in $EDITOR, if $EDITOR is defined.",
+        "After generating the changelog file, open it in $EDITOR, if $EDITOR is defined",
       type: "boolean",
       default: false,
       required: false,
