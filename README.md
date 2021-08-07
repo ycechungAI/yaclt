@@ -1,4 +1,4 @@
-![Build](https://github.com/mrjones2014/yaclt/actions/workflows/build.yml/badge.svg) ![NPM Publish](https://github.com/mrjones2014/yaclt/actions/workflows/publish.yml/badge.svg) ![Discord Server](https://img.shields.io/discord/868246245343367169?logo=discord&style=plastic)
+![Build](https://github.com/mrjones2014/yaclt/actions/workflows/build.yml/badge.svg) ![NPM Publish](https://github.com/mrjones2014/yaclt/actions/workflows/publish.yml/badge.svg) ![Discord Server](https://img.shields.io/discord/868246245343367169?logo=discord&style=flat)
 
 # `yaclt`
 
