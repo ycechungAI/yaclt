@@ -15,28 +15,25 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
   command: "new",
   describe: "Generate a new changelog entry",
   builder: {
-    i: {
-      alias: "issueId",
+    issueId: {
       describe:
         "The issue ID to be interpolated into the new changelog. Takes precedence over parsing from git branch based on --branchFormat",
       type: "string",
       required: false,
     },
-    m: {
-      alias: "message",
+    message: {
+      alias: "m",
       describe: "The change log message, defaults to a placeholder message",
       type: "string",
       required: false,
     },
-    p: {
-      alias: "changeType",
+    changeType: {
       describe:
         "The change type tag to use, defaults to the first one defined in --changeTypes",
       type: "string",
       required: false,
     },
-    o: {
-      alias: "edit",
+    edit: {
       describe:
         "After generating the changelog file, open it in $EDITOR, if $EDITOR is defined.",
       type: "boolean",

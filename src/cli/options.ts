@@ -24,23 +24,20 @@ export interface GlobalArgv {
 }
 
 export const CliOptions: { [key: string]: Options } = {
-  d: {
-    alias: "logsDir",
+  logsDir: {
     type: "string",
     normalize: true,
     default: "changelogs/",
     describe: "The directory to find and place individual changelog entries",
     global: true,
   },
-  b: {
-    alias: "branchFormat",
+  branchFormat: {
     type: "string",
     describe:
       "Regular expression with a capturing group to parse the issue ID out of your git branch. Implies --requireIssueIds and assumes that --format includes %issueid%",
     global: true,
   },
-  c: {
-    alias: "changelogFile",
+  changelogFile: {
     type: "string",
     normalize: true,
     default: "CHANGELOG.md",
@@ -48,22 +45,19 @@ export const CliOptions: { [key: string]: Options } = {
     coerce: coerceFileArg({ createIfNotExist: true }),
     global: true,
   },
-  t: {
-    alias: "changeTypes",
+  changeTypes: {
     type: "array",
     default: ["NEW", "IMPROVED", "FIXED"],
     describe: "The allowed change type tags",
     global: true,
   },
-  r: {
-    alias: "requireIssueIds",
+  requireIssueIds: {
     type: "boolean",
     default: true,
     describe: "Require issue IDs in changelog entries",
     global: true,
   },
-  f: {
-    alias: "format",
+  format: {
     type: "string",
     default: `[{{${StringFormatParams.changeType}}}] {{${StringFormatParams.message}}} {{append "" "{"}}#{{${StringFormatParams.issueId}}}{{append "" "}"}}\n`,
     describe: "Changelog entry format, as a Handlebars template",

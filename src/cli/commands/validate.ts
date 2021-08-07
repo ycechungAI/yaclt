@@ -8,8 +8,7 @@ export interface ValidateCommandOptions extends GlobalArgv {
 }
 
 export const ValidationPatternOption: { [key: string]: Options } = {
-  e: {
-    alias: "validationPattern",
+  validationPattern: {
     describe:
       "A regular expression used to validate each individual changelog entry",
     type: "string",
