@@ -39,7 +39,12 @@ export const BuildCli = () => {
     cli.command(command);
   }
 
-  cli.completion().demandCommand().strictCommands().config(config);
+  cli
+    .completion()
+    .demandCommand()
+    .recommendCommands()
+    .strictCommands()
+    .config(config);
 
   return cli;
 };
