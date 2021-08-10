@@ -1,3 +1,16 @@
+# Release 0.8.0 - 2021-08-10
+
+## IMPROVED
+
+- [IMPROVED] Add recommendCommands() option to CLI builder {#74}
+
+## NEW
+
+- [NEW] Add option + middleware handler to set message from last commit message {#82}
+- [NEW] Add --plumbing option to minimize output for scripting purposes {#86}
+
+---
+
 # Release 0.7.0 - 2021-08-05
 
 ## NEW
