@@ -70,6 +70,7 @@ export const PrepareReleaseCommand: CommandModule<
       }
 
       const options: ActionPrepareReleaseOptions = {
+        plumbing: argv.plumbing,
         changeTypes: argv.changeTypes,
         changelogFile: argv.changelogFile,
         logsDir: argv.logsDir,
@@ -88,6 +89,6 @@ export const PrepareReleaseCommand: CommandModule<
           throw new Error(`postHook returned a falsy value: ${postResult}`);
         }
       }
-    });
+    }, argv.plumbing);
   },
 };

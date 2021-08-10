@@ -46,6 +46,11 @@ export const ActionNew = (options: ActionNewOptions) => {
   }
 
   fs.writeFileSync(outputPath, entryText);
+  if (options.plumbing) {
+    console.log(outputPath);
+    return;
+  }
+
   console.log(
     `${Icons.success} Changelog entry placeholder generated at ${outputPath}!`
   );

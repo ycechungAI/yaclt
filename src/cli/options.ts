@@ -13,6 +13,7 @@ const coerceFileArg =
   };
 
 export interface GlobalArgv {
+  plumbing: boolean;
   logsDir: string;
   branchFormat?: string;
   changelogFile: string;
@@ -61,6 +62,13 @@ export const CliOptions: { [key: string]: Options } = {
     type: "string",
     default: `[{{${StringFormatParams.changeType}}}] {{${StringFormatParams.message}}} {{append "" "{"}}#{{${StringFormatParams.issueId}}}{{append "" "}"}}\n`,
     describe: "Changelog entry format, as a Handlebars template",
+    global: true,
+  },
+  plumbing: {
+    type: "boolean",
+    default: false,
+    describe:
+      "Reduce output to just the relevant data, e.g. filepaths for `new` and `prepare-release`, `true/false` for `validate`, for scripting purposes. Also disables opening `$EDITOR`.",
     global: true,
   },
   preHook: {

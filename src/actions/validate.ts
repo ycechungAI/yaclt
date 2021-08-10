@@ -44,7 +44,7 @@ export const ActionValidate = (options: ActionValidateOptions): boolean => {
         line.includes(changeTypePattern({ changeType }))
       );
       if (!changeType || changeType === "UNCATEGORIZED") {
-        console.log(
+        console.error(
           `${Icons.error} Invalid change type found in changelog file ${filePath}: ${line}`
         );
         hasInvalidEntries = true;
@@ -54,8 +54,14 @@ export const ActionValidate = (options: ActionValidateOptions): boolean => {
 
   if (hasInvalidEntries) {
     const message = `${Icons.error} Malformed changelog entries found.`;
+    console.error(options.plumbing ? "false" : message);
     yargs.exit(1, new Error(message));
     return false;
+  }
+
+  if (options.plumbing) {
+    console.log("true");
+    return true;
   }
 
   console.log(`${Icons.success} All changelog entries formatted correctly!`);

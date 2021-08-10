@@ -33,6 +33,7 @@ export const ValidateCommand: CommandModule<{}, ValidateCommandOptions> = {
       }
 
       const options: ActionValidateOptions = {
+        plumbing: argv.plumbing,
         logsDir: argv.logsDir,
         format: argv.format,
         changeTypes: argv.changeTypes,
@@ -47,6 +48,6 @@ export const ValidateCommand: CommandModule<{}, ValidateCommandOptions> = {
           throw new Error(`postHook returned a falsy value: ${postResult}`);
         }
       }
-    });
+    }, argv.plumbing);
   },
 };
