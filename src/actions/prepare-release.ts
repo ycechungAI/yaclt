@@ -27,6 +27,7 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
   touchFile(options.changelogFile);
 
   const valid = ActionValidate({
+    plumbing: options.plumbing,
     logsDir: options.logsDir,
     format: options.format,
     changeTypes: options.changeTypes,
@@ -103,6 +104,11 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
   fs.readdirSync(options.logsDir)
     .filter((fileName: string) => fileName.endsWith(".md"))
     .map((file: string) => fs.unlinkSync(path.join(options.logsDir, file)));
+
+  if (options.plumbing) {
+    console.log(options.changelogFile);
+    return;
+  }
 
   console.log(
     `${Icons.success} ${options.changelogFile} updated! Be sure to review the changes before comitting.`

@@ -42,7 +42,7 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
     },
     edit: {
       describe:
-        "After generating the changelog file, open it in $EDITOR, if $EDITOR is defined",
+        "After generating the changelog file, open it in `$EDITOR`, if `$EDITOR` is defined",
       type: "boolean",
       default: false,
       required: false,
@@ -69,6 +69,7 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
       }
 
       const options: ActionNewOptions = {
+        plumbing: argv.plumbing,
         logsDir: argv.logsDir,
         format: argv.format,
         changeType:
@@ -89,6 +90,6 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
           throw new Error(`postHook returned a falsy value: ${postResult}`);
         }
       }
-    });
+    }, argv.plumbing);
   },
 };
