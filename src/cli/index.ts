@@ -8,6 +8,7 @@ import { PrepareReleaseCommand } from "./commands/prepare-release";
 import { ValidateCommand } from "./commands/validate";
 import { getConfig } from "./config-handler";
 import { CallFunctionArgsMiddleware } from "./middleware/call-function-args";
+import { LastCommitMessageMiddleware } from "./middleware/last-commit-message-middleware";
 import { TemplatesFromFilesMiddleware } from "./middleware/templates-from-files";
 
 HandlebarsHelpers();
@@ -33,6 +34,10 @@ export const BuildCli = () => {
     .middleware(
       TemplatesFromFilesMiddleware.handler,
       TemplatesFromFilesMiddleware.preValidation
+    )
+    .middleware(
+      LastCommitMessageMiddleware.handler,
+      LastCommitMessageMiddleware.preValidation
     );
 
   for (const command of AllCommands) {
