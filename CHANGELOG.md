@@ -1,3 +1,11 @@
+# Release 0.8.1 - 2021-08-12
+
+## FIXED
+
+- [FIXED] Fix misspelled "releaesNumber" argument to "releaseNumber" {#90}
+
+---
+
 # Release 0.8.0 - 2021-08-10
 
 ## IMPROVED
