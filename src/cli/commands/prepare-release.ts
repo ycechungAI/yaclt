@@ -31,7 +31,7 @@ export const PrepareReleaseCommand: CommandModule<
       required: false,
       default: `# Release {{releaseNumber}} - {{moment "YYYY-MM-DD"}}\n\n{{#each entryGroups}}## {{capitalize label}}\n\n{{#each items}}- {{this}}\n{{/each}}\n\n{{/each}}\n---\n`,
     },
-    releaesNumber: {
+    releaseNumber: {
       type: "string",
       describe: "A label for the release",
       required: true,
