@@ -44,8 +44,8 @@ export const PrepareReleaseCommand: CommandModule<
     },
     ...CliOptions,
   },
-  handler: (argv: Arguments<PrepareReleaseCommandOptions>) => {
-    runAction(() => {
+  handler: async (argv: Arguments<PrepareReleaseCommandOptions>) => {
+    await runAction(async () => {
       if (argv.preHook) {
         const preResult = argv.preHook("prepare-release");
         if (!preResult) {
@@ -81,7 +81,7 @@ export const PrepareReleaseCommand: CommandModule<
         template,
       };
 
-      ActionPrepareRelease(options);
+      await ActionPrepareRelease(options);
 
       if (argv.postHook) {
         const postResult = argv.postHook("prepare-release");

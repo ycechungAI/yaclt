@@ -1,5 +1,5 @@
-import { execSync } from "child_process";
 import fs from "fs";
+import git from "isomorphic-git";
 import path from "path";
 import yargs from "yargs";
 import { readLines, touchFile } from "../utils/file-utils";
@@ -24,7 +24,9 @@ export interface EntryGroup {
   items: string[];
 }
 
-export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
+export const ActionPrepareRelease = async (
+  options: ActionPrepareReleaseOptions
+) => {
   touchFile(options.changelogFile);
 
   const valid = ActionValidate({
@@ -51,7 +53,7 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
     const branchTemplate = compileTemplate(options.releaseBranchPattern);
     const branchName = branchTemplate({ releaseNumber: options.releaseNumber });
     try {
-      execSync(`git checkout -b ${branchName}`);
+      await git.branch({ fs, ref: branchName, dir: process.cwd() });
     } catch (_) {
       const message = `${Icons.error} Failed to checkout release branch: ${branchName}`;
       Logger.error(message);

@@ -10,7 +10,7 @@ export const runAction = (action: () => any, plumbing: boolean) => {
       );
     }
 
-    action();
+    return action();
   } catch (error) {
     if (error.message) {
       Logger.error(error.message);

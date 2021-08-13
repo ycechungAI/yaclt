@@ -50,8 +50,8 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
     },
     ...CliOptions,
   },
-  handler: (argv: Arguments<NewCommandOptions>) => {
-    runAction(() => {
+  handler: async (argv: Arguments<NewCommandOptions>) => {
+    await runAction(async () => {
       if (argv.preHook) {
         const preResult = argv.preHook("new");
         if (!preResult) {
@@ -83,7 +83,7 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
         edit: argv.edit ?? false,
       };
 
-      ActionNew(options);
+      await ActionNew(options);
 
       if (argv.postHook) {
         const postResult = argv.postHook("new");
