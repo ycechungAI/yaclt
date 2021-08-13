@@ -1,4 +1,5 @@
 import yargs from "yargs";
+import { Logger } from "../../utils/logger";
 import { nameof } from "../../utils/nameof";
 import { isFunction } from "../../utils/type-utils";
 import { GlobalArgv } from "../options";
@@ -21,7 +22,7 @@ export const CallFunctionArgsMiddleware: MiddlewareHandler = {
         try {
           argv[key] = argv[key]();
         } catch (error) {
-          console.error(
+          Logger.error(
             `An error occurred evaluating function argument '${key}': `,
             error
           );

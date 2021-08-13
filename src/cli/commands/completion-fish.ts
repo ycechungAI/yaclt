@@ -1,11 +1,12 @@
 import { CommandModule } from "yargs";
+import { Logger } from "../../utils/logger";
 import { GlobalArgv } from "../options";
 
 export const CompletionFishCommand: CommandModule<{}, GlobalArgv> = {
   command: "completion-fish",
   describe: "Generate completion script for Fish",
   handler: () => {
-    console.log(`
+    Logger.log(`
 ###-begin-yaclt-completions-###
 #
 # yargs command completion script

@@ -1,6 +1,8 @@
+import colors from "colors";
+
 export const Icons = {
-  success: "✅",
-  warning: "❗",
-  error: "❌",
-  info: "ℹ️  ",
+  success: colors.green("✔"),
+  warning: colors.yellow("ǃ"),
+  error: colors.red("Х"),
+  info: colors.blue("ⓘ"),
 };

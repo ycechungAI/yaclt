@@ -1,5 +1,6 @@
 import { execSync } from "child_process";
 import yargs from "yargs";
+import { Logger } from "../../utils/logger";
 import { MiddlewareHandler } from "./middleware-handler";
 
 export const LastCommitMessageMiddleware: MiddlewareHandler = {
@@ -18,7 +19,7 @@ export const LastCommitMessageMiddleware: MiddlewareHandler = {
       if (!gitLogResult) {
         const message =
           "An error occurred parsing the last git commit message: received empty value.";
-        console.error(message);
+        Logger.error(message);
         yargs.exit(1, new Error(message));
         process.exit(1);
       }
@@ -27,7 +28,7 @@ export const LastCommitMessageMiddleware: MiddlewareHandler = {
       delete argv["lastCommit"];
       return argv;
     } catch (error) {
-      console.error(
+      Logger.error(
         "An error occurred parsing the last git commit message: ",
         error
       );
