@@ -1,6 +1,7 @@
 import yargs, { Arguments, CommandModule } from "yargs";
 import { ActionNew, ActionNewOptions } from "../../actions/new";
 import { CliOptions, GlobalArgv } from "../../cli/options";
+import { Logger } from "../../utils/logger";
 import { runAction } from "../../utils/run-action";
 import { StringFormatParams } from "../../utils/string-format";
 
@@ -63,7 +64,7 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
         !argv.changeTypes.find((t: string) => t === argv.changeType)
       ) {
         const message = `Invalid change type: ${argv.changeType}`;
-        console.error(message);
+        Logger.error(message);
         yargs.exit(1, new Error(message));
         return;
       }

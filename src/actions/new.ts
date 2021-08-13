@@ -3,6 +3,7 @@ import fs from "fs";
 import moment from "moment";
 import path from "path";
 import { Icons } from "../utils/icons";
+import { Logger } from "../utils/logger";
 import { toValidFilename } from "../utils/path-utils";
 import { StringFormatParams } from "../utils/string-format";
 import { compileTemplate } from "../utils/template-utils";
@@ -47,11 +48,11 @@ export const ActionNew = (options: ActionNewOptions) => {
 
   fs.writeFileSync(outputPath, entryText);
   if (options.plumbing) {
-    console.log(outputPath);
+    Logger.log(outputPath);
     return;
   }
 
-  console.log(
+  Logger.log(
     `${Icons.success} Changelog entry placeholder generated at ${outputPath}!`
   );
 

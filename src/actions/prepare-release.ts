@@ -4,6 +4,7 @@ import path from "path";
 import yargs from "yargs";
 import { readLines, touchFile } from "../utils/file-utils";
 import { Icons } from "../utils/icons";
+import { Logger } from "../utils/logger";
 import { formatToChangeTypeRegex } from "../utils/string-format";
 import { compileTemplate } from "../utils/template-utils";
 import { ActionOptions } from "./action-options";
@@ -41,7 +42,7 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
 
   if (!fs.existsSync(options.logsDir)) {
     const message = `${Icons.error} Cannot prepare a release because no changelogs were found in ${options.logsDir}`;
-    console.error(message);
+    Logger.error(message);
     yargs.exit(1, new Error(message));
     return;
   }
@@ -53,7 +54,7 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
       execSync(`git checkout -b ${branchName}`);
     } catch (_) {
       const message = `${Icons.error} Failed to checkout release branch: ${branchName}`;
-      console.error(message);
+      Logger.error(message);
       yargs.exit(1, new Error(message));
       return;
     }
@@ -106,11 +107,11 @@ export const ActionPrepareRelease = (options: ActionPrepareReleaseOptions) => {
     .map((file: string) => fs.unlinkSync(path.join(options.logsDir, file)));
 
   if (options.plumbing) {
-    console.log(options.changelogFile);
+    Logger.log(options.changelogFile);
     return;
   }
 
-  console.log(
+  Logger.log(
     `${Icons.success} ${options.changelogFile} updated! Be sure to review the changes before comitting.`
   );
 };
