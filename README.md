@@ -19,7 +19,7 @@ Help for each command can be found in [COMMANDS.md](./COMMANDS.md) or by running
 
 ## Dependencies
 
-`yaclt` requires that `git` exists on your `$PATH` and that `node` 12+ is installed.
+Node 12+, and to be run from within a git repo.
 
 ## Configuration
 
