@@ -58,6 +58,7 @@
     "find-up": "^5.0.0",
     "handlebars": "^4.7.7",
     "handlebars-helpers": "^0.10.0",
+    "isomorphic-git": "^1.9.2",
     "js-yaml": "^4.1.0",
     "moment": "^2.29.1",
     "yargs": "^17.0.1"

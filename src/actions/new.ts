@@ -1,5 +1,6 @@
-import { execSync, spawn } from "child_process";
+import { spawn } from "child_process";
 import fs from "fs";
+import git from "isomorphic-git";
 import moment from "moment";
 import path from "path";
 import { Icons } from "../utils/icons";
@@ -17,7 +18,7 @@ export interface ActionNewOptions extends ActionOptions {
   edit: boolean;
 }
 
-export const ActionNew = (options: ActionNewOptions) => {
+export const ActionNew = async (options: ActionNewOptions) => {
   const outputPath = path.join(
     options.logsDir,
     toValidFilename(`${moment().format("YYYY-MM-DD_HH-mm-ss")}.md`)
@@ -27,7 +28,7 @@ export const ActionNew = (options: ActionNewOptions) => {
   if (options.issueId) {
     issueId = options.issueId;
   } else if (options.gitBranchFormat) {
-    const branch = execSync("git branch --show-current").toString();
+    const branch = await git.currentBranch({ fs, dir: process.cwd() });
     if (branch) {
       const pattern = new RegExp(options.gitBranchFormat);
       issueId = branch.match(pattern)?.[1];
