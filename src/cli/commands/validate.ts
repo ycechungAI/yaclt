@@ -10,12 +10,22 @@ export interface ValidateCommandOptions extends GlobalArgv {
   postValidate?: Hook;
 }
 
-export const ValidationPatternOption: { [key: string]: Options } = {
+export const ValidateCommandOptions: { [key: string]: Options } = {
   validationPattern: {
     describe:
       "A regular expression used to validate each individual changelog entry",
     type: "string",
     required: true,
+  },
+  preValidate: {
+    describe:
+      "A hook function to run before performing validation. Throw an error or return false to halt execution. Only usable from a Javascript configuration file.",
+    required: false,
+  },
+  postValidate: {
+    describe:
+      "A hook function to run after performing validation. Only usable from a Javascript configuration file.",
+    required: false,
   },
 };
 
@@ -26,17 +36,7 @@ export const ValidateCommand: CommandModule<
   command: "validate",
   describe: "Validate existing changelogs against the specified format",
   builder: {
-    preValidate: {
-      describe:
-        "A hook function to run before performing validation. Throw an error or return false to halt execution. Only usable from a Javascript configuration file.",
-      required: false,
-    },
-    postValidate: {
-      describe:
-        "A hook function to run after performing validation. Only usable from a Javascript configuration file.",
-      required: false,
-    },
-    ...ValidationPatternOption,
+    ...ValidateCommandOptions,
     ...CliOptions,
   },
   handler: (argv: Arguments<ValidateCommandOptions>) => {

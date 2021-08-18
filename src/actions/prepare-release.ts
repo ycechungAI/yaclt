@@ -18,6 +18,8 @@ export interface ActionPrepareReleaseOptions extends ActionOptions {
   changeTypes: string[];
   validationPattern: string;
   releaseBranchPattern?: string;
+  preValidate?: Hook;
+  postValidate?: Hook;
   prePrepare?: Hook;
   postPrepare?: Hook;
 }
@@ -38,6 +40,8 @@ const actionPrepareReleaseHandler = async (
     format: options.format,
     changeTypes: options.changeTypes,
     validationPattern: options.validationPattern,
+    preValidate: options.preValidate,
+    postValidate: options.postValidate,
   });
 
   if (!valid) {

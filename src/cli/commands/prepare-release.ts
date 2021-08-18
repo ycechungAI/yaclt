@@ -7,13 +7,15 @@ import {
 import { Hook } from "../../utils/hook-handler";
 import { runAction } from "../../utils/run-action";
 import { CliOptions, GlobalArgv } from "../options";
-import { ValidationPatternOption } from "./validate";
+import { ValidateCommandOptions } from "./validate";
 
 export interface PrepareReleaseCommandOptions extends GlobalArgv {
   changelogTemplate: string;
   releaseNumber: string | (() => string);
   validationPattern: string;
   releaseBranchPattern?: string;
+  preValidate?: Hook;
+  postValidate?: Hook;
   prePrepare?: Hook;
   postPrepare?: Hook;
 }
@@ -26,7 +28,6 @@ export const PrepareReleaseCommand: CommandModule<
   describe:
     "Gather the changelogs from --logsDir and compile them into --changelogFile using --changelogTemplate",
   builder: {
-    ...ValidationPatternOption,
     changelogTemplate: {
       type: "string",
       describe:
@@ -46,6 +47,7 @@ export const PrepareReleaseCommand: CommandModule<
         "A pattern to generate a release branch name which will be automatically checked out before preparing the release.",
       required: false,
     },
+    ...ValidateCommandOptions,
     prePrepare: {
       describe:
         "A hook function to run before preparing the release changes. Throw an error or return false to halt execution. Only usable from a Javascript configuration file.",
@@ -77,6 +79,8 @@ export const PrepareReleaseCommand: CommandModule<
         format: argv.format,
         validationPattern: argv.validationPattern,
         releaseBranchPattern: argv.releaseBranchPattern,
+        preValidate: argv.preValidate,
+        postValidate: argv.postValidate,
         prePrepare: argv.prePrepare,
         postPrepare: argv.postPrepare,
         releaseNumber,
