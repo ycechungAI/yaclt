@@ -10,34 +10,15 @@ const handleHookFailure = (error: Error | boolean, hookName: string): void => {
   process.exit(1);
 };
 
-const doPostHook = (hook: unknown, postName: string): void => {
-  if (hook) {
-    if (!isFunction(hook)) {
-      const message = `Hook ${postName} is not defined as a function.`;
-      yargs.exit(1, new Error(message));
-      process.exit(1);
-    }
-
-    try {
-      const result = hook();
-      if (result === false) {
-        handleHookFailure(result, postName.toString());
-      }
-    } catch (error) {
-      handleHookFailure(error, postName.toString());
-    }
-  }
-};
-
-export type Hook = () => void | boolean;
+export type Hook = () => void | boolean | Promise<void> | Promise<boolean>;
 
 export const handleHooks =
   <TArgs, TReturn>(
     handler: (argv: TArgs) => TReturn,
     preName: keyof TArgs,
     postName: keyof TArgs
-  ): ((argv: TArgs) => TReturn | Promise<TReturn>) =>
-  (argv: TArgs): TReturn | Promise<TReturn> => {
+  ): ((argv: TArgs) => Promise<TReturn>) =>
+  async (argv: TArgs): Promise<TReturn> => {
     const preHook = argv[preName];
     if (preHook) {
       if (!isFunction(preHook)) {
@@ -48,7 +29,12 @@ export const handleHooks =
 
       try {
         const result = preHook();
-        if (result === false) {
+        if (result instanceof Promise) {
+          const promiseResult = await result;
+          if (promiseResult === false) {
+            handleHookFailure(promiseResult, preName.toString());
+          }
+        } else if (result === false) {
           handleHookFailure(result, preName.toString());
         }
       } catch (error) {
@@ -56,13 +42,33 @@ export const handleHooks =
       }
     }
 
-    const handlerResult = handler(argv);
+    let handlerResult = handler(argv);
     if (handlerResult instanceof Promise) {
-      return handlerResult.then((result: TReturn) => {
-        doPostHook(argv[postName], postName.toString());
-        return result;
-      });
+      handlerResult = await handlerResult;
     }
-    doPostHook(argv[postName], postName.toString());
+
+    const postHook = argv[postName];
+    if (postHook) {
+      if (!isFunction(postHook)) {
+        const message = `Hook ${postName} is not defined as a function.`;
+        yargs.exit(1, new Error(message));
+        process.exit(1);
+      }
+
+      try {
+        const result = postHook();
+        if (result instanceof Promise) {
+          const promiseResult = await result;
+          if (promiseResult === false) {
+            handleHookFailure(promiseResult, postName.toString());
+          }
+        } else if (result === false) {
+          handleHookFailure(result, postName.toString());
+        }
+      } catch (error) {
+        handleHookFailure(error, postName.toString());
+      }
+    }
+
     return handlerResult;
   };

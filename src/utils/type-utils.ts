@@ -1,6 +1,6 @@
-export function isFunction(
-  subject: unknown
-): subject is () => string | boolean | number {
+// we can't know the return type of the function
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isFunction(subject: unknown): subject is () => any {
   return !!(
     (
       subject &&

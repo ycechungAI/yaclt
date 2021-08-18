@@ -56,13 +56,13 @@ export const NewCommand: CommandModule<
     },
     preNew: {
       describe:
-        "A hook function to run before generating the changelog. Throw an error or return false to halt execution. Only usable from a Javascript config file.",
+        "A hook function to run before generating the changelog. Throw an error or return false to halt execution. Only usable from a Javascript config file. May be async.",
       required: false,
       hidden: true,
     },
     postNew: {
       describe:
-        "A hook function to run after generating the changelog. Only usable from a Javascript config file.",
+        "A hook function to run after generating the changelog. Only usable from a Javascript config file. May be async.",
       required: false,
       hidden: true,
     },

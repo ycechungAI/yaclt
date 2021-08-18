@@ -50,13 +50,13 @@ export const PrepareReleaseCommand: CommandModule<
     ...ValidateCommandOptions,
     prePrepare: {
       describe:
-        "A hook function to run before preparing the release changes. Throw an error or return false to halt execution. Only usable from a Javascript configuration file.",
+        "A hook function to run before preparing the release changes. Throw an error or return false to halt execution. Only usable from a Javascript configuration file. May be async.",
       required: false,
       hidden: true,
     },
     postPrepare: {
       describe:
-        "A hook function to run after preparing the release changes. Only usable from a Javascript configuration file.",
+        "A hook function to run after preparing the release changes. Only usable from a Javascript configuration file. May be async.",
       required: false,
       hidden: true,
     },

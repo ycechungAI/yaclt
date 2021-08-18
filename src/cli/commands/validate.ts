@@ -19,13 +19,13 @@ export const ValidateCommandOptions: { [key: string]: Options } = {
   },
   preValidate: {
     describe:
-      "A hook function to run before performing validation. Throw an error or return false to halt execution. Only usable from a Javascript configuration file.",
+      "A hook function to run before performing validation. Throw an error or return false to halt execution. Only usable from a Javascript configuration file. May be async.",
     required: false,
     hidden: true,
   },
   postValidate: {
     describe:
-      "A hook function to run after performing validation. Only usable from a Javascript configuration file.",
+      "A hook function to run after performing validation. Only usable from a Javascript configuration file. May be async.",
     required: false,
     hidden: true,
   },
