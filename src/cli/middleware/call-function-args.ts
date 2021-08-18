@@ -3,7 +3,6 @@ import { Logger } from "../../utils/logger";
 import { isFunction } from "../../utils/type-utils";
 import { MiddlewareHandler } from "./middleware-handler";
 
-// Record<string, any> allows for any option set whatsoever
 export const CallFunctionArgsMiddleware: MiddlewareHandler = {
   handler: function callFunctionArgs(
     argv: Record<

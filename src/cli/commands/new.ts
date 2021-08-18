@@ -1,6 +1,7 @@
 import yargs, { Arguments, CommandModule } from "yargs";
 import { ActionNew, ActionNewOptions } from "../../actions/new";
 import { CliOptions, GlobalArgv } from "../../cli/options";
+import { Hook } from "../../utils/hook-handler";
 import { Logger } from "../../utils/logger";
 import { runAction } from "../../utils/run-action";
 import { StringFormatParams } from "../../utils/string-format";
@@ -10,6 +11,8 @@ export interface NewCommandOptions extends GlobalArgv {
   message?: string;
   changeType?: string;
   edit?: boolean;
+  preNew?: Hook;
+  postNew?: Hook;
 }
 
 export const NewCommand: CommandModule<
@@ -51,6 +54,16 @@ export const NewCommand: CommandModule<
       default: false,
       required: false,
     },
+    preNew: {
+      describe:
+        "A hook function to run before generating the changelog. Throw an error or return false to halt execution. Only usable from a Javascript config file.",
+      required: false,
+    },
+    postNew: {
+      describe:
+        "A hook function to run after generating the changelog. Only usable from a Javascript config file.",
+      required: false,
+    },
     ...CliOptions,
   },
   handler: async (argv: Arguments<NewCommandOptions>) => {
@@ -74,6 +87,8 @@ export const NewCommand: CommandModule<
         gitBranchFormat: argv.branchFormat,
         message: argv.message,
         edit: argv.edit ?? false,
+        preNew: argv.preNew,
+        postNew: argv.postNew,
       };
 
       await ActionNew(options);

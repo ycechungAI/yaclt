@@ -1,10 +1,13 @@
 import { Arguments, CommandModule, Options } from "yargs";
 import { ActionValidate, ActionValidateOptions } from "../../actions/validate";
+import { Hook } from "../../utils/hook-handler";
 import { runAction } from "../../utils/run-action";
 import { CliOptions, GlobalArgv } from "../options";
 
 export interface ValidateCommandOptions extends GlobalArgv {
   validationPattern: string;
+  preValidate?: Hook;
+  postValidate?: Hook;
 }
 
 export const ValidationPatternOption: { [key: string]: Options } = {
@@ -23,6 +26,16 @@ export const ValidateCommand: CommandModule<
   command: "validate",
   describe: "Validate existing changelogs against the specified format",
   builder: {
+    preValidate: {
+      describe:
+        "A hook function to run before performing validation. Throw an error or return false to halt execution. Only usable from a Javascript configuration file.",
+      required: false,
+    },
+    postValidate: {
+      describe:
+        "A hook function to run after performing validation. Only usable from a Javascript configuration file.",
+      required: false,
+    },
     ...ValidationPatternOption,
     ...CliOptions,
   },
@@ -34,6 +47,8 @@ export const ValidateCommand: CommandModule<
         format: argv.format,
         changeTypes: argv.changeTypes,
         validationPattern: argv.validationPattern,
+        preValidate: argv.preValidate,
+        postValidate: argv.postValidate,
       };
 
       ActionValidate(options);

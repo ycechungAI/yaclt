@@ -4,6 +4,7 @@ import {
   ActionPrepareRelease,
   ActionPrepareReleaseOptions,
 } from "../../actions/prepare-release";
+import { Hook } from "../../utils/hook-handler";
 import { runAction } from "../../utils/run-action";
 import { CliOptions, GlobalArgv } from "../options";
 import { ValidationPatternOption } from "./validate";
@@ -13,6 +14,8 @@ export interface PrepareReleaseCommandOptions extends GlobalArgv {
   releaseNumber: string | (() => string);
   validationPattern: string;
   releaseBranchPattern?: string;
+  prePrepare?: Hook;
+  postPrepare?: Hook;
 }
 
 export const PrepareReleaseCommand: CommandModule<
@@ -43,6 +46,16 @@ export const PrepareReleaseCommand: CommandModule<
         "A pattern to generate a release branch name which will be automatically checked out before preparing the release.",
       required: false,
     },
+    prePrepare: {
+      describe:
+        "A hook function to run before preparing the release changes. Throw an error or return false to halt execution. Only usable from a Javascript configuration file.",
+      required: false,
+    },
+    postPrepare: {
+      describe:
+        "A hook function to run after preparing the release changes. Only usable from a Javascript configuration file.",
+      required: false,
+    },
     ...CliOptions,
   },
   handler: async (argv: Arguments<PrepareReleaseCommandOptions>) => {
@@ -64,6 +77,8 @@ export const PrepareReleaseCommand: CommandModule<
         format: argv.format,
         validationPattern: argv.validationPattern,
         releaseBranchPattern: argv.releaseBranchPattern,
+        prePrepare: argv.prePrepare,
+        postPrepare: argv.postPrepare,
         releaseNumber,
         template,
       };

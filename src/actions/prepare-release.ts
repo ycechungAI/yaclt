@@ -3,6 +3,7 @@ import git from "isomorphic-git";
 import path from "path";
 import yargs from "yargs";
 import { readLines, touchFile } from "../utils/file-utils";
+import { handleHooks, Hook } from "../utils/hook-handler";
 import { Icons } from "../utils/icons";
 import { Logger } from "../utils/logger";
 import { formatToChangeTypeTemplate } from "../utils/string-format";
@@ -17,6 +18,8 @@ export interface ActionPrepareReleaseOptions extends ActionOptions {
   changeTypes: string[];
   validationPattern: string;
   releaseBranchPattern?: string;
+  prePrepare?: Hook;
+  postPrepare?: Hook;
 }
 
 export interface EntryGroup {
@@ -24,7 +27,7 @@ export interface EntryGroup {
   items: string[];
 }
 
-export const ActionPrepareRelease = async (
+const actionPrepareReleaseHandler = async (
   options: ActionPrepareReleaseOptions
 ): Promise<void> => {
   touchFile(options.changelogFile);
@@ -117,3 +120,9 @@ export const ActionPrepareRelease = async (
     `${Icons.success} ${options.changelogFile} updated! Be sure to review the changes before comitting.`
   );
 };
+
+export const ActionPrepareRelease = handleHooks(
+  actionPrepareReleaseHandler,
+  "prePrepare",
+  "postPrepare"
+);

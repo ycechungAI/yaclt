@@ -16,7 +16,9 @@ plugins:
   - "prettier"
   - "unicorn"
 rules:
-  "prettier/prettier": "error"
+  "prettier/prettier":
+    - "error"
+    - usePrettierrc: true
   "@typescript-eslint/explicit-function-return-type": "error"
   "unicorn/prevent-abbreviations": "off" # I want to abbreviate "parameters" as "params"
   "unicorn/prefer-node-protocol": "off" # prefixes node builtins with "node:" in the import path, this messes with Typescript

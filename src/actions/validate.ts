@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import yargs from "yargs";
 import { readLines } from "../utils/file-utils";
+import { handleHooks, Hook } from "../utils/hook-handler";
 import { Icons } from "../utils/icons";
 import { Logger } from "../utils/logger";
 import { formatToChangeTypeTemplate } from "../utils/string-format";
@@ -10,9 +11,11 @@ import { ActionOptions } from "./action-options";
 export interface ActionValidateOptions extends ActionOptions {
   changeTypes: string[];
   validationPattern: string;
+  preValidate?: Hook;
+  postValidate?: Hook;
 }
 
-export const ActionValidate = (options: ActionValidateOptions): boolean => {
+const actionValidateHandler = (options: ActionValidateOptions): boolean => {
   const noneFoundWarning = `${Icons.warning} No changelog entries found in ${options.logsDir}`;
   if (!fs.existsSync(options.logsDir)) {
     Logger.warn(noneFoundWarning);
@@ -68,3 +71,9 @@ export const ActionValidate = (options: ActionValidateOptions): boolean => {
   Logger.log(`${Icons.success} All changelog entries formatted correctly!`);
   return true;
 };
+
+export const ActionValidate = handleHooks(
+  actionValidateHandler,
+  "preValidate",
+  "postValidate"
+);
