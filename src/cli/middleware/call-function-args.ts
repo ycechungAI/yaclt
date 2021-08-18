@@ -7,6 +7,17 @@ import { nameof } from "../../utils/nameof";
 import { isFunction } from "../../utils/type-utils";
 import { MiddlewareHandler } from "./middleware-handler";
 
+const camelToKebabCase = (str: string): string => {
+  return str
+    .split("")
+    .map((letter, idx) => {
+      return letter.toUpperCase() === letter
+        ? `${idx !== 0 ? "-" : ""}${letter.toLowerCase()}`
+        : letter;
+    })
+    .join("");
+};
+
 const hookArgs = new Set<string>([
   nameof<ActionNewOptions>("preNew"),
   nameof<ActionNewOptions>("postNew"),
@@ -15,6 +26,11 @@ const hookArgs = new Set<string>([
   nameof<ActionPrepareReleaseOptions>("prePrepare"),
   nameof<ActionPrepareReleaseOptions>("postPrepare"),
 ]);
+
+// because of the way yargs operates, we'll have both, for example,
+// preNew and pre-new in the Object.keys result below in the loop
+const existingKeys = [...hookArgs];
+existingKeys.forEach((key: string) => hookArgs.add(camelToKebabCase(key)));
 
 export const CallFunctionArgsMiddleware: MiddlewareHandler = {
   handler: function callFunctionArgs(
