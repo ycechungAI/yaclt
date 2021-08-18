@@ -46,13 +46,6 @@ export const PrepareReleaseCommand: CommandModule<
   },
   handler: async (argv: Arguments<PrepareReleaseCommandOptions>) => {
     await runAction(async () => {
-      if (argv.preHook) {
-        const preResult = argv.preHook("prepare-release");
-        if (!preResult) {
-          throw new Error(`preHook returned a falsy value: ${preResult}`);
-        }
-      }
-
       let template: string;
 
       if (fs.existsSync(argv.changelogTemplate)) {
@@ -82,13 +75,6 @@ export const PrepareReleaseCommand: CommandModule<
       };
 
       await ActionPrepareRelease(options);
-
-      if (argv.postHook) {
-        const postResult = argv.postHook("prepare-release");
-        if (!postResult) {
-          throw new Error(`postHook returned a falsy value: ${postResult}`);
-        }
-      }
     }, argv.plumbing);
   },
 };

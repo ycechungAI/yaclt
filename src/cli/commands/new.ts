@@ -52,13 +52,6 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
   },
   handler: async (argv: Arguments<NewCommandOptions>) => {
     await runAction(async () => {
-      if (argv.preHook) {
-        const preResult = argv.preHook("new");
-        if (!preResult) {
-          throw new Error(`preHook returned a falsy value: ${preResult}`);
-        }
-      }
-
       if (
         argv.changeType &&
         !argv.changeTypes.find((t: string) => t === argv.changeType)
@@ -84,13 +77,6 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
       };
 
       await ActionNew(options);
-
-      if (argv.postHook) {
-        const postResult = argv.postHook("new");
-        if (!postResult) {
-          throw new Error(`postHook returned a falsy value: ${postResult}`);
-        }
-      }
     }, argv.plumbing);
   },
 };

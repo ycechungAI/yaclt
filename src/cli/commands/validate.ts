@@ -25,13 +25,6 @@ export const ValidateCommand: CommandModule<{}, ValidateCommandOptions> = {
   },
   handler: (argv: Arguments<ValidateCommandOptions>) => {
     runAction(() => {
-      if (argv.preHook) {
-        const preResult = argv.preHook("validate");
-        if (!preResult) {
-          throw new Error(`preHook returned a falsy value: ${preResult}`);
-        }
-      }
-
       const options: ActionValidateOptions = {
         plumbing: argv.plumbing,
         logsDir: argv.logsDir,
@@ -41,13 +34,6 @@ export const ValidateCommand: CommandModule<{}, ValidateCommandOptions> = {
       };
 
       ActionValidate(options);
-
-      if (argv.postHook) {
-        const postResult = argv.postHook("validate");
-        if (!postResult) {
-          throw new Error(`postHook returned a falsy value: ${postResult}`);
-        }
-      }
     }, argv.plumbing);
   },
 };
