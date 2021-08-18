@@ -1,7 +1,20 @@
 import yargs from "yargs";
+import { ActionNewOptions } from "../../actions/new";
+import { ActionPrepareReleaseOptions } from "../../actions/prepare-release";
+import { ActionValidateOptions } from "../../actions/validate";
 import { Logger } from "../../utils/logger";
+import { nameof } from "../../utils/nameof";
 import { isFunction } from "../../utils/type-utils";
 import { MiddlewareHandler } from "./middleware-handler";
+
+const hookArgs = new Set<string>([
+  nameof<ActionNewOptions>("preNew"),
+  nameof<ActionNewOptions>("postNew"),
+  nameof<ActionValidateOptions>("preValidate"),
+  nameof<ActionValidateOptions>("postValidate"),
+  nameof<ActionPrepareReleaseOptions>("prePrepare"),
+  nameof<ActionPrepareReleaseOptions>("postPrepare"),
+]);
 
 export const CallFunctionArgsMiddleware: MiddlewareHandler = {
   handler: function callFunctionArgs(
@@ -11,6 +24,10 @@ export const CallFunctionArgsMiddleware: MiddlewareHandler = {
     >
   ): Record<string, string | boolean | number> {
     for (const key of Object.keys(argv)) {
+      if (hookArgs.has(key)) {
+        continue;
+      }
+
       const arg = argv[key];
       if (isFunction(arg)) {
         try {
