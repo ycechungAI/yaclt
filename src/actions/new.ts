@@ -18,7 +18,7 @@ export interface ActionNewOptions extends ActionOptions {
   edit: boolean;
 }
 
-export const ActionNew = async (options: ActionNewOptions) => {
+export const ActionNew = async (options: ActionNewOptions): Promise<void> => {
   const outputPath = path.join(
     options.logsDir,
     toValidFilename(`${moment().format("YYYY-MM-DD_HH-mm-ss")}.md`)

@@ -4,28 +4,28 @@ import prettier from "prettier";
  * Humanize a string from camelCase,
  * cameCase becomes Camel Case
  */
-const humanize = (input: string) =>
+const humanize = (input: string): string =>
   input
     .replace(/([a-z])([A-Z])/g, "$1 $2")
     .toLowerCase()
     .split(" ")
-    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
     .join(" ");
 
-export function arrayToMarkdownTable<T extends Record<string, any>>(
+export function arrayToMarkdownTable<T extends Record<string, unknown>>(
   input: T[]
 ): string {
-  if (input.length < 1) {
+  if (input.length === 0) {
     throw new Error("Need at least 1 item to generate a markdown table from.");
   }
 
   let markdown = "|";
-  const headers = Object.keys(input[0]!);
+  const headers = Object.keys(input[0] ?? {});
   headers.forEach((header: string) => {
     markdown += ` ${humanize(header)} |`;
   });
   markdown += "\n|";
-  headers.forEach((_: string) => {
+  headers.forEach(() => {
     markdown += " --- |";
   });
 

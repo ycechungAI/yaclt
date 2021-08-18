@@ -1,2 +1,2 @@
-export const toValidFilename = (input: string) =>
-  input.replace(/[/\\?%*:|"<>]/g, "-");
+export const toValidFilename = (input: string): string =>
+  input.replace(/["%*/:<>?\\|]/g, "-");

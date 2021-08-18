@@ -10,20 +10,18 @@ type TemplateOptions = Pick<GlobalArgv, "format"> &
     PrepareReleaseCommandOptions,
     "changelogTemplate" | "releaseBranchPattern"
   > &
-  Record<string, any>;
-const templateOptionKeys = [
+  Record<string, unknown>;
+const templateOptionKeys = new Set([
   nameof<TemplateOptions>("format"),
   nameof<TemplateOptions>("changelogTemplate"),
   nameof<TemplateOptions>("releaseBranchPattern"),
-];
+]);
 
 export const TemplatesFromFilesMiddleware: MiddlewareHandler = {
-  handler: function (argv: Record<string, any>): Record<string, any> {
+  handler: function (argv: Record<string, unknown>): Record<string, unknown> {
     for (const key of Object.keys(argv)) {
       // ensure we're only manipulating options which are for handlebars templates
-      if (
-        !templateOptionKeys.some((templateKey: string) => templateKey === key)
-      ) {
+      if (!templateOptionKeys.has(key)) {
         continue;
       }
 

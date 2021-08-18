@@ -14,7 +14,7 @@ export const touchFile = (filePath: string): void => {
 
   try {
     fs.utimesSync(filePath, time, time);
-  } catch (err) {
+  } catch {
     fs.closeSync(fs.openSync(filePath, "w"));
   }
 };

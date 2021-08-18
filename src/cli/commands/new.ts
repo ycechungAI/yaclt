@@ -12,7 +12,10 @@ export interface NewCommandOptions extends GlobalArgv {
   edit?: boolean;
 }
 
-export const NewCommand: CommandModule<{}, NewCommandOptions> = {
+export const NewCommand: CommandModule<
+  Record<string, unknown>,
+  NewCommandOptions
+> = {
   command: "new",
   describe: "Generate a new changelog entry",
   builder: {
@@ -52,10 +55,7 @@ export const NewCommand: CommandModule<{}, NewCommandOptions> = {
   },
   handler: async (argv: Arguments<NewCommandOptions>) => {
     await runAction(async () => {
-      if (
-        argv.changeType &&
-        !argv.changeTypes.find((t: string) => t === argv.changeType)
-      ) {
+      if (argv.changeType && !argv.changeTypes.includes(argv.changeType)) {
         const message = `Invalid change type: ${argv.changeType}`;
         Logger.error(message);
         yargs.exit(1, new Error(message));

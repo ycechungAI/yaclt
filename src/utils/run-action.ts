@@ -2,7 +2,7 @@ import yargs from "yargs";
 import { Icons } from "./icons";
 import { Logger } from "./logger";
 
-export const runAction = (action: () => any, plumbing: boolean) => {
+export const runAction = <T>(action: () => T, plumbing: boolean): T => {
   try {
     if (!plumbing && process.env["YACLT_CONFIG_PATH"]) {
       Logger.log(

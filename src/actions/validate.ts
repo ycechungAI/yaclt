@@ -4,7 +4,7 @@ import yargs from "yargs";
 import { readLines } from "../utils/file-utils";
 import { Icons } from "../utils/icons";
 import { Logger } from "../utils/logger";
-import { formatToChangeTypeRegex } from "../utils/string-format";
+import { formatToChangeTypeTemplate } from "../utils/string-format";
 import { ActionOptions } from "./action-options";
 
 export interface ActionValidateOptions extends ActionOptions {
@@ -28,7 +28,7 @@ export const ActionValidate = (options: ActionValidateOptions): boolean => {
   let hasInvalidEntries = false;
 
   const regex = new RegExp(`^${options.validationPattern}$`);
-  const changeTypePattern = formatToChangeTypeRegex(options.format);
+  const changeTypePattern = formatToChangeTypeTemplate(options.format);
   for (const filePath of filePaths) {
     const lines = readLines(path.join(options.logsDir, filePath));
 

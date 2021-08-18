@@ -1,5 +1,5 @@
 import HandlebarsHelpers from "handlebars-helpers";
-import { CommandModule } from "yargs";
+import { Argv, CommandModule } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { CompletionFishCommand } from "./commands/completion-fish";
@@ -15,6 +15,8 @@ HandlebarsHelpers();
 
 const config = getConfig();
 
+// idk a way around this
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const AllCommands: CommandModule<any, any>[] = [
   NewCommand,
   ValidateCommand,
@@ -22,7 +24,7 @@ export const AllCommands: CommandModule<any, any>[] = [
   CompletionFishCommand,
 ];
 
-export const BuildCli = () => {
+export const BuildCli = (): Argv => {
   const cli = yargs(hideBin(process.argv)).scriptName("yaclt");
 
   // register middlewares

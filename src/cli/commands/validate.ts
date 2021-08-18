@@ -16,7 +16,10 @@ export const ValidationPatternOption: { [key: string]: Options } = {
   },
 };
 
-export const ValidateCommand: CommandModule<{}, ValidateCommandOptions> = {
+export const ValidateCommand: CommandModule<
+  Record<string, unknown>,
+  ValidateCommandOptions
+> = {
   command: "validate",
   describe: "Validate existing changelogs against the specified format",
   builder: {

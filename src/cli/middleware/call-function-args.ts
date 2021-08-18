@@ -6,12 +6,16 @@ import { MiddlewareHandler } from "./middleware-handler";
 // Record<string, any> allows for any option set whatsoever
 export const CallFunctionArgsMiddleware: MiddlewareHandler = {
   handler: function callFunctionArgs(
-    argv: Record<string, any>
-  ): Record<string, any> {
+    argv: Record<
+      string,
+      string | boolean | number | (() => string | boolean | number)
+    >
+  ): Record<string, string | boolean | number> {
     for (const key of Object.keys(argv)) {
-      if (isFunction(argv[key])) {
+      const arg = argv[key];
+      if (isFunction(arg)) {
         try {
-          argv[key] = argv[key]();
+          argv[key] = arg();
         } catch (error) {
           Logger.error(
             `An error occurred evaluating function argument '${key}': `,
@@ -23,7 +27,7 @@ export const CallFunctionArgsMiddleware: MiddlewareHandler = {
       }
     }
 
-    return argv;
+    return argv as Record<string, string | boolean | number>;
   },
   preValidation: true,
 };

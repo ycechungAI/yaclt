@@ -7,12 +7,14 @@ export const StringFormatParams = {
   issueId: "issueId",
 };
 
-export const formatToChangeTypeRegex = (format: string) => {
-  const changeTypeTemplatePattern = /\{\{\s*changeType\s*\}\}/;
+export const formatToChangeTypeTemplate = (
+  format: string
+): HandlebarsTemplateDelegate<Record<string, unknown>> => {
+  const changeTypeTemplatePattern = /{{\s*changeType\s*}}/;
   const hasChangeType = changeTypeTemplatePattern.test(format);
   const indexOfChangeType = format.search(changeTypeTemplatePattern);
   const changeTypeHandlebars = hasChangeType
-    ? format.substring(
+    ? format.slice(
         Math.max(0, indexOfChangeType - 2),
         Math.min(
           format.length,

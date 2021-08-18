@@ -3,9 +3,9 @@ import { touchFile } from "../utils/file-utils";
 import { StringFormatParams } from "../utils/string-format";
 
 const coerceFileArg =
-  (options = { createIfNotExist: true }) =>
-  (filePath: string) => {
-    if (options.createIfNotExist) {
+  (createIfNotExist = true) =>
+  (filePath: string): string => {
+    if (createIfNotExist) {
       touchFile(filePath);
     }
 
@@ -41,7 +41,7 @@ export const CliOptions: { [key: string]: Options } = {
     normalize: true,
     default: "CHANGELOG.md",
     describe: "The name of the global changelog file to collect entries into",
-    coerce: coerceFileArg({ createIfNotExist: true }),
+    coerce: coerceFileArg(true),
     global: true,
   },
   changeTypes: {
