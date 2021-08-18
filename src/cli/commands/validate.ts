@@ -21,11 +21,13 @@ export const ValidateCommandOptions: { [key: string]: Options } = {
     describe:
       "A hook function to run before performing validation. Throw an error or return false to halt execution. Only usable from a Javascript configuration file.",
     required: false,
+    hidden: true,
   },
   postValidate: {
     describe:
       "A hook function to run after performing validation. Only usable from a Javascript configuration file.",
     required: false,
+    hidden: true,
   },
 };
 

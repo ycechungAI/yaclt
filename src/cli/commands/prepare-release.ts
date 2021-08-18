@@ -52,11 +52,13 @@ export const PrepareReleaseCommand: CommandModule<
       describe:
         "A hook function to run before preparing the release changes. Throw an error or return false to halt execution. Only usable from a Javascript configuration file.",
       required: false,
+      hidden: true,
     },
     postPrepare: {
       describe:
         "A hook function to run after preparing the release changes. Only usable from a Javascript configuration file.",
       required: false,
+      hidden: true,
     },
     ...CliOptions,
   },
