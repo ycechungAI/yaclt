@@ -59,7 +59,4 @@ The CLI will check if the argument is a filepath to a file that exists, and if s
 
 ## Contributing
 
-- Use `yarn`, not `npm`
-- All code must be strongly-typed TypeScript (the exception being the `yacltrc.js` used in this repo)
-- Before making any commits, make sure to run `yarn install-hooks` to install the Husky git hooks
-- Each pull request must include a changelog entry generated via `yaclt new`
+See [CONTRIBUTING.md](./CONTRIBUTING.md)
