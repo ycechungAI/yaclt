@@ -20,6 +20,8 @@ The changelog entry format and the global changelog file template are both [Hand
 
 Help for each command can be found in [COMMANDS.md](./COMMANDS.md) or by running the command with the `--help` argument.
 
+Neovim users, see [`yaclt.nvim`](https://github.com/mrjones2014/yaclt.nvim)
+
 ## Dependencies
 
 Node 12+, and to be run from within a git repo.
