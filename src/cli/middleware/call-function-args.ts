@@ -1,26 +1,43 @@
 import yargs from "yargs";
+import { ActionNewOptions } from "../../actions/new";
+import { ActionPrepareReleaseOptions } from "../../actions/prepare-release";
+import { ActionValidateOptions } from "../../actions/validate";
 import { Logger } from "../../utils/logger";
 import { nameof } from "../../utils/nameof";
+import { camelToKebabCase } from "../../utils/string-utils";
 import { isFunction } from "../../utils/type-utils";
-import { GlobalArgv } from "../options";
 import { MiddlewareHandler } from "./middleware-handler";
 
-// Record<string, any> allows for any option set whatsoever
+const hookArgs = new Set<string>([
+  nameof<ActionNewOptions>("preNew"),
+  nameof<ActionNewOptions>("postNew"),
+  nameof<ActionValidateOptions>("preValidate"),
+  nameof<ActionValidateOptions>("postValidate"),
+  nameof<ActionPrepareReleaseOptions>("prePrepare"),
+  nameof<ActionPrepareReleaseOptions>("postPrepare"),
+]);
+
+// because of the way yargs operates, we'll have both, for example,
+// preNew and pre-new in the Object.keys result below in the loop
+const existingKeys = [...hookArgs];
+existingKeys.forEach((key: string) => hookArgs.add(camelToKebabCase(key)));
+
 export const CallFunctionArgsMiddleware: MiddlewareHandler = {
   handler: function callFunctionArgs(
-    argv: Record<string, any>
-  ): Record<string, any> {
+    argv: Record<
+      string,
+      string | boolean | number | (() => string | boolean | number)
+    >
+  ): Record<string, string | boolean | number> {
     for (const key of Object.keys(argv)) {
-      // skip hook args because they need to be executed just-in-time
-      if (
-        key === nameof<GlobalArgv>("preHook") ||
-        key === nameof<GlobalArgv>("postHook")
-      ) {
+      if (hookArgs.has(key)) {
         continue;
       }
-      if (isFunction(argv[key])) {
+
+      const arg = argv[key];
+      if (isFunction(arg)) {
         try {
-          argv[key] = argv[key]();
+          argv[key] = arg();
         } catch (error) {
           Logger.error(
             `An error occurred evaluating function argument '${key}': `,
@@ -32,7 +49,7 @@ export const CallFunctionArgsMiddleware: MiddlewareHandler = {
       }
     }
 
-    return argv;
+    return argv as Record<string, string | boolean | number>;
   },
   preValidation: true,
 };

@@ -2,7 +2,10 @@ import { CommandModule } from "yargs";
 import { Logger } from "../../utils/logger";
 import { GlobalArgv } from "../options";
 
-export const CompletionFishCommand: CommandModule<{}, GlobalArgv> = {
+export const CompletionFishCommand: CommandModule<
+  Record<string, unknown>,
+  GlobalArgv
+> = {
   command: "completion-fish",
   describe: "Generate completion script for Fish",
   handler: () => {

@@ -11,16 +11,15 @@ const getFirstLine = (paragraph?: string): string | undefined => {
 
   let index: number | undefined = paragraph.indexOf("\n");
   if (index === -1) {
-    // make undefined so we can pass it cleverly to .substring(start, end)
     index = undefined;
   }
-  return paragraph.substring(0, index);
+  return index ? paragraph.slice(0, index) : paragraph;
 };
 
 export const LastCommitMessageMiddleware: MiddlewareHandler = {
   preValidation: true,
   handler: async function parseMessageFromLastCommit(
-    argv: Record<string, any>
+    argv: Record<string, unknown>
   ) {
     if (!argv["lastCommit"]) {
       return;
@@ -48,7 +47,7 @@ export const LastCommitMessageMiddleware: MiddlewareHandler = {
         process.exit(1);
       }
 
-      const gitLogMessage = getFirstLine(gitLogResult[0]!.commit.message);
+      const gitLogMessage = getFirstLine(gitLogResult[0]?.commit.message);
 
       if (!gitLogMessage) {
         const message =

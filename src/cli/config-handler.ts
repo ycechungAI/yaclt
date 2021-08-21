@@ -17,7 +17,7 @@ const supportedConfigFilenames = [
 const parseConfig = (
   configPath: string,
   configContents: string
-): Record<string, any> => {
+): Record<string, unknown> => {
   if (configPath.endsWith(".json")) {
     return JSON.parse(configContents);
   }
@@ -31,10 +31,12 @@ const parseConfig = (
       process.exit(1);
     }
 
-    return config;
+    return config as Record<string, unknown>;
   }
 
   if (configPath.endsWith(".js")) {
+    // we need to require this at runtime since it's a config file
+    // eslint-disable-next-line unicorn/prefer-module
     return require(configPath.replace(".js", ""));
   }
 
@@ -44,7 +46,7 @@ const parseConfig = (
   process.exit(1);
 };
 
-export const getConfig = (): Record<string, any> => {
+export const getConfig = (): Record<string, unknown> => {
   const configPath = findUp.sync(supportedConfigFilenames);
 
   if (!configPath) {
@@ -62,6 +64,8 @@ export const getConfig = (): Record<string, any> => {
       if (fs.existsSync(globalConfigPath)) {
         process.env["YACLT_CONFIG_PATH"] = globalConfigPath;
         // convert to relative path in case it's a .js config file
+        // need to use __dirname here so disable unicorn/prefer-module
+        // eslint-disable-next-line unicorn/prefer-module
         const relativePath = path.relative(__dirname, globalConfigPath);
         const contents = fs.readFileSync(globalConfigPath).toString();
         return parseConfig(relativePath, contents);

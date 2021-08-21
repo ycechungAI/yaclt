@@ -1,13 +1,17 @@
 import colors from "colors";
 
-function colorStrings(colorFunc: (str: string) => string, data: any[]) {
-  if (data == null) {
+function colorStrings(
+  colorFunc: (str: string) => string,
+  data: unknown[]
+): unknown[] | string {
+  if (data == undefined) {
     return "";
   }
 
   for (let i = 0; i < data.length; i++) {
-    if (typeof data[i] === "string") {
-      data[i] = colorFunc(data[i]);
+    const item = data[i];
+    if (typeof item === "string") {
+      data[i] = colorFunc(item);
     }
   }
 
@@ -16,8 +20,10 @@ function colorStrings(colorFunc: (str: string) => string, data: any[]) {
 
 const logger = {
   log: console.log,
-  error: (...data: any[]) => console.error(...colorStrings(colors.red, data)),
-  warn: (...data: any[]) => console.warn(...colorStrings(colors.yellow, data)),
+  error: (...data: unknown[]): void =>
+    console.error(...colorStrings(colors.red, data)),
+  warn: (...data: unknown[]): void =>
+    console.warn(...colorStrings(colors.yellow, data)),
 };
 
 export const Logger = Object.freeze(logger);

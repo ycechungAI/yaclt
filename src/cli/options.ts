@@ -1,11 +1,11 @@
 import { Options } from "yargs";
 import { touchFile } from "../utils/file-utils";
-import { StringFormatParams } from "../utils/string-format";
+import { StringFormatParams } from "../utils/string-utils";
 
 const coerceFileArg =
-  (options = { createIfNotExist: true }) =>
-  (filePath: string) => {
-    if (options.createIfNotExist) {
+  (createIfNotExist = true) =>
+  (filePath: string): string => {
+    if (createIfNotExist) {
       touchFile(filePath);
     }
 
@@ -20,8 +20,6 @@ export interface GlobalArgv {
   changeTypes: string[];
   requireIssueIds: boolean;
   format: string;
-  preHook?: (commandName: string) => boolean;
-  postHook?: (commandName: string) => boolean;
 }
 
 export const CliOptions: { [key: string]: Options } = {
@@ -43,7 +41,7 @@ export const CliOptions: { [key: string]: Options } = {
     normalize: true,
     default: "CHANGELOG.md",
     describe: "The name of the global changelog file to collect entries into",
-    coerce: coerceFileArg({ createIfNotExist: true }),
+    coerce: coerceFileArg(true),
     global: true,
   },
   changeTypes: {
@@ -70,17 +68,5 @@ export const CliOptions: { [key: string]: Options } = {
     describe:
       "Reduce output to just the relevant data, e.g. filepaths for `new` and `prepare-release`, `true/false` for `validate`, for scripting purposes. Also disables opening `$EDITOR`.",
     global: true,
-  },
-  preHook: {
-    describe:
-      "A hook to allow arbitrary validation code to be executed pre-command execution. If a falsy value is returned, command is aborted. Hook functions get the command name being executed as a parameter; you must guard against `undefined` because the config parser attempts to run them to ensure it is a valid function.",
-    global: true,
-    hidden: true,
-  },
-  postHook: {
-    describe:
-      "A hook to allow arbitrary post-command code to be executed. In the case where one command runs another (e.g. prepare-release implies validate), hooks for both are respected. Hook functions get the command name being executed as a parameter; you must guard against `undefined` because the config parser attempts to run them to ensure it is a valid function.",
-    global: true,
-    hidden: true,
   },
 };

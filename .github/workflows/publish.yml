@@ -2,7 +2,7 @@ name: "NPM Publish"
 on:
   push:
     tags:
-      - '**'
+      - "**"
 jobs:
   Build:
     runs-on: ubuntu-latest
@@ -12,6 +12,7 @@ jobs:
         with:
           node-version: 14
       - run: yarn install
+      - run: yarn lint
       - run: yarn build
       - uses: JS-DevTools/npm-publish@v1
         with:

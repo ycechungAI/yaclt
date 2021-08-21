@@ -3,10 +3,11 @@ import fs from "fs";
 import git from "isomorphic-git";
 import moment from "moment";
 import path from "path";
+import { handleHooks, Hook } from "../utils/hook-handler";
 import { Icons } from "../utils/icons";
 import { Logger } from "../utils/logger";
 import { toValidFilename } from "../utils/path-utils";
-import { StringFormatParams } from "../utils/string-format";
+import { StringFormatParams } from "../utils/string-utils";
 import { compileTemplate } from "../utils/template-utils";
 import { ActionOptions } from "./action-options";
 
@@ -16,9 +17,11 @@ export interface ActionNewOptions extends ActionOptions {
   gitBranchFormat?: string;
   message?: string;
   edit: boolean;
+  preNew?: Hook;
+  postNew?: Hook;
 }
 
-export const ActionNew = async (options: ActionNewOptions) => {
+const actionNewHandler = async (options: ActionNewOptions): Promise<void> => {
   const outputPath = path.join(
     options.logsDir,
     toValidFilename(`${moment().format("YYYY-MM-DD_HH-mm-ss")}.md`)
@@ -61,3 +64,5 @@ export const ActionNew = async (options: ActionNewOptions) => {
     spawn(process.env["EDITOR"], [outputPath], { stdio: "inherit" });
   }
 };
+
+export const ActionNew = handleHooks(actionNewHandler, "preNew", "postNew");

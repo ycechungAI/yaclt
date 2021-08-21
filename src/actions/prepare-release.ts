@@ -3,9 +3,10 @@ import git from "isomorphic-git";
 import path from "path";
 import yargs from "yargs";
 import { readLines, touchFile } from "../utils/file-utils";
+import { handleHooks, Hook } from "../utils/hook-handler";
 import { Icons } from "../utils/icons";
 import { Logger } from "../utils/logger";
-import { formatToChangeTypeRegex } from "../utils/string-format";
+import { formatToChangeTypeTemplate } from "../utils/string-utils";
 import { compileTemplate } from "../utils/template-utils";
 import { ActionOptions } from "./action-options";
 import { ActionValidate } from "./validate";
@@ -17,6 +18,10 @@ export interface ActionPrepareReleaseOptions extends ActionOptions {
   changeTypes: string[];
   validationPattern: string;
   releaseBranchPattern?: string;
+  preValidate?: Hook;
+  postValidate?: Hook;
+  prePrepare?: Hook;
+  postPrepare?: Hook;
 }
 
 export interface EntryGroup {
@@ -24,9 +29,9 @@ export interface EntryGroup {
   items: string[];
 }
 
-export const ActionPrepareRelease = async (
+const actionPrepareReleaseHandler = async (
   options: ActionPrepareReleaseOptions
-) => {
+): Promise<void> => {
   touchFile(options.changelogFile);
 
   const valid = ActionValidate({
@@ -35,10 +40,12 @@ export const ActionPrepareRelease = async (
     format: options.format,
     changeTypes: options.changeTypes,
     validationPattern: options.validationPattern,
+    preValidate: options.preValidate,
+    postValidate: options.postValidate,
   });
 
   if (!valid) {
-    yargs.exit(1, new Error());
+    yargs.exit(1, new Error("Invalid changelog entries found."));
     process.exit(1);
   }
 
@@ -54,7 +61,7 @@ export const ActionPrepareRelease = async (
     const branchName = branchTemplate({ releaseNumber: options.releaseNumber });
     try {
       await git.branch({ fs, ref: branchName, dir: process.cwd() });
-    } catch (_) {
+    } catch {
       const message = `${Icons.error} Failed to checkout release branch: ${branchName}`;
       Logger.error(message);
       yargs.exit(1, new Error(message));
@@ -65,7 +72,7 @@ export const ActionPrepareRelease = async (
   const fileNames = fs.readdirSync(options.logsDir);
 
   const entryGroups: EntryGroup[] = [];
-  const changeTypeCompiledTemplate = formatToChangeTypeRegex(options.format);
+  const changeTypeCompiledTemplate = formatToChangeTypeTemplate(options.format);
 
   for (const fileName of fileNames) {
     const filePath = path.join(options.logsDir, fileName);
@@ -78,7 +85,7 @@ export const ActionPrepareRelease = async (
       );
 
       if (!lineChangeType) {
-        throw new Error(`unable to parse change type`);
+        throw new Error("unable to parse change type");
       }
 
       const existingGroup = entryGroups.find(
@@ -117,3 +124,9 @@ export const ActionPrepareRelease = async (
     `${Icons.success} ${options.changelogFile} updated! Be sure to review the changes before comitting.`
   );
 };
+
+export const ActionPrepareRelease = handleHooks(
+  actionPrepareReleaseHandler,
+  "prePrepare",
+  "postPrepare"
+);

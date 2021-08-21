@@ -7,12 +7,14 @@ export const StringFormatParams = {
   issueId: "issueId",
 };
 
-export const formatToChangeTypeRegex = (format: string) => {
-  const changeTypeTemplatePattern = /\{\{\s*changeType\s*\}\}/;
+export const formatToChangeTypeTemplate = (
+  format: string
+): HandlebarsTemplateDelegate<Record<string, unknown>> => {
+  const changeTypeTemplatePattern = /{{\s*changeType\s*}}/;
   const hasChangeType = changeTypeTemplatePattern.test(format);
   const indexOfChangeType = format.search(changeTypeTemplatePattern);
   const changeTypeHandlebars = hasChangeType
-    ? format.substring(
+    ? format.slice(
         Math.max(0, indexOfChangeType - 2),
         Math.min(
           format.length,
@@ -29,4 +31,15 @@ export const formatToChangeTypeRegex = (format: string) => {
     : "UNCATEGORIZED";
   const changeTypeCompiledTemplate = compileTemplate(changeTypeHandlebars);
   return changeTypeCompiledTemplate;
+};
+
+export const camelToKebabCase = (str: string): string => {
+  return str
+    .split("")
+    .map((letter, idx) => {
+      return letter.toUpperCase() === letter
+        ? `${idx !== 0 ? "-" : ""}${letter.toLowerCase()}`
+        : letter;
+    })
+    .join("");
 };

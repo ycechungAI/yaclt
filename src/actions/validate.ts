@@ -2,17 +2,20 @@ import fs from "fs";
 import path from "path";
 import yargs from "yargs";
 import { readLines } from "../utils/file-utils";
+import { handleHooks, Hook } from "../utils/hook-handler";
 import { Icons } from "../utils/icons";
 import { Logger } from "../utils/logger";
-import { formatToChangeTypeRegex } from "../utils/string-format";
+import { formatToChangeTypeTemplate } from "../utils/string-utils";
 import { ActionOptions } from "./action-options";
 
 export interface ActionValidateOptions extends ActionOptions {
   changeTypes: string[];
   validationPattern: string;
+  preValidate?: Hook;
+  postValidate?: Hook;
 }
 
-export const ActionValidate = (options: ActionValidateOptions): boolean => {
+const actionValidateHandler = (options: ActionValidateOptions): boolean => {
   const noneFoundWarning = `${Icons.warning} No changelog entries found in ${options.logsDir}`;
   if (!fs.existsSync(options.logsDir)) {
     Logger.warn(noneFoundWarning);
@@ -28,7 +31,7 @@ export const ActionValidate = (options: ActionValidateOptions): boolean => {
   let hasInvalidEntries = false;
 
   const regex = new RegExp(`^${options.validationPattern}$`);
-  const changeTypePattern = formatToChangeTypeRegex(options.format);
+  const changeTypePattern = formatToChangeTypeTemplate(options.format);
   for (const filePath of filePaths) {
     const lines = readLines(path.join(options.logsDir, filePath));
 
@@ -68,3 +71,9 @@ export const ActionValidate = (options: ActionValidateOptions): boolean => {
   Logger.log(`${Icons.success} All changelog entries formatted correctly!`);
   return true;
 };
+
+export const ActionValidate = handleHooks(
+  actionValidateHandler,
+  "preValidate",
+  "postValidate"
+);
