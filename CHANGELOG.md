@@ -1,3 +1,13 @@
+# Release 1.0.0 - 2021-08-21
+
+## IMPROVED
+
+- [IMPROVED] Replace emojis with standard unicode characters and color error and warning output {#88}
+- [IMPROVED] Replace all direct shell calls to git with isomorphic-git {#89}
+- [IMPROVED] Refactor hooks architecture to be much more configurable and less brittle {#79}
+
+---
+
 # Release 0.8.1 - 2021-08-12
 
 ## FIXED
