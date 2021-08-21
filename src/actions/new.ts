@@ -7,7 +7,7 @@ import { handleHooks, Hook } from "../utils/hook-handler";
 import { Icons } from "../utils/icons";
 import { Logger } from "../utils/logger";
 import { toValidFilename } from "../utils/path-utils";
-import { StringFormatParams } from "../utils/string-format";
+import { StringFormatParams } from "../utils/string-utils";
 import { compileTemplate } from "../utils/template-utils";
 import { ActionOptions } from "./action-options";
 

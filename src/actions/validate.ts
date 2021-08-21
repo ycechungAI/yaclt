@@ -5,7 +5,7 @@ import { readLines } from "../utils/file-utils";
 import { handleHooks, Hook } from "../utils/hook-handler";
 import { Icons } from "../utils/icons";
 import { Logger } from "../utils/logger";
-import { formatToChangeTypeTemplate } from "../utils/string-format";
+import { formatToChangeTypeTemplate } from "../utils/string-utils";
 import { ActionOptions } from "./action-options";
 
 export interface ActionValidateOptions extends ActionOptions {

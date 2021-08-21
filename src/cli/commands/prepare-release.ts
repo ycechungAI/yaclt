@@ -1,4 +1,3 @@
-import fs from "fs";
 import { Arguments, CommandModule } from "yargs";
 import {
   ActionPrepareRelease,
@@ -11,7 +10,7 @@ import { ValidateCommandOptions } from "./validate";
 
 export interface PrepareReleaseCommandOptions extends GlobalArgv {
   changelogTemplate: string;
-  releaseNumber: string | (() => string);
+  releaseNumber: string;
   validationPattern: string;
   releaseBranchPattern?: string;
   preValidate?: Hook;
@@ -64,15 +63,6 @@ export const PrepareReleaseCommand: CommandModule<
   },
   handler: async (argv: Arguments<PrepareReleaseCommandOptions>) => {
     await runAction(async () => {
-      const template = fs.existsSync(argv.changelogTemplate)
-        ? fs.readFileSync(argv.changelogTemplate).toString()
-        : argv.changelogTemplate;
-
-      const releaseNumber =
-        typeof argv.releaseNumber === "string"
-          ? argv.releaseNumber
-          : argv.releaseNumber();
-
       const options: ActionPrepareReleaseOptions = {
         plumbing: argv.plumbing,
         changeTypes: argv.changeTypes,
@@ -85,8 +75,8 @@ export const PrepareReleaseCommand: CommandModule<
         postValidate: argv.postValidate,
         prePrepare: argv.prePrepare,
         postPrepare: argv.postPrepare,
-        releaseNumber,
-        template,
+        releaseNumber: argv.releaseNumber,
+        template: argv.changelogTemplate,
       };
 
       await ActionPrepareRelease(options);

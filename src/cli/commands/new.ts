@@ -4,7 +4,7 @@ import { CliOptions, GlobalArgv } from "../../cli/options";
 import { Hook } from "../../utils/hook-handler";
 import { Logger } from "../../utils/logger";
 import { runAction } from "../../utils/run-action";
-import { StringFormatParams } from "../../utils/string-format";
+import { StringFormatParams } from "../../utils/string-utils";
 
 export interface NewCommandOptions extends GlobalArgv {
   issueId?: string;

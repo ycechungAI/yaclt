@@ -1,6 +1,6 @@
 import { Options } from "yargs";
 import { touchFile } from "../utils/file-utils";
-import { StringFormatParams } from "../utils/string-format";
+import { StringFormatParams } from "../utils/string-utils";
 
 const coerceFileArg =
   (createIfNotExist = true) =>

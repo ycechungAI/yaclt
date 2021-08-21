@@ -4,19 +4,9 @@ import { ActionPrepareReleaseOptions } from "../../actions/prepare-release";
 import { ActionValidateOptions } from "../../actions/validate";
 import { Logger } from "../../utils/logger";
 import { nameof } from "../../utils/nameof";
+import { camelToKebabCase } from "../../utils/string-utils";
 import { isFunction } from "../../utils/type-utils";
 import { MiddlewareHandler } from "./middleware-handler";
-
-const camelToKebabCase = (str: string): string => {
-  return str
-    .split("")
-    .map((letter, idx) => {
-      return letter.toUpperCase() === letter
-        ? `${idx !== 0 ? "-" : ""}${letter.toLowerCase()}`
-        : letter;
-    })
-    .join("");
-};
 
 const hookArgs = new Set<string>([
   nameof<ActionNewOptions>("preNew"),
