@@ -13,10 +13,10 @@ interface CompileOptions {
   explicitPartialContext?: boolean;
 }
 
-export function compileTemplate(
+export const compileTemplate = (
   template: string,
   options?: CompileOptions
-): HandlebarsTemplateDelegate<Record<string, unknown>> {
+): HandlebarsTemplateDelegate<Record<string, unknown>> => {
   options = { noEscape: true, ...options };
   return Handlebars.compile(template, options);
-}
+};

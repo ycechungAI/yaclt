@@ -80,6 +80,6 @@ export const PrepareReleaseCommand: CommandModule<
       };
 
       await ActionPrepareRelease(options);
-    }, argv.plumbing);
+    });
   },
 };

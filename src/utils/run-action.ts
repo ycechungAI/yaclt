@@ -1,13 +1,27 @@
+import path from "path";
 import yargs from "yargs";
-import { Icons } from "./icons";
 import { Logger } from "./logger";
 
-export const runAction = <T>(action: () => T, plumbing: boolean): T => {
+const relativeize = (configPath: string): string => {
+  const pathRelativeToCwd = path.relative(process.cwd(), configPath);
+  // if config path is under current path, use path relative to cwd
+  if (!pathRelativeToCwd.includes("..")) {
+    return `./${pathRelativeToCwd}`;
+  }
+
+  const home = process.env["HOME"];
+  if (home && configPath.includes(home)) {
+    return configPath.replace(home, "~");
+  }
+
+  return configPath;
+};
+
+export const runAction = <T>(action: () => T): T => {
   try {
-    if (!plumbing && process.env["YACLT_CONFIG_PATH"]) {
-      Logger.log(
-        `${Icons.info} Found configuration file at ${process.env["YACLT_CONFIG_PATH"]}`
-      );
+    const configPath = process.env["YACLT_CONFIG_PATH"];
+    if (configPath) {
+      Logger.info(`Using configuration file at ${relativeize(configPath)}`);
     }
 
     return action();

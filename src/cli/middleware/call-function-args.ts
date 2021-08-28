@@ -23,12 +23,12 @@ const existingKeys = [...hookArgs];
 existingKeys.forEach((key: string) => hookArgs.add(camelToKebabCase(key)));
 
 export const CallFunctionArgsMiddleware: MiddlewareHandler = {
-  handler: function callFunctionArgs(
+  handler: (
     argv: Record<
       string,
       string | boolean | number | (() => string | boolean | number)
     >
-  ): Record<string, string | boolean | number> {
+  ): Record<string, string | boolean | number> => {
     for (const key of Object.keys(argv)) {
       if (hookArgs.has(key)) {
         continue;

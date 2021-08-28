@@ -4,7 +4,6 @@ import git from "isomorphic-git";
 import moment from "moment";
 import path from "path";
 import { handleHooks, Hook } from "../utils/hook-handler";
-import { Icons } from "../utils/icons";
 import { Logger } from "../utils/logger";
 import { toValidFilename } from "../utils/path-utils";
 import { StringFormatParams } from "../utils/string-utils";
@@ -51,14 +50,9 @@ const actionNewHandler = async (options: ActionNewOptions): Promise<void> => {
   }
 
   fs.writeFileSync(outputPath, entryText);
-  if (options.plumbing) {
-    Logger.log(outputPath);
-    return;
-  }
 
-  Logger.log(
-    `${Icons.success} Changelog entry placeholder generated at ${outputPath}!`
-  );
+  Logger.value(outputPath);
+  Logger.success(`Changelog entry placeholder generated at ${outputPath}!`);
 
   if (process.env["EDITOR"] && options.edit) {
     spawn(process.env["EDITOR"], [outputPath], { stdio: "inherit" });

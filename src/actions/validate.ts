@@ -3,7 +3,6 @@ import path from "path";
 import yargs from "yargs";
 import { readLines } from "../utils/file-utils";
 import { handleHooks, Hook } from "../utils/hook-handler";
-import { Icons } from "../utils/icons";
 import { Logger } from "../utils/logger";
 import {
   formatToChangeTypeTemplate,
@@ -19,7 +18,7 @@ export interface ActionValidateOptions extends ActionOptions {
 }
 
 const actionValidateHandler = (options: ActionValidateOptions): boolean => {
-  const noneFoundWarning = `${Icons.warning} No changelog entries found in ${options.logsDir}`;
+  const noneFoundWarning = `No changelog entries found in ${options.logsDir}`;
   if (!fs.existsSync(options.logsDir)) {
     Logger.warn(noneFoundWarning);
     return false;
@@ -41,7 +40,7 @@ const actionValidateHandler = (options: ActionValidateOptions): boolean => {
     for (const line of lines) {
       if (!regex.test(line)) {
         Logger.error(
-          `${Icons.error} Malformed changelog entry found in file ${filePath}: ${line}`
+          `Malformed changelog entry found in file ${filePath}: ${line}`
         );
 
         hasInvalidEntries = true;
@@ -58,7 +57,7 @@ const actionValidateHandler = (options: ActionValidateOptions): boolean => {
         );
         if (!changeType || changeType === "UNCATEGORIZED") {
           Logger.error(
-            `${Icons.error} Invalid change type found in changelog file ${filePath}: ${line}`
+            `Invalid change type found in changelog file ${filePath}: ${line}`
           );
           hasInvalidEntries = true;
         }
@@ -67,18 +66,15 @@ const actionValidateHandler = (options: ActionValidateOptions): boolean => {
   }
 
   if (hasInvalidEntries) {
-    const message = `${Icons.error} Malformed changelog entries found.`;
-    Logger.error(options.plumbing ? "false" : message);
+    const message = "Malformed changelog entries found.";
+    Logger.value(false);
+    Logger.error(message);
     yargs.exit(1, new Error(message));
     return false;
   }
 
-  if (options.plumbing) {
-    Logger.log("true");
-    return true;
-  }
-
-  Logger.log(`${Icons.success} All changelog entries formatted correctly!`);
+  Logger.value(true);
+  Logger.success("All changelog entries formatted correctly!");
   return true;
 };
 

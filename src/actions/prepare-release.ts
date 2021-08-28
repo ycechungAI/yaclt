@@ -4,7 +4,6 @@ import path from "path";
 import yargs from "yargs";
 import { readLines, touchFile } from "../utils/file-utils";
 import { handleHooks, Hook } from "../utils/hook-handler";
-import { Icons } from "../utils/icons";
 import { Logger } from "../utils/logger";
 import { formatToChangeTypeTemplate } from "../utils/string-utils";
 import { compileTemplate } from "../utils/template-utils";
@@ -50,7 +49,7 @@ const actionPrepareReleaseHandler = async (
   }
 
   if (!fs.existsSync(options.logsDir)) {
-    const message = `${Icons.error} Cannot prepare a release because no changelogs were found in ${options.logsDir}`;
+    const message = `Cannot prepare a release because no changelogs were found in ${options.logsDir}`;
     Logger.error(message);
     yargs.exit(1, new Error(message));
     return;
@@ -62,7 +61,7 @@ const actionPrepareReleaseHandler = async (
     try {
       await git.branch({ fs, ref: branchName, dir: process.cwd() });
     } catch {
-      const message = `${Icons.error} Failed to checkout release branch: ${branchName}`;
+      const message = `Failed to checkout release branch: ${branchName}`;
       Logger.error(message);
       yargs.exit(1, new Error(message));
       return;
@@ -116,12 +115,12 @@ const actionPrepareReleaseHandler = async (
     .map((file: string) => fs.unlinkSync(path.join(options.logsDir, file)));
 
   if (options.plumbing) {
-    Logger.log(options.changelogFile);
     return;
   }
 
-  Logger.log(
-    `${Icons.success} ${options.changelogFile} updated! Be sure to review the changes before comitting.`
+  Logger.value(options.changelogFile);
+  Logger.success(
+    `${options.changelogFile} updated! Be sure to review the changes before comitting.`
   );
 };
 

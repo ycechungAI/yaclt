@@ -1,9 +1,9 @@
-import colors from "colors";
+import chalk from "chalk";
 
-function colorStrings(
+const colorStrings = (
   colorFunc: (str: string) => string,
   data: unknown[]
-): unknown[] | string {
+): unknown[] | string => {
   if (data == undefined) {
     return "";
   }
@@ -16,14 +16,80 @@ function colorStrings(
   }
 
   return data;
-}
-
-const logger = {
-  log: console.log,
-  error: (...data: unknown[]): void =>
-    console.error(...colorStrings(colors.red, data)),
-  warn: (...data: unknown[]): void =>
-    console.warn(...colorStrings(colors.yellow, data)),
 };
 
-export const Logger = Object.freeze(logger);
+export const enum LogLevel {
+  none = -1,
+  values = 0,
+  normal = 1,
+  verbose = 2,
+}
+
+/* eslint-disable no-console */
+
+let _logLevel = LogLevel.normal;
+const setLogLevel = (logLevel: LogLevel): LogLevel => (_logLevel = logLevel);
+
+const value = (...data: unknown[]): void => {
+  // this one is primarily used for plumbing, so require exactly this log level
+  if (_logLevel !== LogLevel.values) {
+    return;
+  }
+
+  console.log(...data);
+};
+
+const info = (...data: unknown[]): void => {
+  if (_logLevel < LogLevel.verbose) {
+    return;
+  }
+
+  console.info(
+    chalk.bgBlue(chalk.black(chalk.bold("INFO"))),
+    ...colorStrings(chalk.blue, data)
+  );
+};
+
+const warn = (...data: unknown[]): void => {
+  if (_logLevel < LogLevel.normal) {
+    return;
+  }
+
+  console.warn(
+    chalk.bgYellow(chalk.black(chalk.bold("WARN"))),
+    ...colorStrings(chalk.yellow, data)
+  );
+};
+
+const error = (...data: unknown[]): void => {
+  if (_logLevel < LogLevel.normal) {
+    return;
+  }
+
+  console.error(
+    chalk.bgRed(chalk.black(chalk.bold("ERROR"))),
+    ...colorStrings(chalk.red, data)
+  );
+};
+
+const success = (...data: unknown[]): void => {
+  if (_logLevel < LogLevel.normal) {
+    return;
+  }
+
+  console.log(
+    chalk.bgGreenBright(chalk.black(chalk.bold("SUCCESS"))),
+    ...colorStrings(chalk.greenBright, data)
+  );
+};
+
+export const Logger = Object.freeze({
+  setLogLevel,
+  value,
+  info,
+  warn,
+  error,
+  success,
+});
+
+/* eslint-enable no-console */
