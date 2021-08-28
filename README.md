@@ -22,10 +22,6 @@ Help for each command can be found in [COMMANDS.md](./COMMANDS.md) or by running
 
 Neovim users, see [`yaclt.nvim`](https://github.com/mrjones2014/yaclt.nvim)
 
-## Dependencies
-
-Node 12+, and to be run from within a git repo.
-
 ## Configuration
 
 All command line flags and arguments can be specified in a configuration file. Supported file names are `yacltrc.yml`, `yacltrc.yaml`, `yacltrc.json`, and `yacltrc.js` (`.js` config must use `module.exports =`).
