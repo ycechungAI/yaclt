@@ -94,6 +94,6 @@ export const NewCommand: CommandModule<
       };
 
       await ActionNew(options);
-    }, argv.plumbing);
+    });
   },
 };

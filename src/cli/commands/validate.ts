@@ -54,6 +54,6 @@ export const ValidateCommand: CommandModule<
       };
 
       ActionValidate(options);
-    }, argv.plumbing);
+    });
   },
 };

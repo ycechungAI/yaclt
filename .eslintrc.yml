@@ -17,6 +17,7 @@ plugins:
   - "prettier"
   - "unicorn"
 rules:
+  "no-console": "error" # We should be using the Logger, not console
   "prettier/prettier":
     - "error"
     - usePrettierrc: true

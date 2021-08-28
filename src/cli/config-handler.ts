@@ -4,7 +4,6 @@ import yaml from "js-yaml";
 import os from "os";
 import path from "path";
 import yargs from "yargs";
-import { Icons } from "../utils/icons";
 import { Logger } from "../utils/logger";
 
 const supportedConfigFilenames = [
@@ -25,7 +24,7 @@ const parseConfig = (
   if (configPath.endsWith(".yml") || configPath.endsWith(".yaml")) {
     const config = yaml.load(configContents);
     if (!config || typeof config !== "object") {
-      const message = `${Icons.error} Invalid yml configuration`;
+      const message = "Invalid yml configuration";
       Logger.error(message);
       yargs.exit(1, new Error(message));
       process.exit(1);
