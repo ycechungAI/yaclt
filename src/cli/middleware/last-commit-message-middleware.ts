@@ -18,9 +18,7 @@ const getFirstLine = (paragraph?: string): string | undefined => {
 
 export const LastCommitMessageMiddleware: MiddlewareHandler = {
   preValidation: true,
-  handler: async function parseMessageFromLastCommit(
-    argv: Record<string, unknown>
-  ) {
+  handler: async (argv: Record<string, unknown>) => {
     if (!argv["lastCommit"]) {
       return;
     }

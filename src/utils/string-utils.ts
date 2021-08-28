@@ -33,13 +33,12 @@ export const formatToChangeTypeTemplate = (
   return changeTypeCompiledTemplate;
 };
 
-export const camelToKebabCase = (str: string): string => {
-  return str
+export const camelToKebabCase = (str: string): string =>
+  str
     .split("")
-    .map((letter, idx) => {
-      return letter.toUpperCase() === letter
+    .map((letter, idx) =>
+      letter.toUpperCase() === letter
         ? `${idx !== 0 ? "-" : ""}${letter.toLowerCase()}`
-        : letter;
-    })
+        : letter
+    )
     .join("");
-};

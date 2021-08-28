@@ -18,7 +18,7 @@ const templateOptionKeys = new Set([
 ]);
 
 export const TemplatesFromFilesMiddleware: MiddlewareHandler = {
-  handler: function (argv: Record<string, unknown>): Record<string, unknown> {
+  handler: (argv: Record<string, unknown>): Record<string, unknown> => {
     for (const key of Object.keys(argv)) {
       // ensure we're only manipulating options which are for handlebars templates
       if (!templateOptionKeys.has(key)) {

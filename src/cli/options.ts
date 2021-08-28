@@ -20,6 +20,8 @@ export interface GlobalArgv {
   changeTypes: string[];
   requireIssueIds: boolean;
   format: string;
+  quiet: boolean;
+  verbose: boolean;
 }
 
 export const CliOptions: { [key: string]: Options } = {
@@ -68,6 +70,18 @@ export const CliOptions: { [key: string]: Options } = {
     default: false,
     describe:
       "Reduce output to just the relevant data, e.g. filepaths for `new` and `prepare-release`, `true/false` for `validate`, for scripting purposes. Also disables opening `$EDITOR`.",
+    global: true,
+  },
+  quiet: {
+    type: "boolean",
+    default: false,
+    describe: "Silence all output.",
+    global: true,
+  },
+  verbose: {
+    type: "boolean",
+    default: false,
+    describe: "Output additional command logs and information.",
     global: true,
   },
 };

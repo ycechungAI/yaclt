@@ -14,9 +14,22 @@ ignorePatterns:
   - "yacltrc.js"
 plugins:
   - "@typescript-eslint"
+  - "prefer-arrow"
   - "prettier"
   - "unicorn"
 rules:
+  "prefer-arrow/prefer-arrow-functions":
+    - "error"
+    - disallowPrototype: true
+      singleReturnOnly: false
+      classPropertiesAllowed: true
+  "prefer-arrow-callback": "error"
+  "func-style":
+    - "error"
+    - "expression"
+  "arrow-body-style":
+    - "error"
+    - "as-needed"
   "no-console": "error" # We should be using the Logger, not console
   "prettier/prettier":
     - "error"
@@ -26,6 +39,7 @@ rules:
   "unicorn/prefer-node-protocol": "off" # prefixes node builtins with "node:" in the import path, this messes with Typescript
   "unicorn/no-process-exit": "off" # "Only use process.exit in CLI apps" well this is one
   "unicorn/no-array-for-each": "off" # I like Array#forEach
+  "unicorn/prefer-top-level-await": "error"
   quotes:
     - "error"
     - "double"

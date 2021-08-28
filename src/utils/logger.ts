@@ -1,9 +1,9 @@
 import chalk from "chalk";
 
-function colorStrings(
+const colorStrings = (
   colorFunc: (str: string) => string,
   data: unknown[]
-): unknown[] | string {
+): unknown[] | string => {
   if (data == undefined) {
     return "";
   }
@@ -16,7 +16,7 @@ function colorStrings(
   }
 
   return data;
-}
+};
 
 export const enum LogLevel {
   none = -1,
@@ -24,6 +24,8 @@ export const enum LogLevel {
   normal = 1,
   verbose = 2,
 }
+
+/* eslint-disable no-console */
 
 let _logLevel = LogLevel.normal;
 const setLogLevel = (logLevel: LogLevel): LogLevel => (_logLevel = logLevel);
@@ -89,3 +91,5 @@ export const Logger = Object.freeze({
   error,
   success,
 });
+
+/* eslint-enable no-console */

@@ -12,9 +12,9 @@ const humanize = (input: string): string =>
     .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
     .join(" ");
 
-export function arrayToMarkdownTable<T extends Record<string, unknown>>(
+export const arrayToMarkdownTable = <T extends Record<string, unknown>>(
   input: T[]
-): string {
+): string => {
   if (input.length === 0) {
     throw new Error("Need at least 1 item to generate a markdown table from.");
   }
@@ -40,4 +40,4 @@ export function arrayToMarkdownTable<T extends Record<string, unknown>>(
 
   markdown = prettier.format(markdown, { parser: "markdown" });
   return markdown;
-}
+};
