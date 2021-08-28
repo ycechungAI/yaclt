@@ -9,6 +9,7 @@ import { ValidateCommand } from "./commands/validate";
 import { getConfig } from "./config-handler";
 import { CallFunctionArgsMiddleware } from "./middleware/call-function-args";
 import { LastCommitMessageMiddleware } from "./middleware/last-commit-message-middleware";
+import { LogLevelMiddleware } from "./middleware/loglevel-middleware";
 import { TemplatesFromFilesMiddleware } from "./middleware/templates-from-files";
 
 HandlebarsHelpers();
@@ -40,7 +41,8 @@ export const BuildCli = (): Argv => {
     .middleware(
       LastCommitMessageMiddleware.handler,
       LastCommitMessageMiddleware.preValidation
-    );
+    )
+    .middleware(LogLevelMiddleware.handler, LogLevelMiddleware.preValidation);
 
   for (const command of AllCommands) {
     cli.command(command);

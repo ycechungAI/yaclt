@@ -69,7 +69,7 @@ export const CliOptions: { [key: string]: Options } = {
     type: "boolean",
     default: false,
     describe:
-      "Reduce output to just the relevant data, e.g. filepaths for `new` and `prepare-release`, `true/false` for `validate`, for scripting purposes. Also disables opening `$EDITOR`.",
+      "Reduce output to just the relevant data, e.g. filepaths for `new` and `prepare-release`, `true/false` for `validate`, for scripting purposes. Also disables opening `$EDITOR`. Passing this option will override --quiet or --verbose.",
     global: true,
   },
   quiet: {
