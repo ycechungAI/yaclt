@@ -1,3 +1,15 @@
+# Release 1.1.0 - 2021-08-28
+
+## IMPROVED
+
+- [IMPROVED] Make changeType tags optional by removing the Handlebars variable from the format string {#85}
+
+## NEW
+
+- [NEW] Add more advanced logger and configurable log levels {#98}
+
+---
+
 # Release 1.0.0 - 2021-08-21
 
 ## IMPROVED
