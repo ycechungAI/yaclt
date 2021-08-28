@@ -5,7 +5,10 @@ import { readLines } from "../utils/file-utils";
 import { handleHooks, Hook } from "../utils/hook-handler";
 import { Icons } from "../utils/icons";
 import { Logger } from "../utils/logger";
-import { formatToChangeTypeTemplate } from "../utils/string-utils";
+import {
+  formatToChangeTypeTemplate,
+  StringFormatParams,
+} from "../utils/string-utils";
 import { ActionOptions } from "./action-options";
 
 export interface ActionValidateOptions extends ActionOptions {
@@ -44,14 +47,21 @@ const actionValidateHandler = (options: ActionValidateOptions): boolean => {
         hasInvalidEntries = true;
       }
 
-      const changeType = options.changeTypes.find((changeType: string) =>
-        line.includes(changeTypePattern({ changeType }))
-      );
-      if (!changeType || changeType === "UNCATEGORIZED") {
-        Logger.error(
-          `${Icons.error} Invalid change type found in changelog file ${filePath}: ${line}`
+      // only validate changeTypes if format includes the changeType Handlebars variable
+      if (
+        new RegExp(`{{\\s*${StringFormatParams.changeType}\\s*}}`).test(
+          options.format
+        )
+      ) {
+        const changeType = options.changeTypes.find((changeType: string) =>
+          line.includes(changeTypePattern({ changeType }))
         );
-        hasInvalidEntries = true;
+        if (!changeType || changeType === "UNCATEGORIZED") {
+          Logger.error(
+            `${Icons.error} Invalid change type found in changelog file ${filePath}: ${line}`
+          );
+          hasInvalidEntries = true;
+        }
       }
     }
   }
