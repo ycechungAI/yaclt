@@ -19,6 +19,18 @@ export interface PrepareReleaseCommandOptions extends GlobalArgv {
   postPrepare?: Hook;
 }
 
+const defaultChangelogTemplate = `# Release {{releaseNumber}} - {{currentDateTime}}
+
+{{#each entryGroups}}## {{capitalize label}}
+
+{{#each items}}- {{this}}
+{{/each}}
+
+{{/each}}
+---
+
+`;
+
 export const PrepareReleaseCommand: CommandModule<
   Record<string, unknown>,
   PrepareReleaseCommandOptions
@@ -32,8 +44,7 @@ export const PrepareReleaseCommand: CommandModule<
       describe:
         "The Handlebars template to use to generate the changelog additions. Can be a filepath to read the template from, or a template literal string.",
       required: false,
-      default:
-        "# Release {{releaseNumber}} - {{currentDateTime}}\n\n{{#each entryGroups}}## {{capitalize label}}\n\n{{#each items}}- {{this}}\n{{/each}}\n\n{{/each}}\n---\n",
+      default: defaultChangelogTemplate,
     },
     releaseNumber: {
       type: "string",

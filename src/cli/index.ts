@@ -2,7 +2,7 @@ import Handlebars from "handlebars";
 import { Argv, CommandModule } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-import { currentDateTimeHelper } from "../utils/handlebars-helpers";
+import { capitalize, currentDateTimeHelper } from "../utils/handlebars-helpers";
 import { CompletionFishCommand } from "./commands/completion-fish";
 import { NewCommand } from "./commands/new";
 import { PrepareReleaseCommand } from "./commands/prepare-release";
@@ -14,6 +14,7 @@ import { LogLevelMiddleware } from "./middleware/loglevel-middleware";
 import { TemplatesFromFilesMiddleware } from "./middleware/templates-from-files";
 
 Handlebars.registerHelper("timestamp", currentDateTimeHelper);
+Handlebars.registerHelper("capitalize", capitalize);
 
 const config = getConfig();
 

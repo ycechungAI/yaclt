@@ -1,4 +1,4 @@
-import { compileFunction } from "vm";
+import { compileTemplate } from "../../../utils/template-utils";
 import { PrepareReleaseStrategy } from "./prepare-release-strategy";
 
 export interface EntryGroup {
@@ -43,7 +43,7 @@ export class WithChangeTypeStrategy extends PrepareReleaseStrategy {
   }
 
   public override generate(template: string, releaseNumber: string): string {
-    const handlebarsTemplate = compileFunction(template);
+    const handlebarsTemplate = compileTemplate(template);
     return handlebarsTemplate({
       releaseNumber,
       entryGroups: this.entryGroups,
