@@ -1,7 +1,7 @@
 import { spawn } from "child_process";
 import fs from "fs";
 import git from "isomorphic-git";
-import moment from "moment";
+import { DateTime } from "luxon";
 import path from "path";
 import { handleHooks, Hook } from "../utils/hook-handler";
 import { Logger } from "../utils/logger";
@@ -23,7 +23,7 @@ export interface ActionNewOptions extends ActionOptions {
 const actionNewHandler = async (options: ActionNewOptions): Promise<void> => {
   const outputPath = path.join(
     options.logsDir,
-    toValidFilename(`${moment().format("YYYY-MM-DD_HH-mm-ss")}.md`)
+    toValidFilename(`${DateTime.now().toISO()}.md`)
   );
 
   let issueId: string | undefined;
