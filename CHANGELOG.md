@@ -1,3 +1,11 @@
+# Release 2.0.1 - 2021-08-29
+
+## FIXED
+
+- [FIXED] Remove remaining references to `moment` {#107}
+
+---
+
 # Release 2.0.0 - 2021-08-29
 
 ## IMPROVED
