@@ -40,8 +40,7 @@ export const formatToChangeTypeTemplate = (
         )
     )
   );
-  const changeTypeCompiledTemplate = compileTemplate(changeTypeHandlebars);
-  return changeTypeCompiledTemplate;
+  return compileTemplate(changeTypeHandlebars);
 };
 
 export const camelToKebabCase = (str: string): string =>

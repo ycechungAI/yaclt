@@ -1,3 +1,11 @@
+# Release 1.1.1 - 2021-08-29
+
+## IMPROVED
+
+- [IMPROVED] Add `-q` as shorthand for `--quiet`, `-v` as shorthand for `--verbose`, and `-p` as shorthand for `--plumbing` {#101}
+
+---
+
 # Release 1.1.0 - 2021-08-28
 
 ## IMPROVED
