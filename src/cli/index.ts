@@ -1,7 +1,8 @@
-import HandlebarsHelpers from "handlebars-helpers";
+import Handlebars from "handlebars";
 import { Argv, CommandModule } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
+import { currentDateTimeHelper } from "../utils/handlebars-helpers";
 import { CompletionFishCommand } from "./commands/completion-fish";
 import { NewCommand } from "./commands/new";
 import { PrepareReleaseCommand } from "./commands/prepare-release";
@@ -12,7 +13,7 @@ import { LastCommitMessageMiddleware } from "./middleware/last-commit-message-mi
 import { LogLevelMiddleware } from "./middleware/loglevel-middleware";
 import { TemplatesFromFilesMiddleware } from "./middleware/templates-from-files";
 
-HandlebarsHelpers();
+Handlebars.registerHelper("timestamp", currentDateTimeHelper);
 
 const config = getConfig();
 
