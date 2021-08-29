@@ -43,8 +43,7 @@ The CLI will check if the argument is a filepath to a file that exists, and if s
 
 #### `currentDateTime`
 
-`currentDateTime` outputs a timestamp, and accepts an optional format parameter. By default, it formats via
-[Luxon's `toISODate()` function](https://github.com/moment/luxon/blob/master/docs/formatting.md#iso-8601). There are a few special
+`currentDateTime` outputs a timestamp given a format parameter. There are a few special
 format values:
 
 - `ISODate` => `DateTime.now().toISODate()` (this is also the default)

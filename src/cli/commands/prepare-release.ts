@@ -19,7 +19,7 @@ export interface PrepareReleaseCommandOptions extends GlobalArgv {
   postPrepare?: Hook;
 }
 
-const defaultChangelogTemplate = `# Release {{releaseNumber}} - {{currentDateTime}}
+const defaultChangelogTemplate = `# Release {{releaseNumber}} - {{currentDateTime "ISODate"}}
 
 {{#each entryGroups}}## {{capitalize label}}
 

@@ -1,3 +1,11 @@
+# Release 2.0.0 - 2021-08-29
+
+## IMPROVED
+
+- [IMPROVED] Remove `handlebars-helpers` and `moment` and replace with a custom `timestamp` helper using Luxon {#105}
+
+---
+
 # Release 1.1.2 - 2021-08-29
 
 ## FIXED

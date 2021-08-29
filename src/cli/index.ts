@@ -3,9 +3,9 @@ import { Argv, CommandModule } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import {
-  capitalize,
+  capitalizeHelper,
   currentDateTimeHelper,
-  echo,
+  echoHelper,
 } from "../utils/handlebars-helpers";
 import { CompletionFishCommand } from "./commands/completion-fish";
 import { NewCommand } from "./commands/new";
@@ -17,9 +17,9 @@ import { LastCommitMessageMiddleware } from "./middleware/last-commit-message-mi
 import { LogLevelMiddleware } from "./middleware/loglevel-middleware";
 import { TemplatesFromFilesMiddleware } from "./middleware/templates-from-files";
 
-Handlebars.registerHelper("timestamp", currentDateTimeHelper);
-Handlebars.registerHelper("capitalize", capitalize);
-Handlebars.registerHelper("echo", echo);
+Handlebars.registerHelper("currentDateTime", currentDateTimeHelper);
+Handlebars.registerHelper("capitalize", capitalizeHelper);
+Handlebars.registerHelper("echo", echoHelper);
 
 const config = getConfig();
 
