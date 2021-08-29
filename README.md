@@ -51,7 +51,7 @@ format values:
 - `localeString` => `DateTime.now().toLocaleString()`
 - Any other string will be passed like `DateTime.now().toFormat(string)`
 
-For more information on formatting with the `timestamp` helper, see [Luxon's formatting documentation](https://github.com/moment/luxon/blob/master/docs/formatting.md).
+For more information on formatting with the `currentDateTime` helper, see [Luxon's formatting documentation](https://github.com/moment/luxon/blob/master/docs/formatting.md).
 
 #### `capitalize`
 
