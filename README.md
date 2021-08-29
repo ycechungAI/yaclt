@@ -41,7 +41,9 @@ The CLI will check if the argument is a filepath to a file that exists, and if s
 
 ### Helpers
 
-A Handlebars helper called `timestamp` is available by default, and accepts an optional format parameter. By default, it formats via
+#### `currentDateTime`
+
+`currentDateTime` outputs a timestamp, and accepts an optional format parameter. By default, it formats via
 [Luxon's `toISODate()` function](https://github.com/moment/luxon/blob/master/docs/formatting.md#iso-8601). There are a few special
 format values:
 
@@ -51,6 +53,14 @@ format values:
 - Any other string will be passed like `DateTime.now().toFormat(string)`
 
 For more information on formatting with the `timestamp` helper, see [Luxon's formatting documentation](https://github.com/moment/luxon/blob/master/docs/formatting.md).
+
+#### `capitalize`
+
+`capitalize` takes a string and makes the first letter capitalized, and the rest lower case.
+
+#### `echo`
+
+`echo` takes a string and simply returns it. This is useful if you want to use literal `{` or `}` characters in your template, like the default templates do.
 
 ### Variables
 
