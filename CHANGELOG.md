@@ -1,3 +1,11 @@
+# Release 1.1.2 - 2021-08-29
+
+## FIXED
+
+- [FIXED] Update `prepare-release` command to support optional change type tags {#103}
+
+---
+
 # Release 1.1.1 - 2021-08-29
 
 ## IMPROVED
