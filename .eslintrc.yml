@@ -22,7 +22,7 @@ rules:
     - "error"
     - disallowPrototype: true
       singleReturnOnly: false
-      classPropertiesAllowed: true
+      classPropertiesAllowed: false
   "prefer-arrow-callback": "error"
   "func-style":
     - "error"

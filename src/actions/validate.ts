@@ -4,10 +4,7 @@ import yargs from "yargs";
 import { readLines } from "../utils/file-utils";
 import { handleHooks, Hook } from "../utils/hook-handler";
 import { Logger } from "../utils/logger";
-import {
-  formatToChangeTypeTemplate,
-  StringFormatParams,
-} from "../utils/string-utils";
+import { formatToChangeTypeTemplate } from "../utils/string-utils";
 import { ActionOptions } from "./action-options";
 
 export interface ActionValidateOptions extends ActionOptions {
@@ -47,11 +44,7 @@ const actionValidateHandler = (options: ActionValidateOptions): boolean => {
       }
 
       // only validate changeTypes if format includes the changeType Handlebars variable
-      if (
-        new RegExp(`{{\\s*${StringFormatParams.changeType}\\s*}}`).test(
-          options.format
-        )
-      ) {
+      if (changeTypePattern) {
         const changeType = options.changeTypes.find((changeType: string) =>
           line.includes(changeTypePattern({ changeType }))
         );

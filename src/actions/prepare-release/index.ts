@@ -2,13 +2,15 @@ import fs from "fs";
 import git from "isomorphic-git";
 import path from "path";
 import yargs from "yargs";
-import { readLines, touchFile } from "../utils/file-utils";
-import { handleHooks, Hook } from "../utils/hook-handler";
-import { Logger } from "../utils/logger";
-import { formatToChangeTypeTemplate } from "../utils/string-utils";
-import { compileTemplate } from "../utils/template-utils";
-import { ActionOptions } from "./action-options";
-import { ActionValidate } from "./validate";
+import { readLines, touchFile } from "../../utils/file-utils";
+import { handleHooks, Hook } from "../../utils/hook-handler";
+import { Logger } from "../../utils/logger";
+import { formatToChangeTypeTemplate } from "../../utils/string-utils";
+import { compileTemplate } from "../../utils/template-utils";
+import { ActionOptions } from "../action-options";
+import { ActionValidate } from "../validate";
+import { WithChangeTypeStrategy } from "./strategies/with-change-type";
+import { WithoutChangeTypeStrategy } from "./strategies/without-change-type";
 
 export interface ActionPrepareReleaseOptions extends ActionOptions {
   changelogFile: string;
@@ -21,11 +23,6 @@ export interface ActionPrepareReleaseOptions extends ActionOptions {
   postValidate?: Hook;
   prePrepare?: Hook;
   postPrepare?: Hook;
-}
-
-export interface EntryGroup {
-  label: string;
-  items: string[];
 }
 
 const actionPrepareReleaseHandler = async (
@@ -70,41 +67,27 @@ const actionPrepareReleaseHandler = async (
 
   const fileNames = fs.readdirSync(options.logsDir);
 
-  const entryGroups: EntryGroup[] = [];
   const changeTypeCompiledTemplate = formatToChangeTypeTemplate(options.format);
+  const strategy = changeTypeCompiledTemplate
+    ? new WithChangeTypeStrategy(
+        changeTypeCompiledTemplate,
+        options.changeTypes
+      )
+    : new WithoutChangeTypeStrategy();
 
   for (const fileName of fileNames) {
     const filePath = path.join(options.logsDir, fileName);
     const lines = readLines(filePath);
 
     for (const line of lines) {
-      const lineChangeType: string | undefined = options.changeTypes.find(
-        (changeType: string) =>
-          line.includes(changeTypeCompiledTemplate({ changeType }))
-      );
-
-      if (!lineChangeType) {
-        throw new Error("unable to parse change type");
-      }
-
-      const existingGroup = entryGroups.find(
-        (group: EntryGroup) => group.label === lineChangeType
-      );
-      if (existingGroup) {
-        existingGroup.items.push(line);
-      } else {
-        entryGroups.push({ label: lineChangeType, items: [line] });
-      }
+      strategy.processLine(line);
     }
   }
 
-  const handlebarsContext = {
-    releaseNumber: options.releaseNumber,
-    entryGroups,
-  };
-
-  const template = compileTemplate(options.template);
-  const changelogAddition = template(handlebarsContext);
+  const changelogAddition = strategy.generate(
+    options.template,
+    options.releaseNumber
+  );
   const existingContents = fs.readFileSync(options.changelogFile).toString();
   const newContents = `${changelogAddition}\n${existingContents}`;
   fs.writeFileSync(options.changelogFile, newContents);
