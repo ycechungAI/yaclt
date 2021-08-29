@@ -58,7 +58,7 @@ For more information on formatting with the `timestamp` helper, see [Luxon's for
 
 | Name         | Description                                                                                       | Required                                  |
 | ------------ | ------------------------------------------------------------------------------------------------- | ----------------------------------------- |
-| `changeType` | The change type for the entry, e.g. `NEW`, `IMPROVED`, `FIXED`, or custom ones you've configured. | `true`                                    |
+| `changeType` | The change type for the entry, e.g. `NEW`, `IMPROVED`, `FIXED`, or custom ones you've configured. | `false`                                   |
 | `message`    | The change log entry message.                                                                     | `true`                                    |
 | `issueId`    | The issue ID. This is optional based on your config.                                              | `false` if `--requireIssueIds` is `false` |
 
