@@ -33,7 +33,7 @@ export const PrepareReleaseCommand: CommandModule<
         "The Handlebars template to use to generate the changelog additions. Can be a filepath to read the template from, or a template literal string.",
       required: false,
       default:
-        "# Release {{releaseNumber}} - {{ currentDateTime }}\n\n{{#each entryGroups}}## {{capitalize label}}\n\n{{#each items}}- {{this}}\n{{/each}}\n\n{{/each}}\n---\n",
+        "# Release {{releaseNumber}} - {{currentDateTime}}\n\n{{#each entryGroups}}## {{capitalize label}}\n\n{{#each items}}- {{this}}\n{{/each}}\n\n{{/each}}\n---\n",
     },
     releaseNumber: {
       type: "string",
