@@ -60,7 +60,7 @@ export const CliOptions: { [key: string]: Options } = {
   },
   format: {
     type: "string",
-    default: `[{{${StringFormatParams.changeType}}}] {{${StringFormatParams.message}}} {{append "" "{"}}#{{${StringFormatParams.issueId}}}{{append "" "}"}}\n`,
+    default: `[{{${StringFormatParams.changeType}}}] {{${StringFormatParams.message}}} {{echo "{"}}#{{${StringFormatParams.issueId}}}{{echo "}"}}\n`,
     describe:
       "Changelog entry format, as a Handlebars template. To make change type tags optional, simply don't include the Handlebars variable for it.",
     global: true,
