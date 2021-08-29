@@ -65,23 +65,23 @@ export const CliOptions: { [key: string]: Options } = {
       "Changelog entry format, as a Handlebars template. To make change type tags optional, simply don't include the Handlebars variable for it.",
     global: true,
   },
-  p: {
-    alias: "plumbing",
+  plumbing: {
+    alias: "p",
     type: "boolean",
     default: false,
     describe:
       "Reduce output to just the relevant data, e.g. filepaths for `new` and `prepare-release`, `true/false` for `validate`, for scripting purposes. Also disables opening `$EDITOR`. Passing this option will override `--quiet` or `--verbose`.",
     global: true,
   },
-  q: {
-    alias: "quiet",
+  quiet: {
+    alias: "q",
     type: "boolean",
     default: false,
     describe: "Silence all output.",
     global: true,
   },
-  v: {
-    alias: "verbose",
+  verbose: {
+    alias: "v",
     type: "boolean",
     default: false,
     describe: "Output additional command logs and information.",
