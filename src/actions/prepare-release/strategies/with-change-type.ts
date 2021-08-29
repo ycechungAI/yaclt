@@ -1,0 +1,52 @@
+import { compileFunction } from "vm";
+import { PrepareReleaseStrategy } from "./prepare-release-strategy";
+
+export interface EntryGroup {
+  label: string;
+  items: string[];
+}
+
+export class WithChangeTypeStrategy extends PrepareReleaseStrategy {
+  private entryGroups: EntryGroup[] = [];
+  private changeTypeTemplate: HandlebarsTemplateDelegate<
+    Record<string, unknown>
+  >;
+  private changeTypes: string[];
+
+  constructor(
+    changeTypeTemplate: HandlebarsTemplateDelegate<Record<string, unknown>>,
+    changeTypes: string[]
+  ) {
+    super();
+    this.changeTypeTemplate = changeTypeTemplate;
+    this.changeTypes = changeTypes;
+  }
+
+  public override processLine(line: string): void {
+    const lineChangeType: string | undefined = this.changeTypes.find(
+      (changeType: string) =>
+        line.includes(this.changeTypeTemplate({ changeType }))
+    );
+
+    if (!lineChangeType) {
+      throw new Error("unable to parse change type");
+    }
+
+    const existingGroup = this.entryGroups.find(
+      (group: EntryGroup) => group.label === lineChangeType
+    );
+    if (existingGroup) {
+      existingGroup.items.push(line);
+    } else {
+      this.entryGroups.push({ label: lineChangeType, items: [line] });
+    }
+  }
+
+  public override generate(template: string, releaseNumber: string): string {
+    const handlebarsTemplate = compileFunction(template);
+    return handlebarsTemplate({
+      releaseNumber,
+      entryGroups: this.entryGroups,
+    });
+  }
+}

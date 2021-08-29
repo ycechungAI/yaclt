@@ -7,28 +7,39 @@ export const StringFormatParams = {
   issueId: "issueId",
 };
 
+export const regexIndexOf = (
+  string: string,
+  regex: RegExp,
+  startpos?: number
+): number => {
+  const indexOf = string.slice(Math.max(0, startpos || 0)).search(regex);
+  return indexOf >= 0 ? indexOf + (startpos || 0) : indexOf;
+};
+
 export const formatToChangeTypeTemplate = (
   format: string
-): HandlebarsTemplateDelegate<Record<string, unknown>> => {
+): HandlebarsTemplateDelegate<Record<string, unknown>> | undefined => {
   const changeTypeTemplatePattern = /{{\s*changeType\s*}}/;
   const hasChangeType = changeTypeTemplatePattern.test(format);
+  if (!hasChangeType) {
+    return undefined;
+  }
+
   const indexOfChangeType = format.search(changeTypeTemplatePattern);
-  const changeTypeHandlebars = hasChangeType
-    ? format.slice(
-        Math.max(0, indexOfChangeType - 2),
-        Math.min(
-          format.length,
-          indexOfChangeType +
-            StringFormatParams.changeType.length +
-            Math.max(
-              format
-                .slice(indexOfChangeType + StringFormatParams.changeType.length)
-                .indexOf("}}") + 3,
-              0
-            )
+  const changeTypeHandlebars = format.slice(
+    Math.max(0, regexIndexOf(format, changeTypeTemplatePattern)),
+    Math.min(
+      format.length,
+      indexOfChangeType +
+        StringFormatParams.changeType.length +
+        Math.max(
+          format
+            .slice(indexOfChangeType + StringFormatParams.changeType.length)
+            .indexOf("}}") + 3,
+          0
         )
-      )
-    : "UNCATEGORIZED";
+    )
+  );
   const changeTypeCompiledTemplate = compileTemplate(changeTypeHandlebars);
   return changeTypeCompiledTemplate;
 };

@@ -47,10 +47,11 @@ The CLI will check if the argument is a filepath to a file that exists, and if s
 
 ### Global Changelog Template
 
-| Name            | Description                                                                                                                                                        | Required |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
-| `releaseNumber` | The release number or label, specified by `--releaseNumber` flag or from configuration file                                                                        | `true`   |
-| `entryGroups`   | An array of objects with the interface `{ label: string; items: string[]; }` where `label` is the change type and `items` is all the entries with that change type | `true`   |
+| Name            | Description                                                                                                                                                                                                                            | Required                             |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| `releaseNumber` | The release number or label, specified by `--releaseNumber` flag or from configuration file.                                                                                                                                           | `true`                               |
+| `entryGroups`   | An array of objects with the interface `{ label: string; items: string[]; }` where `label` is the change type and `items` is all the entries with that change type. Will only be passed if your format template uses change type tags. | `true` if using change type tags     |
+| `entries`       | An array of strings which are the individual changelog entries. This will be used if your format template does not use change type tags.                                                                                               | `true` if not using change type tags |
 
 ### Release Branch Pattern
 
