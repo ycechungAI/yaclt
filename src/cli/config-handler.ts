@@ -36,7 +36,7 @@ const parseConfig = (
   if (configPath.endsWith(".js")) {
     // we need to require this at runtime since it's a config file
     // eslint-disable-next-line unicorn/prefer-module
-    return require(configPath.replace(".js", ""));
+    return require(path.resolve(configPath.replace(".js", "")));
   }
 
   const message = `Unsupported config format '${configPath}'. Only 'yacltrc.yaml', 'yacltrc.yml', 'yacltrc.json', and 'yacltrc.js'`;
