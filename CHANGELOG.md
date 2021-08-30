@@ -1,3 +1,11 @@
+# Release 2.0.2 - 2021-08-30
+
+## FIXED
+
+- [FIXED] Use `path.resolve` to avoid module not found error for global config files {#109}
+
+---
+
 # Release 2.0.1 - 2021-08-29
 
 ## FIXED
