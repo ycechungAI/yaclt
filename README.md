@@ -26,7 +26,7 @@ Neovim users, see [`yaclt.nvim`](https://github.com/mrjones2014/yaclt.nvim)
 ## Configuration
 
 All command line flags and arguments can be specified in a configuration file. Supported file names are `yacltrc.yml`, `yacltrc.yaml`, `yacltrc.json`, and `yacltrc.js` (`.js` config must use CommonJS
-format, e.g. `module.exports =`).
+format, e.g. `module.exports =`). Command line flags override values from configuration files.
 
 If the working directory is inside a git repository, the tree will be traversed to the git root, using the first valid configuration file that is found. If no configuration file is found in the repo,
 it will also check, in order of precedence, `$YACLT_CONFIG_HOME/`, `$XDG_CONFIG_HOME/yaclt/`, `$HOME/.config/yaclt/` for global configuration files.
