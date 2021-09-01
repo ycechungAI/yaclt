@@ -1,3 +1,11 @@
+# Release 2.0.4 - 2021-09-01
+
+## FIXED
+
+- [FIXED] Fix checking out release branch with `releaseBranchPattern` is set {#114}
+
+---
+
 # Release 2.0.3 - 2021-09-01
 
 ## FIXED
