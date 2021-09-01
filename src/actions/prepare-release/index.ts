@@ -103,7 +103,7 @@ const actionPrepareReleaseHandler = async (
 
   Logger.value(options.changelogFile);
   Logger.success(
-    `${options.changelogFile} updated! Be sure to review the changes before comitting.`
+    `${options.changelogFile} updated! Be sure to review the changes before committing.`
   );
 };
 
