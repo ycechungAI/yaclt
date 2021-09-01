@@ -57,6 +57,7 @@ const actionPrepareReleaseHandler = async (
     const branchName = branchTemplate({ releaseNumber: options.releaseNumber });
     try {
       await git.branch({ fs, ref: branchName, dir: process.cwd() });
+      await git.checkout({ fs, ref: branchName, dir: process.cwd() });
     } catch {
       const message = `Failed to checkout release branch: ${branchName}`;
       Logger.error(message);
