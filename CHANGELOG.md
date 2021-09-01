@@ -2,7 +2,7 @@
 
 ## FIXED
 
-- [FIXED] Fix checking out release branch with `releaseBranchPattern` is set {#114}
+- [FIXED] Fix checking out release branch when `releaseBranchPattern` is set {#114}
 
 ---
 
