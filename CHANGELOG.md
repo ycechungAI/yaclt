@@ -1,3 +1,11 @@
+# Release 2.0.3 - 2021-09-01
+
+## FIXED
+
+- [FIXED] Fix typo in work 'committing' {#112}
+
+---
+
 # Release 2.0.2 - 2021-08-30
 
 ## FIXED
