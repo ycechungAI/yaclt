@@ -1,19 +1,15 @@
 const execSync = require("child_process").execSync;
 
-const getDefaultBranch = () =>
-  execSync("git remote show origin | grep 'HEAD branch' | cut -d' ' -f5")
-    .toString()
-    .replace(/\n/g, "")
-    .trim();
+const getCurrentBranch = () =>
+  execSync("git branch --show-current").toString().replace(/\n/g, "").trim();
 
 const allChangedFiles = () => {
-  const defaultBranch = getDefaultBranch();
-  execSync(`git fetch origin ${defaultBranch}`, { stdio: "pipe" });
+  execSync(`git fetch origin master`, { stdio: "pipe" });
   const currentRevision = execSync("git rev-parse HEAD")
     .toString()
     .replace(/\n/g, "");
   return execSync(
-    `git --no-pager diff --name-only origin/${defaultBranch} ${currentRevision}`
+    `git --no-pager diff --name-only origin/master ${currentRevision}`
   )
     .toString()
     .split("\n")
@@ -33,6 +29,22 @@ module.exports = {
     ) {
       console.error(
         "No changelog has been added for the current change set. Create a new changelog entry for this change set."
+      );
+      return false;
+    }
+  },
+  prePrepare: () => {
+    // if work tree is not clean, can't prepare a release
+    if (execSync("git diff --stat").toString().replace(/\n/g, "").trim()) {
+      console.error(
+        "Work tree is not clean. Releases can only be prepared from a clean work tree."
+      );
+      return false;
+    }
+
+    if (getCurrentBranch() !== "master") {
+      console.error(
+        `Releases can only be prepared from ${defaultBranch}! There should be no changes from ${defaultBranch} before preparing the changelog.`
       );
       return false;
     }
