@@ -8,7 +8,7 @@ const getDefaultBranch = () =>
 
 const allChangedFiles = () => {
   const defaultBranch = getDefaultBranch();
-  execSync(`git fetch origin ${defaultBranch}`);
+  execSync(`git fetch origin ${defaultBranch}`, { stdio: "pipe" });
   const currentRevision = execSync("git rev-parse HEAD")
     .toString()
     .replace(/\n/g, "");

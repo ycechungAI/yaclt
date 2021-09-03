@@ -13,7 +13,8 @@
     "gen-docs": "ts-node ./gen-docs.ts && git add COMMANDS.md",
     "logger-test": "ts-node ./logger-colors-test.ts",
     "prettier": "pretty-quick --staged",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "validate-changelogs": "./dist/index.js validate"
   },
   "repository": {
     "type": "git",
