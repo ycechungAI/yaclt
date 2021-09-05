@@ -7,7 +7,12 @@ const handleHookFailure = (error: Error | boolean, hookName: string): void => {
     error === false
       ? `Hook ${hookName} returned false.`
       : `An error occurred evaluating hook ${hookName}`;
-  Logger.error(message, error);
+  const logArgs: unknown[] = [message];
+  // add the error if it's an actual thrown error
+  if (error !== false) {
+    logArgs.push(error);
+  }
+  Logger.error(...logArgs);
   yargs.exit(1, new Error(message));
   process.exit(1);
 };
