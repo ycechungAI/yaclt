@@ -1,3 +1,12 @@
+# Release 2.1.0 - 2021-09-07
+
+## IMPROVED
+
+- [IMPROVED] Add changelog validation to CI {#122}
+- [IMPROVED] Hijack `console` methods to use `Logger` for formatting when invoked from a JS config file {#117}
+
+---
+
 # Release 2.0.4 - 2021-09-01
 
 ## FIXED
