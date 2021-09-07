@@ -26,9 +26,24 @@ export const enum LogLevel {
 }
 
 /* eslint-disable no-console */
+const consoleLog = console.log.bind({});
+const consoleInfo = console.info.bind({});
+const consoleWarn = console.warn.bind({});
+const consoleError = console.error.bind({});
+
+const hijackConsole = (): void => {
+  console.log = info;
+  console.info = info;
+  console.warn = warn;
+  console.error = error;
+};
+/* eslint-enable no-console */
 
 let _logLevel = LogLevel.normal;
-const setLogLevel = (logLevel: LogLevel): LogLevel => (_logLevel = logLevel);
+const setLogLevel = (logLevel: LogLevel): LogLevel => {
+  hijackConsole();
+  return (_logLevel = logLevel);
+};
 
 const value = (...data: unknown[]): void => {
   // this one is primarily used for plumbing, so require exactly this log level
@@ -36,7 +51,7 @@ const value = (...data: unknown[]): void => {
     return;
   }
 
-  console.log(...data);
+  consoleLog(...data);
 };
 
 const info = (...data: unknown[]): void => {
@@ -44,7 +59,7 @@ const info = (...data: unknown[]): void => {
     return;
   }
 
-  console.info(
+  consoleInfo(
     chalk.bgBlue(chalk.black(chalk.bold("INFO"))),
     ...colorStrings(chalk.blue, data)
   );
@@ -55,7 +70,7 @@ const warn = (...data: unknown[]): void => {
     return;
   }
 
-  console.warn(
+  consoleWarn(
     chalk.bgYellow(chalk.black(chalk.bold("WARN"))),
     ...colorStrings(chalk.yellow, data)
   );
@@ -66,7 +81,7 @@ const error = (...data: unknown[]): void => {
     return;
   }
 
-  console.error(
+  consoleError(
     chalk.bgRed(chalk.black(chalk.bold("ERROR"))),
     ...colorStrings(chalk.red, data)
   );
@@ -77,7 +92,7 @@ const success = (...data: unknown[]): void => {
     return;
   }
 
-  console.log(
+  consoleLog(
     chalk.bgGreenBright(chalk.black(chalk.bold("SUCCESS"))),
     ...colorStrings(chalk.greenBright, data)
   );
@@ -91,5 +106,3 @@ export const Logger = Object.freeze({
   error,
   success,
 });
-
-/* eslint-enable no-console */
