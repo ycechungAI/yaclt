@@ -25,7 +25,8 @@ module.exports = {
     const changedFiles = allChangedFiles();
     if (
       changedFiles.length > 0 &&
-      !changedFiles.some((filename) => filename.startsWith("changelogs/"))
+      !changedFiles.some((filename) => filename.startsWith("changelogs/")) &&
+      getCurrentBranch() !== "master"
     ) {
       console.error(
         "No changelog has been added for the current change set. Create a new changelog entry for this change set."
