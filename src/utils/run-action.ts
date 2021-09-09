@@ -21,7 +21,7 @@ export const runAction = <T>(action: () => T): T => {
   try {
     const configPath = process.env["YACLT_CONFIG_PATH"];
     if (configPath) {
-      Logger.info(`Using configuration file at ${relativeize(configPath)}`);
+      Logger.info(`Using configuration file at ${relativize(configPath)}`);
     }
 
     return action();
