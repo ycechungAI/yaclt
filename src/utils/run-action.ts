@@ -2,7 +2,7 @@ import path from "path";
 import yargs from "yargs";
 import { Logger } from "./logger";
 
-const relativeize = (configPath: string): string => {
+const relativize = (configPath: string): string => {
   const pathRelativeToCwd = path.relative(process.cwd(), configPath);
   // if config path is under current path, use path relative to cwd
   if (!pathRelativeToCwd.includes("..")) {
