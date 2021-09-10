@@ -36,7 +36,14 @@ module.exports = {
   },
   prePrepare: () => {
     // if work tree is not clean, can't prepare a release
-    if (execSync("git diff --stat").toString().replace(/\n/g, "").trim()) {
+    const changedFiles = execSync("git diff --stat --name-only")
+      .toString()
+      .trim();
+
+    if (
+      changedFiles.replace(/\n/g, "") !== "" &&
+      changedFiles !== "package.json"
+    ) {
       console.error(
         "Work tree is not clean. Releases can only be prepared from a clean work tree."
       );
@@ -45,7 +52,7 @@ module.exports = {
 
     if (getCurrentBranch() !== "master") {
       console.error(
-        `Releases can only be prepared from ${defaultBranch}! There should be no changes from ${defaultBranch} before preparing the changelog.`
+        `Releases can only be prepared from master! There should be no changes from master before preparing the changelog.`
       );
       return false;
     }
