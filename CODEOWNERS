@@ -1,6 +1,1 @@
-src/* @mrjones2014
-*.md @mrjones2014
-*.ts @mrjones2014
-*.js @mrjones2014
-*.json @mrjones2014
-yarn.lock @mrjones2014
+* @mrjones2014
