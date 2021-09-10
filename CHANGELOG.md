@@ -1,3 +1,16 @@
+# Release 2.2.0 - 2021-09-10
+
+## IMPROVED
+
+- [IMPROVED] Run CI for PRs {#133}
+- [IMPROVED] Move `@types/luxon` to `devDependencies` instead of `dependencies` {#118}
+- [IMPROVED] Improve `CONTRIBUTING.md` and add `CODEOWNERS` file {#143}
+- [IMPROVED] Update Code of Conduct {#146}
+- [IMPROVED] Update `yacltrc.js` to allow preparing releases with a version change in `package.json` {#148}
+- [IMPROVED] Upadated PR template to make sure people are reading the contributing guidelines {#137}
+
+---
+
 # Release 2.1.0 - 2021-09-07
 
 ## IMPROVED
