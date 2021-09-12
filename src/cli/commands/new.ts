@@ -26,44 +26,44 @@ export const NewCommand: CommandModule<
       describe:
         "The issue ID to be interpolated into the new changelog. Takes precedence over parsing from git branch based on --branchFormat",
       type: "string",
-      required: false,
+      demandOption: false,
     },
     message: {
       alias: "m",
       describe: "The change log message, defaults to a placeholder message",
       type: "string",
-      required: false,
+      demandOption: false,
     },
     lastCommit: {
       describe:
         "Use the first line of the most recent git commit message as the message for the new changelog entry",
       type: "boolean",
-      required: false,
+      demandOption: false,
       conflicts: "message",
     },
     changeType: {
       describe:
         "The change type tag to use, defaults to the first one defined in --changeTypes",
       type: "string",
-      required: false,
+      demandOption: false,
     },
     edit: {
       describe:
         "After generating the changelog file, open it in `$EDITOR`, if `$EDITOR` is defined",
       type: "boolean",
       default: false,
-      required: false,
+      demandOption: false,
     },
     preNew: {
       describe:
         "A hook function to run before generating the changelog. Throw an error or return false to halt execution. Only usable from a Javascript config file. May be async.",
-      required: false,
+      demandOption: false,
       hidden: true,
     },
     postNew: {
       describe:
         "A hook function to run after generating the changelog. Only usable from a Javascript config file. May be async.",
-      required: false,
+      demandOption: false,
       hidden: true,
     },
     ...CliOptions,

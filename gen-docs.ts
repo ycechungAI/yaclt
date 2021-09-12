@@ -1,4 +1,5 @@
 import fs from "fs";
+import { Options } from "yargs";
 import { AllCommands } from "./src/cli";
 import { arrayToMarkdownTable } from "./src/utils/array-to-markdown-table";
 
@@ -8,6 +9,15 @@ const escapeDefault = (value: string | unknown): string | unknown => {
   }
 
   return value.replace(/\n/g, "\\n");
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const formatLongOption = (option: [string, any]): string => {
+  if (option[1].hidden === true) {
+    return `JS: \`${option[0]}\``;
+  }
+
+  return `\`--${option[0]}\``;
 };
 
 let contents = "# `yaclt` Command Documentation\n";
@@ -20,13 +30,14 @@ for (const command of AllCommands) {
   contents += `${command.describe ?? ""}\n\n`;
   const optionsData = Object.entries(command.builder ?? {}).map(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (option: { [key: string]: any }) => ({
-      option: `\`--${option[0]}\``,
+    (option: [string, Options]) => ({
+      option: formatLongOption(option),
       alias: option[1].alias ? `\`-${option[1].alias}\`` : "",
       description: option[1].describe,
       type: option[0].endsWith("Hook") ? "`function`" : `\`${option[1].type}\``,
-      required: option[1].required ? "`true`" : "`false`",
+      required: option[1].demandOption ? "`true`" : "`false`",
       defaultValue: `\`${escapeDefault(option[1].default)}\``,
+      requiresJsConfig: option[1].hidden === true ? "✅" : "",
     })
   );
   contents += arrayToMarkdownTable(optionsData);

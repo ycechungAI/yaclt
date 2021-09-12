@@ -37,37 +37,37 @@ export const PrepareReleaseCommand: CommandModule<
 > = {
   command: "prepare-release",
   describe:
-    "Gather the changelogs from --logsDir and compile them into --changelogFile using --changelogTemplate",
+    "Gather the changelogs from `--logsDir` and compile them into `--changelogFile` using `--changelogTemplate`",
   builder: {
     changelogTemplate: {
       type: "string",
       describe:
         "The Handlebars template to use to generate the changelog additions. Can be a filepath to read the template from, or a template literal string.",
-      required: false,
+      demandOption: false,
       default: defaultChangelogTemplate,
     },
     releaseNumber: {
       type: "string",
       describe: "A label for the release",
-      required: true,
+      demandOption: true,
     },
     releaseBranchPattern: {
       type: "string",
       describe:
         "A pattern to generate a release branch name which will be automatically checked out before preparing the release.",
-      required: false,
+      demandOption: false,
     },
     ...ValidateCommandOptions,
     prePrepare: {
       describe:
         "A hook function to run before preparing the release changes. Throw an error or return false to halt execution. Only usable from a Javascript configuration file. May be async.",
-      required: false,
+      demandOption: false,
       hidden: true,
     },
     postPrepare: {
       describe:
         "A hook function to run after preparing the release changes. Only usable from a Javascript configuration file. May be async.",
-      required: false,
+      demandOption: false,
       hidden: true,
     },
     ...CliOptions,
