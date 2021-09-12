@@ -44,7 +44,7 @@ Validate existing changelogs against the specified format
 
 ## `yaclt prepare-release`
 
-Gather the changelogs from --logsDir and compile them into --changelogFile using --changelogTemplate
+Gather the changelogs from `--logsDir` and compile them into `--changelogFile` using `--changelogTemplate`
 
 | Option                   | Alias | Description                                                                                                                                                                                                                                | Type        | Required | Default Value                                                                                                                                                               | Requires Js Config |
 | ------------------------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |

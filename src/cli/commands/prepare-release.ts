@@ -37,7 +37,7 @@ export const PrepareReleaseCommand: CommandModule<
 > = {
   command: "prepare-release",
   describe:
-    "Gather the changelogs from --logsDir and compile them into --changelogFile using --changelogTemplate",
+    "Gather the changelogs from `--logsDir` and compile them into `--changelogFile` using `--changelogTemplate`",
   builder: {
     changelogTemplate: {
       type: "string",
