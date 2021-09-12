@@ -1,3 +1,18 @@
+# Release 2.3.0 - 2021-09-12
+
+## IMPROVED
+
+- [IMPROVED] Fix typo in function name, change `relativeize` to `relativize` {#130}
+- [IMPROVED] Enhanced README.md {#151}
+- [IMPROVED] Replace `required` property with `demandOption` since `required` is deprecated in `yargs` {#152}
+- [IMPROVED] Move shebang line into source and remove `shebangify.js` from build script {#153}
+
+## NEW
+
+- [NEW] Add middleware to check for options not known to any command {#155}
+
+---
+
 # Release 2.2.0 - 2021-09-10
 
 ## IMPROVED
