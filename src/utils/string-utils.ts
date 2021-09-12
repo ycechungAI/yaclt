@@ -52,3 +52,6 @@ export const camelToKebabCase = (str: string): string =>
         : letter
     )
     .join("");
+
+export const kebabToCamelCase = (str: string): string =>
+  str.replace(/-./g, (match: string) => match.charAt(1).toUpperCase());
