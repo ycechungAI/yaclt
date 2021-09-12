@@ -1,5 +1,5 @@
 import Handlebars from "handlebars";
-import { Argv, CommandModule } from "yargs";
+import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import {
@@ -7,15 +7,13 @@ import {
   currentDateTimeHelper,
   echoHelper,
 } from "../utils/handlebars-helpers";
-import { CompletionFishCommand } from "./commands/completion-fish";
-import { NewCommand } from "./commands/new";
-import { PrepareReleaseCommand } from "./commands/prepare-release";
-import { ValidateCommand } from "./commands/validate";
+import { Commands } from "./commands";
 import { getConfig } from "./config-handler";
-import { CallFunctionArgsMiddleware } from "./middleware/call-function-args";
+import { CallFunctionArgsMiddleware } from "./middleware/call-function-args-middleware";
 import { LastCommitMessageMiddleware } from "./middleware/last-commit-message-middleware";
 import { LogLevelMiddleware } from "./middleware/loglevel-middleware";
-import { TemplatesFromFilesMiddleware } from "./middleware/templates-from-files";
+import { TemplatesFromFilesMiddleware } from "./middleware/templates-from-files-middleware";
+import { ValidateArgvMiddleware } from "./middleware/validate-argv-middleware";
 
 Handlebars.registerHelper("currentDateTime", currentDateTimeHelper);
 Handlebars.registerHelper("capitalize", capitalizeHelper);
@@ -23,20 +21,15 @@ Handlebars.registerHelper("echo", echoHelper);
 
 const config = getConfig();
 
-// idk a way around this
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const AllCommands: CommandModule<any, any>[] = [
-  NewCommand,
-  ValidateCommand,
-  PrepareReleaseCommand,
-  CompletionFishCommand,
-];
-
 export const BuildCli = (): Argv => {
   const cli = yargs(hideBin(process.argv)).scriptName("yaclt");
 
   // register middlewares
   cli
+    .middleware(
+      ValidateArgvMiddleware.handler,
+      ValidateArgvMiddleware.preValidation
+    )
     .middleware(
       CallFunctionArgsMiddleware.handler,
       CallFunctionArgsMiddleware.preValidation
@@ -51,7 +44,7 @@ export const BuildCli = (): Argv => {
     )
     .middleware(LogLevelMiddleware.handler, LogLevelMiddleware.preValidation);
 
-  for (const command of AllCommands) {
+  for (const command of Commands) {
     cli.command(command);
   }
 

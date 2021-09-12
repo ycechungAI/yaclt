@@ -19,8 +19,7 @@ const hookArgs = new Set<string>([
 
 // because of the way yargs operates, we'll have both, for example,
 // preNew and pre-new in the Object.keys result below in the loop
-const existingKeys = [...hookArgs];
-existingKeys.forEach((key: string) => hookArgs.add(camelToKebabCase(key)));
+[...hookArgs].forEach((key: string) => hookArgs.add(camelToKebabCase(key)));
 
 export const CallFunctionArgsMiddleware: MiddlewareHandler = {
   handler: (

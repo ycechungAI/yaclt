@@ -1,6 +1,6 @@
 import fs from "fs";
 import { Options } from "yargs";
-import { AllCommands } from "./src/cli";
+import { Commands } from "./src/cli/commands";
 import { arrayToMarkdownTable } from "./src/utils/array-to-markdown-table";
 
 const escapeDefault = (value: string | unknown): string | unknown => {
@@ -21,7 +21,7 @@ const formatLongOption = (option: [string, any]): string => {
 };
 
 let contents = "# `yaclt` Command Documentation\n";
-for (const command of AllCommands) {
+for (const command of Commands) {
   if (!command.builder || Object.entries(command.builder).length === 0) {
     continue;
   }
