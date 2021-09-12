@@ -2,7 +2,7 @@ import path from "path";
 import yargs from "yargs";
 import { Logger } from "./logger";
 
-const relativeize = (configPath: string): string => {
+const relativize = (configPath: string): string => {
   const pathRelativeToCwd = path.relative(process.cwd(), configPath);
   // if config path is under current path, use path relative to cwd
   if (!pathRelativeToCwd.includes("..")) {
@@ -21,7 +21,7 @@ export const runAction = <T>(action: () => T): T => {
   try {
     const configPath = process.env["YACLT_CONFIG_PATH"];
     if (configPath) {
-      Logger.info(`Using configuration file at ${relativeize(configPath)}`);
+      Logger.info(`Using configuration file at ${relativize(configPath)}`);
     }
 
     return action();
