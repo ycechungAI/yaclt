@@ -23,9 +23,9 @@ const hookArgs = new Set<string>([
 [...hookArgs].forEach((key: string) => hookArgs.add(camelToKebabCase(key)));
 
 export const CallFunctionArgsMiddleware: MiddlewareHandler = {
-  handler: (
+  handler: async (
     argv: Record<string, string | boolean | number | FunctionArg>
-  ): Record<string, string | boolean | number> => {
+  ): Promise<Record<string, string | boolean | number>> => {
     for (const key of Object.keys(argv)) {
       if (hookArgs.has(key)) {
         continue;
@@ -34,11 +34,11 @@ export const CallFunctionArgsMiddleware: MiddlewareHandler = {
       const arg = argv[key];
       if (isFunction(arg)) {
         try {
-          if (key === "entryFileName" || key === "entry-file-name") {
-            argv[key] = arg(DateTime.now());
-          } else {
-            argv[key] = arg();
-          }
+          const result =
+            key === "entryFileName" || key === "entry-file-name"
+              ? arg(DateTime.now())
+              : arg();
+          argv[key] = result instanceof Promise ? await result : result;
         } catch (error) {
           Logger.error(
             `An error occurred evaluating function argument '${key}': `,
