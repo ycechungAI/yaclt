@@ -3,6 +3,7 @@ import fs from "fs";
 import git from "isomorphic-git";
 import { DateTime } from "luxon";
 import path from "path";
+import yargs from "yargs";
 import { handleHooks, Hook } from "../utils/hook-handler";
 import { Logger } from "../utils/logger";
 import { toValidFilename } from "../utils/path-utils";
@@ -26,6 +27,13 @@ const actionNewHandler = async (options: ActionNewOptions): Promise<void> => {
     options.logsDir,
     toValidFilename(options.entryFileName || `${DateTime.now().toISO()}.md`)
   );
+
+  if (fs.existsSync(outputPath)) {
+    const message = `File ${outputPath} alread exists`;
+    Logger.error(message);
+    yargs.exit(1, new Error(message));
+    process.exit(1);
+  }
 
   let issueId: string | undefined;
   if (options.issueId) {
