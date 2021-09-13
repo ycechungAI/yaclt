@@ -1,16 +1,12 @@
 import yargs from "yargs";
 import { Logger, LogLevel } from "../../utils/logger";
 import { nameof } from "../../utils/nameof";
+import { FunctionArg } from "../../utils/type-utils";
 import { GlobalArgv } from "../options";
 import { MiddlewareHandler } from "./middleware-handler";
 
 export const LogLevelMiddleware: MiddlewareHandler = {
-  handler: (
-    argv: Record<
-      string,
-      string | boolean | number | (() => string | boolean | number)
-    >
-  ) => {
+  handler: (argv: Record<string, string | boolean | number | FunctionArg>) => {
     if (argv[nameof<GlobalArgv>("plumbing")]) {
       Logger.setLogLevel(LogLevel.values);
       return;

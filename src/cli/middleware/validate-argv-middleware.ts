@@ -1,6 +1,7 @@
 import yargs, { CommandModule, Options } from "yargs";
 import { Logger } from "../../utils/logger";
 import { kebabToCamelCase } from "../../utils/string-utils";
+import { FunctionArg } from "../../utils/type-utils";
 import { Commands } from "../commands";
 import { MiddlewareHandler } from "./middleware-handler";
 
@@ -29,14 +30,8 @@ Commands.forEach((command: CommandModule) => {
 
 export const ValidateArgvMiddleware: MiddlewareHandler = {
   handler: (
-    argv: Record<
-      string,
-      string | boolean | number | (() => string | boolean | number)
-    >
-  ): Record<
-    string,
-    string | boolean | number | (() => string | boolean | number)
-  > => {
+    argv: Record<string, string | boolean | number | FunctionArg>
+  ): Record<string, string | boolean | number | FunctionArg> => {
     const invalidOptions: string[] = [];
     for (const key of Object.keys(argv)) {
       const convertedKey = kebabToCamelCase(key);

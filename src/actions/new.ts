@@ -18,12 +18,13 @@ export interface ActionNewOptions extends ActionOptions {
   edit: boolean;
   preNew?: Hook;
   postNew?: Hook;
+  entryFileName?: string;
 }
 
 const actionNewHandler = async (options: ActionNewOptions): Promise<void> => {
   const outputPath = path.join(
     options.logsDir,
-    toValidFilename(`${DateTime.now().toISO()}.md`)
+    toValidFilename(options.entryFileName || `${DateTime.now().toISO()}.md`)
   );
 
   let issueId: string | undefined;

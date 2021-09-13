@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import yargs from "yargs";
 import { ActionNewOptions } from "../../actions/new";
 import { ActionPrepareReleaseOptions } from "../../actions/prepare-release";
@@ -5,7 +6,7 @@ import { ActionValidateOptions } from "../../actions/validate";
 import { Logger } from "../../utils/logger";
 import { nameof } from "../../utils/nameof";
 import { camelToKebabCase } from "../../utils/string-utils";
-import { isFunction } from "../../utils/type-utils";
+import { FunctionArg, isFunction } from "../../utils/type-utils";
 import { MiddlewareHandler } from "./middleware-handler";
 
 const hookArgs = new Set<string>([
@@ -23,10 +24,7 @@ const hookArgs = new Set<string>([
 
 export const CallFunctionArgsMiddleware: MiddlewareHandler = {
   handler: (
-    argv: Record<
-      string,
-      string | boolean | number | (() => string | boolean | number)
-    >
+    argv: Record<string, string | boolean | number | FunctionArg>
   ): Record<string, string | boolean | number> => {
     for (const key of Object.keys(argv)) {
       if (hookArgs.has(key)) {
@@ -36,7 +34,11 @@ export const CallFunctionArgsMiddleware: MiddlewareHandler = {
       const arg = argv[key];
       if (isFunction(arg)) {
         try {
-          argv[key] = arg();
+          if (key === "entryFileName" || key === "entry-file-name") {
+            argv[key] = arg(DateTime.now());
+          } else {
+            argv[key] = arg();
+          }
         } catch (error) {
           Logger.error(
             `An error occurred evaluating function argument '${key}': `,
