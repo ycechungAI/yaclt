@@ -1,3 +1,11 @@
+# Release 2.4.0 - 2021-09-13
+
+## NEW
+
+- [NEW] Add support for user-defined entry file names {#127}
+
+---
+
 # Release 2.3.0 - 2021-09-12
 
 ## IMPROVED
