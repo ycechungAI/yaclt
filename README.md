@@ -2,7 +2,7 @@
 
 <img src="https://github.com/mrjones2014/yaclt/raw/master/images/logo_color_on_transparent.png" alt="yaclt logo" height="150" align="right"/>
 
-# <ins>Y</ins>et <ins>A</ins>nother <ins>C</ins>hange<ins> L</ins>og <ins>T</ins>ool
+# <ins>Y</ins>et <ins>A</ins>nother <ins>C</ins>hange <ins>L</ins>og <ins>T</ins>ool
 
 Friends don't let friends use git commit messages as change log entries; they should be more thoughtfully written.
 
