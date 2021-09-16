@@ -38,7 +38,7 @@ for example, if you'd like to write some custom logic to parse the next release 
 For options which are Handlebars templates (e.g. `--format`, `--releaseBranchPattern`, or `--changelogTemplate`), you may specify a filepath instead of a literal template string.
 The CLI will check if the argument is a filepath to a file that exists, and if so, read the template from that file.
 
-Documentation on customizing formats with Handlebars can be found in [handlebars-templates.md](./handlebars-templates.md).
+Documentation on customizing formats with Handlebars can be found in [handlebars-templates.md](./docs/handlebars-templates.md).
 
 ### Configuration Recipes
 
