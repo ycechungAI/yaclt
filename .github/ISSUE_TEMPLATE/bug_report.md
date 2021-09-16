@@ -1,3 +1,7 @@
+---
+labels: 'bug'
+---
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
@@ -16,8 +20,8 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Information about device and software**
-
 - OS: [e.g. macOS/Linux/Windows]
+- yaclt version: 
 
 **Additional context**
 Add any other context about the problem here.
