@@ -13,6 +13,7 @@ export interface NewCommandOptions extends GlobalArgv {
   edit?: boolean;
   preNew?: Hook;
   postNew?: Hook;
+  entryFileName?: string;
 }
 
 export const NewCommand: CommandModule<
@@ -44,6 +45,12 @@ export const NewCommand: CommandModule<
     changeType: {
       describe:
         "The change type tag to use, defaults to the first one defined in --changeTypes",
+      type: "string",
+      demandOption: false,
+    },
+    entryFileName: {
+      describe:
+        "Pass a custom entry filename. If using a JS config file and this is a function, it will be passed an instance of `DateTime` from Luxon representing the current timestamp. See Luxon documentation for `DateTime` API.",
       type: "string",
       demandOption: false,
     },
@@ -88,6 +95,7 @@ export const NewCommand: CommandModule<
         issueId: argv.issueId,
         gitBranchFormat: argv.branchFormat,
         message: argv.message,
+        entryFileName: argv.entryFileName,
         edit: argv.edit ?? false,
         preNew: argv.preNew,
         postNew: argv.postNew,

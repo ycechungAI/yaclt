@@ -1,6 +1,6 @@
 {
   "name": "yaclt",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Yet Another Change Log Tool",
   "main": "index.js",
   "bin": "dist/index.js",
@@ -13,7 +13,7 @@
     "gen-docs": "ts-node ./gen-docs.ts && git add COMMANDS.md",
     "logger-test": "ts-node ./logger-colors-test.ts",
     "prettier": "pretty-quick --staged",
-    "lint": "eslint src/",
+    "lint": "eslint src/ --max-warnings=0",
     "validate-changelogs": "./dist/index.js validate"
   },
   "repository": {
