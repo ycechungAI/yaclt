@@ -17,7 +17,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Information about device and software**
 
-- OS: [e.g. iOS/ android/ macOS/ Linux/ Windows]
+- OS: [e.g. macOS/Linux/Windows]
 
 **Additional context**
 Add any other context about the problem here.
