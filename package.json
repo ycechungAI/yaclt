@@ -10,7 +10,7 @@
     "postpublish": "pinst --enable",
     "build": "set YACLT_VERSION=$(node -e \"console.log(require('./package.json').version)\") && tsc --project tsconfig.json && chmod +x ./dist/index.js",
     "clean": "rm -rf dist/",
-    "gen-docs": "ts-node ./gen-docs.ts && git add COMMANDS.md",
+    "gen-docs": "ts-node ./gen-docs.ts && git add docs/COMMANDS.md",
     "logger-test": "ts-node ./logger-colors-test.ts",
     "prettier": "pretty-quick --staged",
     "lint": "eslint src/ --max-warnings=0",

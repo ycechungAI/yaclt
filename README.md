@@ -21,7 +21,7 @@ then use `yaclt` again to gather each individual entry into `CHANGELOG.md` as pa
 - Neovim plugin ([`yaclt.nvim`](https://github.com/mrjones2014/yaclt.nvim))
 - And more
 
-The full set of options for each command can be found in [COMMANDS.md](./COMMANDS.md) or by running the command with the `--help` argument.
+The full set of options for each command can be found in [COMMANDS.md](./docs/COMMANDS.md) or by running the command with the `--help` argument.
 
 ## Configuration
 
