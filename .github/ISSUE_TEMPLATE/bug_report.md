@@ -1,5 +1,9 @@
 ---
+name: Bug report
+about: Help us diagnose an issue
+title: ''
 labels: 'bug'
+assignees: ''
 ---
 
 **Describe the bug**
