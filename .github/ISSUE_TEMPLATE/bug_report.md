@@ -17,7 +17,6 @@ If applicable, add screenshots to help explain your problem.
 
 **Information about device and software**
 
-- Device: [e.g. Desktop, Pixel 4a, iPhone6]
 - OS: [e.g. iOS/ android/ macOS/ Linux/ Windows]
 
 **Additional context**
