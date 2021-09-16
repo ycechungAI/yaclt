@@ -19,8 +19,6 @@ If applicable, add screenshots to help explain your problem.
 
 - Device: [e.g. Desktop, Pixel 4a, iPhone6]
 - OS: [e.g. iOS/ android/ macOS/ Linux/ Windows]
-- Browser [e.g. chrome, safari, firefox]
-- Browser-Version [e.g. 22]
 
 **Additional context**
 Add any other context about the problem here.
