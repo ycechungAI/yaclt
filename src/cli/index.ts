@@ -14,6 +14,7 @@ import { LastCommitMessageMiddleware } from "./middleware/last-commit-message-mi
 import { LogLevelMiddleware } from "./middleware/loglevel-middleware";
 import { TemplatesFromFilesMiddleware } from "./middleware/templates-from-files-middleware";
 import { ValidateArgvMiddleware } from "./middleware/validate-argv-middleware";
+import { versionInfo } from "./version-info";
 
 Handlebars.registerHelper("currentDateTime", currentDateTimeHelper);
 Handlebars.registerHelper("capitalize", capitalizeHelper);
@@ -43,6 +44,8 @@ export const BuildCli = (): Argv => {
       LastCommitMessageMiddleware.preValidation
     )
     .middleware(LogLevelMiddleware.handler, LogLevelMiddleware.preValidation);
+
+  cli.version(versionInfo);
 
   for (const command of Commands) {
     cli.command(command);

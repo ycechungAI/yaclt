@@ -2,7 +2,7 @@
 
 <img src="https://github.com/mrjones2014/yaclt/raw/master/images/logo_color_on_transparent.png" alt="yaclt logo" height="150" align="right"/>
 
-# <ins>Y</ins>et <ins>A</ins>nother <ins>C</ins>hange<ins> L</ins>og <ins>T</ins>ool
+# <ins>Y</ins>et <ins>A</ins>nother <ins>C</ins>hange <ins>L</ins>og <ins>T</ins>ool
 
 Friends don't let friends use git commit messages as change log entries; they should be more thoughtfully written.
 
@@ -21,7 +21,7 @@ then use `yaclt` again to gather each individual entry into `CHANGELOG.md` as pa
 - Neovim plugin ([`yaclt.nvim`](https://github.com/mrjones2014/yaclt.nvim))
 - And more
 
-The full set of options for each command can be found in [COMMANDS.md](./COMMANDS.md) or by running the command with the `--help` argument.
+The full set of options for each command can be found in [COMMANDS.md](./docs/COMMANDS.md) or by running the command with the `--help` argument.
 
 ## Configuration
 
@@ -38,7 +38,7 @@ for example, if you'd like to write some custom logic to parse the next release 
 For options which are Handlebars templates (e.g. `--format`, `--releaseBranchPattern`, or `--changelogTemplate`), you may specify a filepath instead of a literal template string.
 The CLI will check if the argument is a filepath to a file that exists, and if so, read the template from that file.
 
-Documentation on customizing formats with Handlebars can be found in [handlebars-templates.md](./handlebars-templates.md).
+Documentation on customizing formats with Handlebars can be found in [handlebars-templates.md](./docs/handlebars-templates.md).
 
 ### Configuration Recipes
 

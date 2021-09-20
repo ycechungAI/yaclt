@@ -8,4 +8,3 @@ Resolves: #[issue number]
 1. **Be as detailed as possible.**
 
 ## Potential Side Effects/Things to Look Out For
-
