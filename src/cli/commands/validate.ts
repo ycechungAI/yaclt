@@ -1,6 +1,7 @@
 import { Arguments, CommandModule, Options } from "yargs";
 import { ActionValidate, ActionValidateOptions } from "../../actions/validate";
 import { Hook } from "../../utils/hook-handler";
+import { Logger } from "../../utils/logger";
 import { runAction } from "../../utils/run-action";
 import { CliOptions, GlobalArgv } from "../options";
 
@@ -15,7 +16,7 @@ export const ValidateCommandOptions: { [key: string]: Options } = {
     describe:
       "A regular expression used to validate each individual changelog entry",
     type: "string",
-    demandOption: true,
+    default: "\\[.*\\]\\s+.*\\s{#[\\d]+}",
   },
   preValidate: {
     describe:
@@ -31,17 +32,37 @@ export const ValidateCommandOptions: { [key: string]: Options } = {
   },
 };
 
+const options = {
+  ...ValidateCommandOptions,
+  ...CliOptions,
+};
+
 export const ValidateCommand: CommandModule<
   Record<string, unknown>,
   ValidateCommandOptions
 > = {
   command: "validate",
   describe: "Validate existing changelogs against the specified format",
-  builder: {
-    ...ValidateCommandOptions,
-    ...CliOptions,
-  },
+  builder: options,
   handler: (argv: Arguments<ValidateCommandOptions>) => {
+    if (
+      argv.format === options["format"]?.default &&
+      argv.validationPattern !== options["validationPattern"]?.default
+    ) {
+      Logger.warn(
+        "Using default value for --format but not for --validationPattern. Most likely you want to use a custom value for --format."
+      );
+    }
+
+    if (
+      argv.validationPattern === options["validationPattern"]?.default &&
+      argv.format !== options["format"]?.default
+    ) {
+      Logger.warn(
+        "Using default value for --validationPattern but not --format. Most likely you want to use a custom value for --validationPattern."
+      );
+    }
+
     runAction(() => {
       const options: ActionValidateOptions = {
         plumbing: argv.plumbing,

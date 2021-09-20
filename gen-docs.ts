@@ -60,4 +60,4 @@ for (const command of Commands) {
   contents += "\n";
 }
 
-fs.writeFileSync("./COMMANDS.md", contents);
+fs.writeFileSync("./docs/COMMANDS.md", contents);
