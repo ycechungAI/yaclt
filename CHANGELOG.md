@@ -1,3 +1,14 @@
+# Release 2.4.1 - 2021-09-20
+
+## IMPROVED
+
+- [IMPROVED] Update bug issue template to remove irrelevant prompts {#149}
+- [IMPROVED] Add a fun ASCII logo to the version info {#165}
+- [IMPROVED] Sort JS-only options to bottom of tables in COMMANDS.md {#166}
+- [IMPROVED] Provide a default value for `--validationPattern` that corresponds to the default value of `--format`, and log a warning if using the default value of one but not the other {#163}
+
+---
+
 # Release 2.4.0 - 2021-09-13
 
 ## NEW
